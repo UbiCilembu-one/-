@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Gift Just For You</title>
     <style>
-        /* --- STYLING UTAMA & LATAR BELAKANG --- */
+        /* --- STYLING UTAMA & LATAR BELAKANG LUXURY --- */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #000;
+            background: radial-gradient(circle, #111111 0%, #000000 100%);
             color: #fff;
             height: 100vh;
             display: flex;
@@ -73,17 +73,20 @@
             color: #ffffff;
         }
 
-        /* --- ANIMATIONS FOR INTRO --- */
         @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn {
-            to {
-                opacity: 0.8;
-            }
+            to { opacity: 0.8; }
+        }
+
+        /* --- TEXT GRADASI EMAS (GOLD GRADIENT) --- */
+        .gold-text {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(187, 143, 40, 0.3);
         }
 
         /* --- EFEK BINTANG BERGERAK (BACKGROUND) --- */
@@ -97,64 +100,78 @@
             pointer-events: none;
         }
 
-        /* --- WADAH KONTEN/LAYAR --- */
+        /* --- WADAH KONTEN DENGAN BINGKAI MEWAH --- */
         .screen {
             position: absolute;
-            width: 90%;
-            max-width: 450px;
-            height: 100%;
+            width: 85%;
+            max-width: 420px;
+            height: 80vh;
             text-align: center;
             z-index: 2;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 1.5s ease;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            transform: scale(0.95);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.05), 0 20px 50px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
         }
 
         .active {
             opacity: 1;
             pointer-events: auto;
+            transform: scale(1);
         }
 
-        /* --- TYPOGRAPHY & TOMBOL --- */
-        h1 { font-size: 26px; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; color: #f5f5f5; }
-        p { font-size: 16px; font-weight: 300; line-height: 1.8; color: #ccc; margin-bottom: 20px; }
-        .small-text { font-size: 12px; color: #777; font-style: italic; margin-top: 15px; }
+        /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
+        h1 { font-size: 24px; font-weight: 300; margin-bottom: 15px; letter-spacing: 3px; color: #f5f5f5; text-transform: uppercase; }
+        p { font-size: 15px; font-weight: 300; line-height: 1.8; color: #ccc; margin-bottom: 20px; }
+        .small-text { font-size: 11px; color: #555; font-style: italic; margin-top: 15px; letter-spacing: 1px; }
 
         .btn {
             background: none;
-            border: 1px solid #fff;
+            border: 1px solid rgba(255, 255, 255, 0.6);
             color: #fff;
-            padding: 10px 25px;
-            font-size: 14px;
+            padding: 10px 28px;
+            font-size: 12px;
+            text-transform: uppercase;
             cursor: pointer;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
             margin-top: 15px;
             z-index: 30;
+            background: rgba(255, 255, 255, 0.03);
         }
-        .btn:hover { background: #fff; color: #000; }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.4); border-color: #fff; }
 
         input[type="text"] {
             background: transparent;
             border: none;
-            border-bottom: 1px solid #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.4);
             color: #fff;
             text-align: center;
             font-size: 18px;
-            padding: 5px;
+            padding: 8px;
             margin: 20px 0;
             outline: none;
             width: 80%;
+            letter-spacing: 2px;
+            transition: border-color 0.3s;
         }
+        input[type="text"]:focus { border-color: #bf953f; }
 
         /* --- KOTAK KADO & PITA --- */
         .box-container {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             position: relative;
             margin: 30px 0;
             cursor: pointer;
@@ -162,27 +179,56 @@
         .gift-box {
             width: 100%;
             height: 100%;
-            background-color: #111;
-            border: 2px solid #333;
+            background-color: #151515;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
-        .gift-box::before { content: ''; position: absolute; left: 47%; top: 0; width: 8%; height: 100%; background: #fff; }
-        .gift-box::after { content: ''; position: absolute; left: 0; top: 47%; width: 100%; height: 8%; background: #fff; }
+        .gift-box::before { content: ''; position: absolute; left: 47%; top: 0; width: 6%; height: 100%; background: linear-gradient(to right, #bf953f, #fcf6ba, #aa771c); }
+        .gift-box::after { content: ''; position: absolute; left: 0; top: 47%; width: 100%; height: 6%; background: linear-gradient(to bottom, #bf953f, #fcf6ba, #aa771c); }
         
         .ribbon-top {
             position: absolute;
             top: -15px; left: 50%;
             transform: translateX(-50%);
             width: 30px; height: 15px;
-            border: 2px solid #fff;
+            border: 2px solid #bf953f;
             border-bottom: none;
             border-radius: 15px 15px 0 0;
             transition: opacity 0.5s;
         }
 
-        .box-container.open .gift-box { transform: scale(0); opacity: 0; }
+        .box-container.open .gift-box { transform: scale(0) rotate(15deg); opacity: 0; }
         .box-container.open .ribbon-top { opacity: 0; }
+
+        /* --- KONTROL AUDIO ESTETIK --- */
+        #audio-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            background: rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+        #audio-control.playing {
+            animation: rotateDisk 4s linear infinite;
+            color: #fcf6ba;
+            border-color: #bf953f;
+        }
+        @keyframes rotateDisk {
+            to { transform: rotate(360deg); }
+        }
 
         /* --- EFEK KELOPAK BUNGA GUGUR --- */
         .petal {
@@ -196,63 +242,79 @@
             100% { top: 110%; transform: translateX(100px) rotate(360deg); opacity: 0; }
         }
 
+        /* --- EFEK KILAUAN GLITTER (SPARKLE) --- */
+        .sparkle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: #fcf6ba;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #bf953f;
+            pointer-events: none;
+            z-index: 999;
+            animation: flySparkle 0.8s ease-out forwards;
+        }
+        @keyframes flySparkle {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
+        }
+
         /* --- BUKET BUNGA --- */
-        .bouquet { font-size: 60px; margin-bottom: 20px; transition: opacity 2s ease; }
+        .bouquet { font-size: 55px; margin-bottom: 20px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
 
         /* --- INTERAKTIF RASI BINTANG --- */
         .sky-memories {
             position: relative;
             width: 100%;
-            height: 40vh;
+            height: 35vh;
             margin: 15px 0;
         }
         
         .clickable-star-btn {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background: transparent;
             border: none;
             outline: none;
-            font-size: 20px;
+            font-size: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             z-index: 99;
             transition: transform 0.2s ease;
+            filter: drop-shadow(0 0 5px rgba(255,235,59,0.6));
         }
-        
-        .clickable-star-btn:active {
-            transform: scale(1.4);
-        }
+        .clickable-star-btn:active { transform: scale(1.5); }
         
         .message-display-box {
-            width: 90%;
-            min-height: 60px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 10px;
+            width: 100%;
+            min-height: 65px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 4px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px 15px;
-            font-size: 15px;
-            color: #ffeb3b;
+            padding: 12px 18px;
+            font-size: 14px;
+            color: #fcf6ba;
             letter-spacing: 0.5px;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
             z-index: 25;
             margin-bottom: 10px;
             opacity: 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
-        .message-display-box.show {
-            opacity: 1;
-        }
+        .message-display-box.show { opacity: 1; }
     </style>
 </head>
 <body>
+
+    <!-- TOMBOL CONTROLLER AUDIO -->
+    <div id="audio-control" onclick="toggleAudio()">🎵</div>
 
     <!-- LAYER PENGANTAR (INTRO SCREEN) -->
     <div id="sc-intro">
@@ -271,7 +333,7 @@
     <!-- LAYER 1: RESERVED -->
     <div class="screen active" id="sc-reserved">
         <h1>🎁 A Gift Just For You</h1>
-        <p style="color: #888;">Reserved For You</p>
+        <p style="color: #666; font-size: 13px; letter-spacing: 1px;">Reserved For You</p>
         <p>This gift has been reserved for one person.<br>If this isn’t you, please close this page.</p>
         <button class="btn" onclick="nextScreen('sc-verification')">Continue →</button>
     </div>
@@ -297,20 +359,20 @@
 
     <!-- LAYER 4: SURAT MESIN TIK -->
     <div class="screen" id="sc-letter">
-        <h1 style="font-size: 20px; margin-bottom: 30px; color: #ffeb3b;">💌 A Letter</h1>
-        <p id="typewriter" style="min-height: 120px; font-size: 17px; text-align: center; padding: 0 10px;"></p>
+        <h1 class="gold-text" style="font-size: 18px; margin-bottom: 25px;">💌 A Letter</h1>
+        <p id="typewriter" style="min-height: 120px; font-size: 16px; text-align: center; padding: 0 5px;"></p>
     </div>
 
     <!-- LAYER 5: FLOWERS (BUKET) -->
     <div class="screen" id="sc-flowers">
         <div class="bouquet">💐🌼🌸</div>
-        <p id="flowerText" style="font-size: 18px; min-height: 80px;"></p>
+        <p id="flowerText" style="font-size: 17px; min-height: 80px;"></p>
     </div>
 
     <!-- LAYER 6: MEMORIES (BINTANG LANGIT MALAM) -->
     <div class="screen" id="sc-memories">
-        <h1 style="margin-top: 15px;">⭐ Memories</h1>
-        <p style="font-size: 14px; color: #aaa; padding: 0 10px; margin-bottom: 0;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
+        <h1 style="margin-top: 5px;">⭐ Memories</h1>
+        <p style="font-size: 13px; color: #888; padding: 0 5px; margin-bottom: 0;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
         
         <!-- Wadah Langit -->
         <div class="sky-memories" id="skyArea"></div>
@@ -318,15 +380,15 @@
         <!-- Display Kotak Pesan -->
         <div class="message-display-box" id="msgBox">Klik salah satu bintang di atas...</div>
         
-        <button class="btn" id="toEndingBtn" style="margin-bottom: 15px; z-index: 100;">🤍 One Last Thing</button>
+        <button class="btn" id="toEndingBtn" style="margin-bottom: 5px; z-index: 100;">🤍 One Last Thing</button>
     </div>
 
     <!-- LAYER 7: ENDING -->
     <div class="screen" id="sc-ending">
-        <h1>🌙 Ending</h1>
-        <p id="endingText" style="font-size: 16px; white-space: pre-line;"></p>
-        <p style="font-size: 24px; margin-top: 10px;">🤍</p>
-        <p class="small-text" style="color:#555; font-size:11px;">This page was made especially for one person.</p>
+        <h1 class="gold-text" style="font-size: 20px; letter-spacing: 4px;">🌙 Ending</h1>
+        <p id="endingText" style="font-size: 15px; white-space: pre-line; line-height: 2; color: #e5e5e5;"></p>
+        <p class="gold-text" style="font-size: 22px; margin-top: 15px;">🤍</p>
+        <p class="small-text" style="color:#444;">This page was made especially for one person.</p>
     </div>
 
     <script>
@@ -337,6 +399,20 @@
             setTimeout(() => {
                 intro.style.display = 'none';
             }, 1500);
+        }
+
+        // --- SISTEM AUDIO CONTROLLER ---
+        const audio = document.getElementById('bgMusic');
+        const audioCtrl = document.getElementById('audio-control');
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                audioCtrl.classList.add('playing');
+            } else {
+                audio.pause();
+                audioCtrl.classList.remove('playing');
+            }
         }
 
         // --- 1. EFEK BINTANG BERGERAK (BACKGROUND) ---
@@ -363,7 +439,7 @@
 
         function animateStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
             stars.forEach(s => {
                 ctx.beginPath();
                 ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
@@ -401,7 +477,7 @@
             if (!startFlowers) return;
             const petal = document.createElement('div');
             petal.classList.add('petal');
-            const size = Math.random() * 12 + 10;
+            const size = Math.random() * 10 + 8;
             petal.style.width = size + 'px';
             petal.style.height = size + 'px';
             petal.style.backgroundColor = warnaBunga[Math.floor(Math.random() * warnaBunga.length)];
@@ -412,7 +488,7 @@
             document.body.appendChild(petal);
             setTimeout(() => petal.remove(), duration * 1000);
         }
-        setInterval(buatKelopak, 250);
+        setInterval(buatKelopak, 300);
 
         // --- 4. AKSI BUKA KADO & MUSIK ---
         function openGift() {
@@ -422,15 +498,17 @@
             box.classList.add('open');
             document.getElementById('btnOpenGift').style.display = 'none';
             
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(e => console.log("Audio play blocked."));
+            audio.play().then(() => {
+                audioCtrl.style.display = 'flex';
+                audioCtrl.classList.add('playing');
+            }).catch(e => console.log("Audio blocked"));
 
-            document.body.style.backgroundColor = '#111';
-            setTimeout(() => { document.body.style.backgroundColor = '#000'; }, 300);
+            document.body.style.backgroundColor = '#151515';
+            setTimeout(() => { document.body.style.backgroundColor = ''; }, 300);
 
             setTimeout(() => {
                 startFlowers = true; 
-                document.getElementById('boxPack').innerHTML = "<p style='font-size:15px; color:#ffeb3b;'>Not every gift comes inside a box.<br>Some arrive as a reminder...<br>that someone genuinely wishes you well.</p>";
+                document.getElementById('boxPack').innerHTML = "<p style='font-size:14px; color:#fcf6ba; font-style:italic;'>Not every gift comes inside a box.<br>Some arrive as a reminder...<br>that someone genuinely wishes you well.</p>";
                 
                 setTimeout(() => {
                     nextScreen('sc-letter');
@@ -486,12 +564,12 @@
                 if (i < teks.length) {
                     elemen.innerHTML += teks.charAt(i);
                     i++;
-                    setTimeout(ketik, 40); 
+                    setTimeout(ketik, 45); 
                 } else if (callback) {
                     callback();
                 }
             }
-            let kejar = setTimeout(ketik, 40);
+            setTimeout(ketik, 40);
         }
 
         // --- 6. LAYER FLOWERS BUKET TRANSISI ---
@@ -513,7 +591,7 @@
             }, 3000);
         }
 
-        // --- 7. BINTANG MEMORI INTERAKTIF (VERSI TOMBOL) ---
+        // --- 7. BINTANG MEMORI INTERAKTIF + EFEK SPARKLE GLITTER ---
         const dataBintang = [
             "My Incess Selamanya. 👑",
             "Beautiful Princess 🧚\u200D♀️",
@@ -534,11 +612,30 @@
                 starBtn.classList.add('clickable-star-btn');
                 starBtn.innerHTML = "⭐"; 
                 
-                starBtn.style.left = Math.random() * 80 + 5 + '%';
-                starBtn.style.top = Math.random() * 80 + 5 + '%';
+                starBtn.style.left = Math.random() * 80 + 10 + '%';
+                starBtn.style.top = Math.random() * 75 + 10 + '%';
                 
                 starBtn.onclick = function(e) {
                     e.preventDefault();
+                    
+                    // Trigger Efek Percikan Kilauan (Sparkle)
+                    const rect = starBtn.getBoundingClientRect();
+                    for(let k=0; k<8; k++) {
+                        const sp = document.createElement('div');
+                        sp.classList.add('sparkle');
+                        sp.style.left = (rect.left + rect.width/2) + 'px';
+                        sp.style.top = (rect.top + rect.height/2) + 'px';
+                        
+                        // Arah acak percikan
+                        const angle = Math.random() * Math.PI * 2;
+                        const dist = Math.random() * 40 + 20;
+                        sp.style.setProperty('--mx', Math.cos(angle) * dist + 'px');
+                        sp.style.setProperty('--my', Math.sin(angle) * dist + 'px');
+                        
+                        document.body.appendChild(sp);
+                        setTimeout(() => sp.remove(), 800);
+                    }
+
                     msgBox.innerText = pesan;
                     msgBox.classList.add('show');
                 };
@@ -550,8 +647,8 @@
         // --- 8. LAYER ENDING & TRANSISI GELAP ---
         document.getElementById('toEndingBtn').onclick = function(e) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.body.style.transition = "background-color 2s";
-            document.body.style.backgroundColor = "#000";
+            document.body.style.transition = "background-color 2.5s";
+            document.body.style.backgroundColor = "#000000";
             
             setTimeout(() => {
                 nextScreen('sc-ending');
