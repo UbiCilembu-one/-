@@ -25,6 +25,67 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* --- SCREEN INTRO PREMIUM (PUTIH POLOS) --- */
+        #sc-intro {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .intro-text {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #2c2c2c;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 1.8s forwards 0.5s;
+        }
+
+        .intro-btn {
+            background: none;
+            border: 1px solid #1a1a1a;
+            color: #1a1a1a;
+            padding: 8px 24px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 35px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            animation: fadeIn 1.2s forwards 2.2s;
+        }
+        .intro-btn:hover {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        /* --- ANIMATIONS FOR INTRO --- */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 0.8;
+            }
+        }
+
         /* --- EFEK BINTANG BERGERAK (BACKGROUND) --- */
         #starfield {
             position: absolute;
@@ -193,6 +254,12 @@
 </head>
 <body>
 
+    <!-- LAYER PENGANTAR (INTRO SCREEN) -->
+    <div id="sc-intro">
+        <div class="intro-text">Dari Ubi Cilembu Kamu.</div>
+        <button class="intro-btn" onclick="closeIntro()">Buka Hadiah</button>
+    </div>
+
     <!-- AUDIO SYSTEM -->
     <audio id="bgMusic" loop>
         <source src="Chelsea%20Cutler%20-%20Your%20Shirt.mp3" type="audio/mpeg">
@@ -263,6 +330,15 @@
     </div>
 
     <script>
+        // --- FUNCTION UNTUK MENUTUP INTRO SCREEN ---
+        function closeIntro() {
+            const intro = document.getElementById('sc-intro');
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 1500);
+        }
+
         // --- 1. EFEK BINTANG BERGERAK (BACKGROUND) ---
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
