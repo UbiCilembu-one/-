@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Gift</title>
+    <!-- Font Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Icon Musik -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS UTAMA & RESET */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* EFEK BINTANG BERGERAK (BACKGROUND) */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(circle at center, #0c0c1e 0%, #000000 100%);
+        }
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: blink var(--duration) infinite ease-in-out;
+            opacity: 0.2;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* SCREEN MANAGEMENT */
+        .screen {
+            position: absolute;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            z-index: 10;
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            transform: translateY(20px);
+        }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* TYPOGRAPHY & BUTTONS */
+        h1 { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.8rem; line-height: 1.5; margin-bottom: 10px; }
+        p { color: #a0aec0; font-size: 0.9rem; }
+        .btn {
+            margin-top: 30px;
+            padding: 10px 25px;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+
+        /* SCREEN 2: VERIFIKASI */
+        .input-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            width: 100%;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 15px;
+            outline: none;
+        }
+        .status-msg { margin-top: 15px; font-size: 0.85rem; height: 20px; color: #4ade80; display: none; }
+
+        /* SCREEN 3 & 7: KADO HITAM & PUTIH */
+        .gift-container { position: relative; width: 160px; height: 160px; cursor: pointer; margin-bottom: 20px; }
+        .gift-box {
+            width: 100%; height: 100%; background: #1a1a1a; border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 15px rgba(255,255,255,0.05);
+            position: relative; transition: transform 0.5s;
+        }
+        .gift-box.white-gift { background: #f3f4f6; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
+        /* Pita */
+        .gift-box::before { content:''; position:absolute; left:50%; width:24px; height:100%; background:#fff; transform:translateX(-50%); }
+        .gift-box::after { content:''; position:absolute; top:50%; width:100%; height:24px; background:#fff; transform:translateY(-50%); }
+        .gift-box.white-gift::before, .gift-box.white-gift::after { background: #1a1a1a; }
+        /* Animasi pita kebuka */
+        .gift-container.open .gift-box { transform: scale(0); opacity: 0; transition: all 0.8s ease; }
+        /* Efek Cahaya */
+        .glow-effect {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%; pointer-events: none; transition: transform 1s ease, opacity 1s ease; opacity: 0;
+        }
+        .gift-container.open .glow-effect { transform: translate(-50%, -50%) scale(2.5); opacity: 1; }
+
+        /* SCREEN 4: SURAT KETIK */
+        .letter-text { font-family: 'Playfair Display', serif; font-size: 1.25rem; line-height: 2; text-align: left; max-width: 90%; margin: 0 auto; color: #e2e8f0; }
+
+        /* SCREEN 5: BUNGA */
+        .flower-svg { width: 150px; height: 150px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); margin-bottom: 20px; }
+
+        /* SCREEN 6: MEMORY LANGIT BINTANG */
+        .memory-area { position: relative; width: 100%; height: 250px; margin-bottom: 20px; }
+        .star-clickable {
+            position: absolute; cursor: pointer; color: #ffd700; font-size: 1.2rem;
+            animation: pulse 1.5s infinite alternate; transition: transform 0.3s;
+        }
+        .star-clickable:hover { transform: scale(1.4); }
+        .pop-message {
+            position: absolute; background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+            padding: 8px 15px; border-radius: 10px; font-size: 0.85rem; color: #fff;
+            border: 1px solid rgba(255,255,255,0.2); pointer-events: none;
+            opacity: 0; transform: scale(0.8) translateY(10px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .pop-message.show { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes pulse { 0% { opacity: 0.6; } 100% { opacity: 1; font-shadow: 0 0 10px #ffd700; } }
+
+        /* AUDIO PLAYER PREMIUM */
+        .audio-player {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 12px 20px; display: flex; align-items: center;
+            gap: 15px; width: 100%; max-width: 320px; margin-top: 20px; backdrop-filter: blur(4px);
+        }
+        .track-info { text-align: left; flex-grow: 1; }
+        .track-info .now { font-size: 0.7rem; color: #718096; text-transform: uppercase; letter-spacing: 1px; }
+        .track-info .title { font-size: 0.85rem; color: #edf2f7; font-weight: 500; }
+        .play-btn { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.1rem; transition: transform 0.2s; }
+        .play-btn:hover { transform: scale(1.1); }
+
+        /* SCREEN 8: PENUTUP GRADIENT LANGIT */
+        .sky-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, #fedac2 0%, #b5c7d3 50%, #899bb0 100%);
+            z-index: 2; opacity: 0; transition: opacity 2s ease; pointer-events: none;
+        }
+        .screen-final h1 { color: #2d3748; }
+        .screen-final p { color: #4a5568; }
+    </style>
+</head>
+<body>
+
+    <!-- Latar Belakang Efek -->
+    <div class="stars" id="starContainer"></div>
+    <div class="sky-bg" id="skyBg"></div>
+
+    <!-- AUDIO SYSTEM -->
+    <audio id="bgMusic" loop>
+        <!-- GANTI LINK DI BAWAH INI DENGAN LINK LAGU .MP3 KAMU -->
+        <source src="LINK_LAGU_KAMU_DISINI.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ================= SCREENS ================= -->
+
+    <!-- 1. Halaman Pembuka -->
+    <div class="screen active" id="screen1">
+        <h1>This gift has been reserved for one person.</h1>
+        <p>If this isn’t you, please close this page.</p>
+        <button class="btn" onclick="nextScreen(1, 2)">Continue →</button>
+    </div>
+
+    <!-- 2. Verifikasi Nama -->
+    <div class="screen" id="screen2">
+        <div class="input-box">
+            <h1>Enter your name</h1>
+            <input type="text" id="nameInput" placeholder="Ketik namamu di sini..." autocomplete="off">
+            <div class="status-msg" id="verifyStatus"></div>
+            <button class="btn" onclick="verifyName()">Unlock</button>
+        </div>
+    </div>
+
+    <!-- 3. Kotak Hadiah Utama -->
+    <div class="screen" id="screen3">
+        <div class="gift-container" onclick="openMainGift(this)">
+            <div class="gift-box"></div>
+            <div class="glow-effect"></div>
+        </div>
+        <p style="letter-spacing: 2px;">KETUK KADO UNTUK MEMBUKA 🎀</p>
+    </div>
+
+    <!-- 4. Surat Mengetik Otomatis -->
+    <div class="screen" id="screen4">
+        <div class="letter-text" id="typingTarget"></div>
+        <button class="btn" id="letterBtn" style="display:none; align-self:center;" onclick="nextScreen(4, 5)">Next →</button>
+    </div>
+
+    <!-- 5. Halaman Bunga -->
+    <div class="screen" id="screen5">
+        <!-- Riasan Gambar Bunga Minimalis Premium (SVG) -->
+        <svg class="flower-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 45C32 45 26 35 28 27C30 19 32 12 32 12C32 12 34 19 36 27C38 35 32 45 32 45Z" fill="#eddcd2"/>
+            <path d="M24 42C24 42 16 36 20 29C24 22 28 16 28 16C28 16 28 24 28 32C28 40 24 42 24 42Z" fill="#dbcdf0"/>
+            <path d="M40 42C40 42 48 36 44 29C40 22 36 16 36 16C36 16 36 24 36 32C36 40 40 42 40 42Z" fill="#f7d6c8"/>
+            <circle cx="32" cy="20" r="3" fill="#fcd581"/>
+            <circle cx="26" cy="24" r="2.5" fill="#fcd581"/>
+            <circle cx="38" cy="24" r="2.5" fill="#fcd581"/>
+            <path d="M31 44L32 60M33 44L35 58M31 44L28 57" stroke="#556b2f" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h1 style="font-size: 1.5rem; margin-bottom: 5px;">These flowers will never wilt.</h1>
+        <button class="btn" onclick="nextScreen(5, 6)">See Memories →</button>
+    </div>
+
+    <!-- 6. Memory Langit Bintang & Player Musik -->
+    <div class="screen" id="screen6">
+        <h1 style="font-size: 1.4rem; margin-bottom: 5px;">Touch the stars...</h1>
+        <div class="memory-area" id="memoryArea">
+            <!-- Bintang Interaktif & Pesan Tersembunyi -->
+            <div class="star-clickable" style="top:15%; left:20%;" onclick="showMemory(0, this)"><i class="fa-solid fa-star"></i></div>
+            <div class="star-clickable" style="top:40%; left:75%;" onclick="showMemory(1, this)"><i class="fa-solid fa-star"></i></div>
+            <div class="star-clickable" style="top:70%; left:25%;" onclick="showMemory(2, this)"><i class="fa-solid fa-star"></i></div>
+            <div class="star-clickable" style="top:75%; left:65%;" onclick="showMemory(3, this)"><i class="fa-solid fa-star"></i></div>
+            
+            <div class="pop-message" id="msg0" style="top:5%; left:5%;">“You’re So Beautiful.”</div>
+            <div class="pop-message" id="msg1" style="top:30%; left:50%;">“My Princess.”</div>
+            <div class="pop-message" id="msg2" style="top:60%; left:5%;">“Be Happy.”</div>
+            <div class="pop-message" id="msg3" style="top:65%; left:45%;">“Keep smiling.”</div>
+        </div>
+
+        <!-- Premium Music Player Box -->
+        <div class="audio-player">
+            <div class="track-info">
+                <div class="now">now playing</div>
+                <div class="title">Your shirt - Chelsea Cutler</div>
+            </div>
+            <button class="play-btn" onclick="toggleMusic()" id="playerPlayBtn">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+        </div>
+
+        <button class="btn" id="toFinalGiftBtn" style="margin-top:25px; display:none;" onclick="nextScreen(6, 7)">Open Last Gift →</button>
+    </div>
+
+    <!-- 7. Hadiah Terakhir (Kotak Kosong) -->
+    <div class="screen" id="screen7">
+        <div class="gift-container" onclick="openFinalGift(this)">
+            <div class="gift-box white-gift" style="width:100px; height:100px;"></div>
+            <div class="glow-effect"></div>
+        </div>
+        <div id="finalGiftText" style="height: 50px; font-family:'Playfair Display', serif; font-size:1.3rem;"></div>
+        <button class="btn" id="finalNextBtn" style="display:none;" onclick="triggerFinalSky()">Next →</button>
+    </div>
+
+    <!-- 8. Penutup (Langit Cerah) -->
+    <div class="screen screen-final" id="screen8">
+        <h1 id="finalSay1"></h1>
+        <h1 id="finalSay2" style="margin-top: 15px; font-size: 2.2rem; display:none;"></h1>
+        <p id="finalSay3" style="margin-top: 35px; width:85%; font-size:0.95rem; display:none;"></p>
+    </div>
+
+    <!-- ================= LOGIKANYA (JAVASCRIPT) ================= -->
+    <script>
+        // Pembuat Bintang Acak di Background
+        const starContainer = document.getElementById('starContainer');
+        for (let i = 0; i < 60; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            const size = Math.random() * 3;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${2 + Math.random() * 4}s`);
+            starContainer.appendChild(star);
+        }
+
+        // Fungsi Perpindahan Screen Dasar
+        function nextScreen(current, next) {
+            const curScreen = document.getElementById(`screen${current}`);
+            const nxtScreen = document.getElementById(`screen${next}`);
+            curScreen.style.opacity = '0';
+            setTimeout(() => {
+                curScreen.classList.remove('active');
+                nxtScreen.classList.add('active');
+                setTimeout(() => { nxtScreen.style.opacity = '1'; }, 50);
+                
+                // Triggers Khusus saat masuk screen tertentu
+                if (next === 4) { startTypingLetter(); }
+            }, 800);
+        }
+
+        // Screen 2: Validasi Nama Berlian
+        function verifyName() {
+            const input = document.getElementById('nameInput').value.trim();
+            const status = document.getElementById('verifyStatus');
+            
+            // Mengubah ke huruf kecil agar ketikan kapital tidak berpengaruh
+            if (input.toLowerCase() === 'berlian') {
+                status.style.display = 'block';
+                status.style.color = '#4ade80';
+                status.innerHTML = '✓ Identity confirmed.<br>Welcome.';
+                setTimeout(() => { nextScreen(2, 3); }, 2000);
+            } else {
+                status.style.display = 'block';
+                status.style.color = '#f87171';
+                status.innerText = 'Nama tidak dikenali. Silakan coba lagi.';
+            }
+        }
+
+        // Musik Kontroler
+        const audio = document.getElementById('bgMusic');
+        function toggleMusic() {
+            const btnIcon = document.getElementById('playerPlayBtn').querySelector('i');
+            if (audio.paused) {
+                audio.play();
+                btnIcon.className = "fa-solid fa-pause";
+            } else {
+                audio.pause();
+                btnIcon.className = "fa-solid fa-play";
+            }
+        }
+
+        // Screen 3: Buka Kado Utama
+        function openMainGift(element) {
+            element.classList.add('open');
+            // Putar musik secara perlahan/langsung saat klik kado
+            audio.play().catch(() => console.log("Izin audio browser aktif setelah interaksi"));
+            setTimeout(() => { nextScreen(3, 4); }, 1500);
+        }
+
+        // Screen 4: Efek Surat Ketik Dengan Pause Jeda Waktu
+        const letterLines = [
+            "Hai.",
+            "Mungkin kamu bertanya-tanya kenapa ada hadiah ini.",
+            "Karena menurutku…",
+            "seseorang sepertimu pantas mendapat sesuatu yang dibuat khusus."
+        ];
+        
+        function startTypingLetter() {
+            const target = document.getElementById('typingTarget');
+            let lineIdx = 0;
+
+            function printLine() {
+                if (lineIdx < letterLines.length) {
+                    let pTag = document.createElement('p');
+                    pTag.style.marginBottom = '20px';
+                    pTag.style.color = '#fff';
+                    target.appendChild(pTag);
+                    
+                    let txt = letterLines[lineIdx];
+                    let charIdx = 0;
+                    
+                    function typeChar() {
+                        if (charIdx < txt.length) {
+                            pTag.innerHTML += txt.charAt(charIdx);
+                            charIdx++;
+                            setTimeout(typeChar, 40); // Kecepatan ketik karakter
+                        } else {
+                            lineIdx++;
+                            // Jeda 2 detik (2000ms) sebelum memunculkan baris berikutnya sesuai request kamu
+                            setTimeout(printLine, 2000); 
+                        }
+                    }
+                    typeChar();
+                } else {
+                    // Tampilkan tombol lanjut setelah semua surat terketik
+                    document.getElementById('letterBtn').style.display = 'block';
+                }
+            }
+            printLine();
+        }
+
+        // Screen 6: Interaksi Bintang Memory
+        let clickedStarsCount = 0;
+        const totalStars = 4;
+        function showMemory(index, starEl) {
+            const msg = document.getElementById(`msg${index}`);
+            if(!msg.classList.contains('show')) {
+                msg.classList.add('show');
+                starEl.style.color = '#fff'; // Berubah warna tanda sudah diklik
+                clickedStarsCount++;
+                
+                // Jika semua bintang memori sudah diklik, tampilkan tombol ke kado terakhir
+                if(clickedStarsCount === totalStars) {
+                    setTimeout(() => {
+                        document.getElementById('toFinalGiftBtn').style.display = 'inline-block';
+                    }, 1000);
+                }
+            }
+        }
+
+        // Screen 7: Kotak Hadiah Terakhir (Kosong)
+        function openFinalGift(element) {
+            if(element.classList.contains('open')) return;
+            element.classList.add('open');
+            const txtBox = document.getElementById('finalGiftText');
+            
+            setTimeout(() => {
+                txtBox.innerText = "There is nothing inside.";
+                setTimeout(() => {
+                    document.getElementById('finalNextBtn').style.display = 'inline-block';
+                }, 1500);
+            }, 1000);
+        }
+
+        // Screen 8: Transisi Menjadi Langit & Penutup Romantis
+        function triggerFinalSky() {
+            const sky = document.getElementById('skyBg');
+            sky.style.opacity = '1'; // Mengubah background menjadi langit gradasi cerah
+            
+            nextScreen(7, 8);
+            
+            setTimeout(() => {
+                const s1 = document.getElementById('finalSay1');
+                s1.innerText = "Because...";
+                
+                setTimeout(() => {
+                    const s2 = document.getElementById('finalSay2');
+                    s2.style.display = 'block';
+                    s2.innerText = "You are the gift.";
+                    
+                    setTimeout(() => {
+                        const s3 = document.getElementById('finalSay3');
+                        s3.style.display = 'block';
+                        s3.innerHTML = "If life becomes difficult, come back here.<br>This page will always wait for you. 🤍";
+                    }, 2000);
+                }, 2000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
