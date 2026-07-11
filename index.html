@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Gift For You</title>
+    <!-- Efek Premium Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: #fff;
+        }
+        .container { text-align: center; cursor: pointer; perspective: 1000px; }
+        
+        /* Animasi Kado Premium */
+        .gift-box {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background: #e94560;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.5s ease;
+        }
+        .gift-box::before { /* Pita Vertikal */
+            content: ''; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+            width: 30px; height: 100%; background: #ffd700;
+        }
+        .gift-box::after { /* Pita Horizontal */
+            content: ''; position: absolute; top: 50%; left: 0; transform: translateY(-55%);
+            width: 100%; height: 30px; background: #ffd700;
+        }
+        .gift-box:hover { transform: scale(1.05) rotate(3deg); }
+        
+        /* Pesan Rahasia */
+        .message-box {
+            display: none;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 80%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .message-box h1 { font-size: 2rem; color: #ffd700; margin-bottom: 15px; }
+        .message-box p { font-size: 1.1rem; line-height: 1.6; color: #e4e4e7; }
+        
+        /* Instruksi Awal */
+        .hint { margin-top: 20px; font-size: 0.9rem; color: #a0aec0; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="giftContainer" onclick="openGift()">
+        <div class="gift-box" id="giftBox"></div>
+        <p class="hint" id="hintText">TAP UNTUK MEMBUKA KADO ✨</p>
+        
+        <div class="message-box" id="messageBox">
+            <h1>Untuk Orang Spesial ✨</h1>
+            <p>Tulis pesan manismu di sini. Ceritakan betapa berartinya dia bagimu, atau masukkan memori indah yang pernah kalian lewati bersama.</p>
+        </div>
+    </div>
+
+    <!-- Audio Musik Latar -->
+    <!-- Ganti URL di bawah dengan link lagu (.mp3) pilihanmu -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function openGift() {
+            const giftBox = document.getElementById('giftBox');
+            const hintText = document.getElementById('hintText');
+            const messageBox = document.getElementById('messageBox');
+            const music = document.getElementById('bgMusic');
+
+            // 1. Putar Musik (Catatan: Browser modern mewajibkan interaksi user seperti klik untuk putar audio)
+            music.play().catch(error => console.log("Musik butuh izin interaksi tambahan."));
+
+            // 2. Efek Premium Confetti Meledak
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffd700', '#e94560', '#ffffff'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ffd700', '#e94560', '#ffffff'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+
+            // 3. Animasi Transisi Menghilangkan Kado & Memunculkan Pesan
+            giftBox.style.display = 'none';
+            hintText.style.display = 'none';
+            
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.opacity = '1';
+                messageBox.style.transform = 'scale(1)';
+            }, 50);
+            
+            // Matikan fungsi klik setelah kado terbuka
+            document.getElementById('giftContainer').onclick = null;
+        }
+    </script>
+</body>
+</html>
