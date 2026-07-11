@@ -71,6 +71,7 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             margin-top: 15px;
+            z-index: 20; /* Memastikan tombol selalu bisa diklik */
         }
         .btn:hover { background: #fff; color: #000; }
 
@@ -103,7 +104,6 @@
             position: relative;
             transition: transform 0.5s ease;
         }
-        /* Pita Putih silang */
         .gift-box::before { content: ''; position: absolute; left: 47%; top: 0; width: 8%; height: 100%; background: #fff; }
         .gift-box::after { content: ''; position: absolute; left: 0; top: 47%; width: 100%; height: 8%; background: #fff; }
         
@@ -118,7 +118,6 @@
             transition: opacity 0.5s;
         }
 
-        /* Animasi Buka Kado */
         .box-container.open .gift-box { transform: scale(0); opacity: 0; }
         .box-container.open .ribbon-top { opacity: 0; }
 
@@ -141,35 +140,42 @@
         .sky-memories {
             position: relative;
             width: 100%;
-            height: 300px;
-            margin-top: 20px;
+            height: 320px;
+            margin-top: 10px;
+            z-index: 10; /* Menaikkan z-index agar berada di atas elemen lain */
         }
         .memory-star {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             background: #fff;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             cursor: pointer;
-            box-shadow: 0 0 10px #fff;
-            transition: transform 0.3s;
+            box-shadow: 0 0 12px #fff;
+            transition: transform 0.2s ease-in-out;
+            z-index: 15;
         }
-        .memory-star:hover { transform: scale(1.4); }
+        .memory-star:hover { transform: scale(1.5); background: #ffeb3b; box-shadow: 0 0 15px #ffeb3b; }
+        
         .star-popup {
             position: absolute;
-            background: rgba(255,255,255,0.1);
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(5px);
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 13px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #fff;
             white-space: nowrap;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s, transform 0.3s;
-            transform: translateY(-20px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
-        .star-popup.show { opacity: 1; transform: translateY(-35px); }
+        .star-popup.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
@@ -224,9 +230,9 @@
     <!-- LAYER 6: MEMORIES (BINTANG LANGIT MALAM) -->
     <div class="screen" id="sc-memories">
         <h1>⭐ Memories</h1>
-        <p style="font-size: 14px; color: #aaa;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
+        <p style="font-size: 14px; color: #aaa; margin-bottom: 5px;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
         <div class="sky-memories" id="skyArea"></div>
-        <button class="btn" onclick="nextScreen('sc-ending')" style="margin-top:20px;">🤍 One Last Thing</button>
+        <button class="btn" id="toEndingBtn" style="margin-top:20px;">🤍 One Last Thing</button>
     </div>
 
     <!-- LAYER 7: ENDING -->
@@ -321,15 +327,12 @@
             box.classList.add('open');
             document.getElementById('btnOpenGift').style.display = 'none';
             
-            // Putar Musik
             const audio = document.getElementById('bgMusic');
             audio.play().catch(e => console.log("Audio play blocked."));
 
-            // Cahaya Kilatan Efek Sementara
             document.body.style.backgroundColor = '#111';
             setTimeout(() => { document.body.style.backgroundColor = '#000'; }, 300);
 
-            // Munculkan teks transisi bunga
             setTimeout(() => {
                 startFlowers = true; 
                 document.getElementById('boxPack').innerHTML = "<p style='font-size:15px; color:#ffeb3b;'>Not every gift comes inside a box.<br>Some arrive as a reminder...<br>that someone genuinely wishes you well.</p>";
@@ -415,50 +418,59 @@
             }, 3000);
         }
 
-        // --- 7. BINTANG MEMORI INTERAKTIF ---
+        // --- 7. BINTANG MEMORI INTERAKTIF FIX ---
         const dataBintang = [
-            "⭐ My Incess Selamanya.",
-            "⭐ Beautiful Princess🧚🏻‍♀️.",
-            "⭐ Selalu Minum Air Putih.",
-            "⭐ Selalu Tersenyum.",
-            "⭐ Jangan Overthinking.",
-            "⭐ Istirahat Yang Cukup.",
-            "⭐ Kamu Itu Kuat Dari Yang Kamu Kira."
+            "My Incess Selamanya.",
+            "Beautiful Princess🧚🏻‍♀️.",
+            "Selalu Minum Air Putih.",
+            "Selalu Tersenyum.",
+            "Jangan Overthinking.",
+            "Istirahat Yang Cukup.",
+            "Kamu Itu Kuat Dari Yang Kamu Kira."
         ];
 
         function buatBintangMemori() {
             const sky = document.getElementById('skyArea');
             sky.innerHTML = "";
             
-            dataBintang.forEach((pesan, index) => {
+            dataBintang.forEach((pesan) => {
                 const star = document.createElement('div');
                 star.classList.add('memory-star');
                 
+                // Distribusi acak posisi bintang di dalam kontainer langit
                 star.style.left = Math.random() * 85 + 5 + '%';
-                star.style.top = Math.random() * 75 + 10 + '%';
+                star.style.top = Math.random() * 75 + 5 + '%';
                 
                 const popup = document.createElement('div');
                 popup.classList.add('star-popup');
-                popup.innerText = pesan.replace("⭐ ", "");
+                popup.innerText = pesan;
                 
+                // Event Listener Klik Bintang
                 star.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Mencegah penutupan instan akibat klik body
+                    
+                    // Sembunyikan semua popup lain terlebih dahulu
                     document.querySelectorAll('.star-popup').forEach(p => p.classList.remove('show'));
+                    
+                    // Tampilkan popup bintang yang diklik
                     popup.classList.add('show');
-                    e.stopPropagation();
                 });
                 
                 star.appendChild(popup);
                 sky.appendChild(star);
             });
-
-            document.addEventListener('click', () => {
-                document.querySelectorAll('.star-popup').forEach(p => p.classList.remove('show'));
-            });
         }
 
+        // Tutup popup jika area layar kosong mana pun diklik
+        document.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('memory-star')) {
+                document.querySelectorAll('.star-popup').forEach(p => p.classList.remove('show'));
+            }
+        });
+
         // --- 8. LAYER ENDING & TRANSISI GELAP 2 DETIK ---
-        const endingBtn = document.querySelector("#sc-memories .btn");
-        endingBtn.onclick = function() {
+        document.getElementById('toEndingBtn').onclick = function(e) {
+            e.stopPropagation();
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.body.style.transition = "background-color 2s";
             document.body.style.backgroundColor = "#000";
