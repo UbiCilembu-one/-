@@ -187,7 +187,7 @@
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         
         .secret-popup-box {
-            position: absolute; bottom: -100%; left: 0; width: 100%; height: 65%;
+            position: absolute; bottom: -100%; left: 0; width: 100%; height: 75%;
             background: #0d0a12; border-top: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px 8px 0 0;
             padding: 30px 25px; z-index: 500; transition: bottom 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -320,24 +320,25 @@
         <button class="btn" id="btnOpenGift" onclick="openGift()">🎁 Open Gift</button>
     </div>
 
-    <!-- LAYER 4: SURAT MESIN TIK (KALIMAT BARU SUDAH TERPASANG) -->
+    <!-- LAYER 4: SURAT UTAMA (PESAN PANJANG ASLI KAMU TETAP DI SINI) -->
     <div class="screen" id="sc-letter">
         <h1 class="gold-text" style="font-size: 16px; margin-bottom: 25px;">💌 A Letter</h1>
-        <p id="typewriter" style="min-height: 130px; font-size: 15px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
+        <p id="typewriter" style="min-height: 130px; font-size: 14px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
         
+        <!-- Pemicu Amplop Kecil -->
         <div class="envelope-wrapper" id="miniEnvelope" onclick="openSecretPopup()">📩</div>
         
-        <!-- POPUP SURAT RAHASIA -->
+        <!-- POPUP SURAT RAHASIA (KALIMAT PRINCESS DI MASUKKAN KE SINI) -->
         <div class="secret-popup-box" id="secretPopup">
-            <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ Catatan Kecil ✨</p>
-            <p style="font-size: 13px; color: #ccc; text-align: center; font-style: italic; line-height: 1.8;">
-                "Jangan lupa minum air putih yang banyak hari ini, dan kurangi kebiasaan overthinking-mu yaa. Semangat terus! 🤍"
+            <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ For My Princess ✨</p>
+            <p style="font-size: 14px; color: #fcf6ba; text-align: center; font-style: italic; line-height: 2;">
+                "Aku tidak pernah bosan untuk selalu memanggil kamu dengan senyuman yang tulus dari hati, karena aku tau bahwa seorang Princess bisa secantik ini karena kerja keras Princess ku sendiri🤍"
             </p>
             <button class="btn" onclick="closeSecretPopup(event)">Tutup & Lanjut</button>
         </div>
     </div>
 
-    <!-- LAYER 4.5: POLAROID SURPRISE (NAMA FOTO HP SUDAH DI-SET) -->
+    <!-- LAYER 4.5: POLAROID SURPRISE -->
     <div class="screen" id="sc-polaroid">
         <h1>📸 Captured Moment</h1>
         <p style="font-size: 11px; color: #777; margin-bottom: 5px; letter-spacing: 1px;">Ketuk foto di bawah untuk mencetak memori</p>
@@ -485,15 +486,15 @@
             }, 1000);
         }
 
-        // KELOMPOK BARIS SURAT BARU
+        // --- DI SINI PESAN PANJANG UTAMA DIKEMBALIKAN ---
         const barisSurat = [
-            "Hai.",
-            "Aku tidak pernah bosan",
-            "untuk selalu memanggil kamu",
-            "dengan senyuman yang tulus dari hati...",
-            "karena aku tau",
-            "bahwa seorang Princess bisa secantik ini",
-            "karena kerja keras Princess ku sendiri. 🤍"
+            "Halo kamu,",
+            "Mungkin ini cuma halaman web sederhana,",
+            "tapi di dalamnya ada banyak ketulusan yang sengaja ditulis.",
+            "Semoga hari-hari yang kamu lewati selalu dipenuhi kebaikan,",
+            "dan semoga lelahmu hari ini lekas memudar ya.",
+            "Terima kasih sudah bertahan dan berjuang sejauh ini.",
+            "Jangan lupa tersenyum setelah membaca ini..."
         ];
         let indeksBaris = 0;
         const wadahKetik = document.getElementById('typewriter');
