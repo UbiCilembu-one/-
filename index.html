@@ -234,6 +234,24 @@
             0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0.8; }
             100% { top: 110%; transform: translateX(80px) rotate(360deg); opacity: 0; }
         }
+
+        /* --- TAMBAHAN: ANIMASI KUNANG-KUNANG LEMBUT --- */
+        .firefly {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 50%;
+            background: rgba(254, 246, 186, 0.6);
+            box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.5);
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) translateX(0) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(var(--drift)) scale(1.2); opacity: 0; }
+        }
+
         .click-heart {
             position: absolute; pointer-events: none; font-size: 16px; z-index: 99999;
             animation: heartFloat 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards; color: rgba(255, 255, 255, 0.7);
@@ -320,7 +338,7 @@
         <button class="btn" id="btnOpenGift" onclick="openGift()">🎁 Open Gift</button>
     </div>
 
-    <!-- LAYER 4: SURAT UTAMA (PESAN PANJANG ASLI KAMU SUDAH DIKEMBALIKAN) -->
+    <!-- LAYER 4: SURAT UTAMA -->
     <div class="screen" id="sc-letter">
         <h1 class="gold-text" style="font-size: 16px; margin-bottom: 25px;">💌 A Letter</h1>
         <p id="typewriter" style="min-height: 130px; font-size: 14px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
@@ -328,7 +346,7 @@
         <!-- Pemicu Amplop Kecil -->
         <div class="envelope-wrapper" id="miniEnvelope" onclick="openSecretPopup()">📩</div>
         
-        <!-- POPUP SURAT RAHASIA (KALIMAT PRINCESS AMAN DI SINI) -->
+        <!-- POPUP SURAT RAHASIA -->
         <div class="secret-popup-box" id="secretPopup">
             <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ For My Princess ✨</p>
             <p style="font-size: 14px; color: #fcf6ba; text-align: center; font-style: italic; line-height: 2;">
@@ -469,6 +487,28 @@
         }
         setInterval(buatKelopak, 400);
 
+        // ANIMASI TAMBAHAN: KUNANG-KUNANG EMAS MELAYANG (AKTIF SETELAH BUKA KADO)
+        function buatKunangKunang() {
+            if (!startFlowers) return;
+            const firefly = document.createElement('div');
+            firefly.classList.add('firefly');
+            
+            const size = Math.random() * 3 + 2; // ukuran kecil lembut 2px - 5px
+            firefly.style.width = size + 'px';
+            firefly.style.height = size + 'px';
+            firefly.style.left = Math.random() * window.innerWidth + 'px';
+            
+            const drift = Math.random() * 100 - 50; // efek meliuk ke kanan/kiri
+            firefly.style.setProperty('--drift', drift + 'px');
+            
+            const duration = Math.random() * 5 + 6; // kecepatan melayang 6s - 11s
+            firefly.style.animationDuration = duration + 's';
+            
+            document.body.appendChild(firefly);
+            setTimeout(() => firefly.remove(), duration * 1000);
+        }
+        setInterval(buatKunangKunang, 600); // interval kemunculan kunang-kunang
+
         function openGift() {
             const box = document.getElementById('boxPack');
             if(box.classList.contains('open')) return;
@@ -486,7 +526,6 @@
             }, 1000);
         }
 
-        // --- BERHASIL DIKEMBALIKAN SESUAI TANGKAPAN LAYAR KAMU ---
         const barisSurat = [
             "Mungkin kamu bertanya-tanya kenapa ada hadiah ini,",
             "Because in my eyes...",
@@ -614,7 +653,7 @@
             if(!isEndingActive) return;
             const colors = ['#fcf6ba', '#bf953f', '#ffffff', '#ffe5ec'];
             const fx = Math.random() * window.innerWidth;
-            const fy = Math.random() * (window.innerHeight * 0.45);
+            const fx_y = Math.random() * (window.innerHeight * 0.45);
             const color = colors[Math.floor(Math.random()*colors.length)];
             
             for(let i=0; i<14; i++) {
@@ -622,7 +661,7 @@
                 p.classList.add('fw-particle');
                 p.style.color = color;
                 p.style.backgroundColor = color;
-                p.style.left = fx + 'px'; p.style.top = fy + 'px';
+                p.style.left = fx + 'px'; p.style.top = fx_y + 'px';
                 const angle = (i / 14) * Math.PI * 2;
                 const speed = Math.random() * 45 + 35;
                 p.style.setProperty('--x', Math.cos(angle)*speed + 'px');
