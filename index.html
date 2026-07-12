@@ -14,7 +14,6 @@
         }
 
         body {
-            /* Warna latar belakang dasar cream lembut */
             background-color: #f7f3eb;
             color: #4a3728;
             min-height: 100dvh;
@@ -95,7 +94,7 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
-            opacity: 0.4; /* Dikurangi sedikit agar menyatu dengan latar terang */
+            opacity: 0.4;
         }
 
         /* --- WADAH KONTEN DENGAN DOUBLE LINE BORDER & TEXTURE LINEN --- */
@@ -110,12 +109,10 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 40px 25px;
             
-            /* BINGKAI GANDA (DOUBLE LINE BORDER) ELEGAN */
             border: 1px solid #8c6239;
             outline: 3px solid #8c6239;
             outline-offset: -5px;
             
-            /* BACKGROUND BARU: Cream Lembut + Efek Line/Linen Texture Halus */
             background: 
                 linear-gradient(90deg, rgba(140, 98, 57, 0.03) 1px, transparent 1px),
                 linear-gradient(rgba(140, 98, 57, 0.03) 1px, transparent 1px),
@@ -128,7 +125,6 @@
             border-radius: 2px;
         }
 
-        /* Ornamen Tipis Menyilang di Belakang Layar */
         .screen-luxury-bg {
             position: absolute;
             top: 10%; left: 10%; right: 10%; bottom: 10%;
@@ -137,7 +133,6 @@
             z-index: -1;
         }
 
-        /* Ornamen di Sudut Bingkai Ganda */
         .screen::before {
             content: ''; position: absolute; top: 12px; left: 12px; width: 14px; height: 14px;
             border-top: 2px solid #8c6239; border-left: 2px solid #8c6239;
@@ -152,7 +147,6 @@
         /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
         h1 { font-size: 18px; font-weight: 300; margin-bottom: 15px; letter-spacing: 4px; color: #4a3728; text-transform: uppercase; }
         
-        /* Ornamen Pembatas (Flourish Divider) di Bawah Judul Surat */
         .gold-divider {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 60%; margin: 0 auto 25px auto; color: rgba(140, 98, 57, 0.5); font-size: 10px;
@@ -212,6 +206,7 @@
         }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         
+        /* --- KOTAK SURAT RAHASIA POPUP POINTER-EVENTS FIXED --- */
         .secret-popup-box {
             position: absolute; bottom: -100%; left: 0; width: 100%; height: 75%;
             background: #fdfbf7; border-top: 1px solid #8c6239; border-radius: 8px 8px 0 0;
@@ -219,12 +214,13 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             box-shadow: 0 -15px 35px rgba(140, 98, 57, 0.15);
             outline: 2px solid #8c6239; outline-offset: -6px;
+            pointer-events: none;
         }
         .secret-popup-box::before {
             content: ''; position: absolute; top: 12px; left: 12px; width: 10px; height: 10px;
             border-top: 1px solid #8c6239; border-left: 1px solid #8c6239;
         }
-        .secret-popup-box.open { bottom: 0; }
+        .secret-popup-box.open { bottom: 0; pointer-events: auto; }
 
         /* --- KOTAK KADO & PITA --- */
         .box-container { width: 120px; height: 120px; position: relative; margin: 30px 0; cursor: pointer; }
@@ -277,7 +273,6 @@
             100% { transform: translate3d(0, -5vh, 0) scale(1.2); opacity: 0; }
         }
 
-        /* ANIMASI GELOMBANG GLOW */
         .glow-active {
             box-shadow: 0 0 30px rgba(140, 98, 57, 0.25), inset 0 0 20px rgba(140, 98, 57, 0.1);
             border-color: rgba(140, 98, 57, 0.8) !important;
@@ -345,7 +340,7 @@
 
     <div id="audio-control" onclick="toggleAudio()">🎵</div>
 
-    <!-- WADAH ISOLASI KHUSUS ANIMASI -->
+    <!-- WADAH ISOLASI ANIMASI -->
     <div id="animation-container"></div>
 
     <!-- INTRO SCREEN -->
@@ -458,12 +453,17 @@
         </div>
     </div>
 
-    <!-- LAYER 7: ENDING -->
+    <!-- LAYER 7: ENDING (Kalimat Asli Inggris Dikembalikan ke Sini) -->
     <div class="screen" id="sc-ending">
         <div class="screen-luxury-bg"></div>
         <h1 class="gold-text" style="font-size: 18px; letter-spacing: 5px;">🌙 Ending</h1>
         <div class="gold-divider">✦ 🌙 ✦</div>
-        <p id="endingText" style="font-size: 14px; white-space: pre-line; line-height: 2.2; color: #4a3728; font-style: italic;"></p>
+        <!-- Kalimat Asli Versi Inggris Ditulis di Sini -->
+        <p id="endingText" style="font-size: 14px; white-space: pre-line; line-height: 2.2; color: #4a3728; font-style: italic;">I'm glad to hear that.
+
+        Keep moving forward with confidence. This page will always be here as a small reminder whenever you need it.
+        
+        Have a beautiful journey ahead.</p>
         <p class="gold-text" style="font-size: 20px; margin-top: 15px;">🤍</p>
         <p class="small-text" style="color:#887261; letter-spacing: 1px;">This page was made especially for one person.</p>
     </div>
@@ -485,7 +485,6 @@
             else { audio.pause(); audioCtrl.classList.remove('playing'); }
         }
 
-        // EFEK TEKANAN LAYAR MEMUNCULKAN HATI ANGGUN
         document.body.addEventListener('click', function(e) {
             if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame')) return;
             const heart = document.createElement('div');
@@ -497,7 +496,6 @@
             setTimeout(() => heart.remove(), 1200);
         });
 
-        // KANVAS BINTANG LEMBUT
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -537,7 +535,6 @@
             } else { alert("Maaf, halaman ini tidak ditujukan untukmu."); }
         }
 
-        // KELOPAK BUNGA GUGUR ELEGAN
         const warnaBunga = ['#8c6239', '#ffccd5', '#ffe5ec', '#6b4c2b'];
         let startFlowers = false;
 
@@ -559,7 +556,6 @@
         }
         setInterval(buatKelopak, 600);
 
-        // ANIMASI MAGIC DUST / KUNANG-KUNANG
         function buatGlowDust() {
             if (!startFlowers) return;
             if (animContainer.querySelectorAll('.glow-dust').length > 10) return;
@@ -622,6 +618,7 @@
                         } 
                         else { 
                             letterScreen.classList.remove('glow-active');
+                            document.getElementById('secretPopup').classList.remove('open');
                             document.getElementById('miniEnvelope').style.display = 'block'; 
                         }
                     }, 2200);
@@ -635,7 +632,7 @@
                 if (i < teks.length) { 
                     elemen.innerHTML += teks.charAt(i); 
                     
-                    if (Math.random() > 0.5) { 
+                    if (Math.random() > 0.5) {
                         const pSparkle = document.createElement('div');
                         pSparkle.classList.add('text-sparkle');
                         pSparkle.innerHTML = ['✨', '⭐'][Math.floor(Math.random() * 2)];
@@ -664,9 +661,9 @@
         }
 
         function closeSecretPopup(e) {
-            e.stopPropagation();
+            if (e) e.stopPropagation();
             document.getElementById('secretPopup').classList.remove('open');
-            setTimeout(() => { nextScreen('sc-polaroid'); }, 500);
+            setTimeout(() => { nextScreen('sc-polaroid'); }, 800);
         }
 
         function revealPhoto() {
@@ -675,7 +672,6 @@
             photo.style.opacity = '1';
             caption.innerText = "Captured Memories ✨";
             
-            // Efek kembang api kecil saat foto muncul
             for(let i=0; i<15; i++) {
                 setTimeout(() => {
                     const fw = document.createElement('div');
@@ -722,7 +718,6 @@
                     document.getElementById('msgBox').innerText = pesanBintang[i];
                     document.getElementById('msgBox').classList.add('show');
                     
-                    // Efek kilau terbang saat bintang ditekan
                     for(let k=0; k<6; k++) {
                         const sp = document.createElement('div');
                         sp.classList.add('sparkle');
@@ -746,10 +741,13 @@
             btnNo.style.transform = `translate(${x}px, ${y}px)`;
         }
 
+        // LOGIKA DINAMIS: Mengetik teks asli bawaan HTML tanpa menimpanya dengan translate baru
         function answerYes() {
             nextScreen('sc-ending');
-            const endingTxt = "Aku ikut bahagia mendengarnya.\n\nTetaplah melangkah dengan penuh keyakinan. Halaman ini akan selalu ada di sini untuk menjadi pengingat kecil di kala kamu membutuhkannya.\n\nHave a beautiful journey ahead.";
-            ketikTeks(endingTxt, document.getElementById('endingText'));
+            const endingElement = document.getElementById('endingText');
+            const endingTxt = endingElement.innerText || "Have a beautiful journey ahead."; 
+            endingElement.innerText = ""; 
+            ketikTeks(endingTxt, endingElement);
         }
     </script>
 </body>
