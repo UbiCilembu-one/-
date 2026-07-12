@@ -16,7 +16,7 @@
         body {
             background: radial-gradient(circle at center, #110d1a 0%, #030205 100%);
             color: #fff;
-            min-height: 100dvh; /* Menggunakan dvh agar dinamis mengikuti ukuran layar browser Instagram */
+            min-height: 100dvh;
             height: 100dvh;
             display: flex;
             justify-content: center;
@@ -27,7 +27,7 @@
             position: relative;
         }
 
-        /* --- WADAH ISOLASI ANIMASI (SOLUSI ANTI KEDAP-KEDIP) --- */
+        /* --- WADAH ISOLASI ANIMASI --- */
         #animation-container {
             position: fixed;
             top: 0;
@@ -37,7 +37,6 @@
             z-index: 5;
             pointer-events: none;
             overflow: hidden;
-            /* Memaksa GPU memproses area ini agar tidak mengganggu UI Browser */
             transform: translate3d(0, 0, 0);
             -webkit-transform: translate3d(0, 0, 0);
         }
@@ -60,7 +59,7 @@
             100% { transform: translate(5%, 5%) rotate(5deg); }
         }
 
-        /* --- SCREEN INTRO PREMIUM (PUTIH MAJESTIK) --- */
+        /* --- SCREEN INTRO PREMIUM --- */
         #sc-intro {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -94,7 +93,7 @@
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { to { opacity: 0.7; } }
 
-        /* --- TEXT GRADASI EMAS MENGKILAP (SHIMMER GOLD) --- */
+        /* --- TEXT GRADASI EMAS MENGKILAP --- */
         .gold-text {
             background: linear-gradient(90deg, #aa771c, #fcf6ba, #bf953f, #fcf6ba, #aa771c);
             background-size: 200% auto;
@@ -115,46 +114,73 @@
             z-index: 1; pointer-events: none;
         }
 
-        /* --- WADAH KONTEN DENGAN BINGKAI EMAS ANGGUN --- */
+        /* --- WADAH KONTEN DENGAN ORNAMEN ROYAL DAN WARNA AGAN YANG ELEGAN --- */
         .screen {
             position: absolute;
             width: 85%; max-width: 400px; 
-            height: 75dvh; /* Menggunakan dvh agar tingginya presisi di dalam Instagram */
+            height: 78dvh; 
             text-align: center; z-index: 2;
             opacity: 0; pointer-events: none;
             transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform: scale(0.97) translateY(10px);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px 30px;
+            padding: 40px 25px;
             
             /* Bingkai Ganda Mewah */
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            outline: 4px solid rgba(212, 175, 55, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            outline: 4px solid rgba(212, 175, 55, 0.04);
             outline-offset: -10px;
             
-            background: rgba(13, 10, 18, 0.75); /* Sedikit ditebalkan agar background putih luar tidak menerawang */
+            /* BACKGROUND BARU: Efek Pola Royal Damask Anggun & Tekstur Halus */
+            background-color: #0d0a14;
+            background-image: 
+                radial-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 0),
+                linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px, 40px 40px, 40px 40px;
+            background-position: 0 0, 10px 10px, 10px 10px;
+            
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(212, 175, 55, 0.02);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), inset 0 0 50px rgba(212, 175, 55, 0.05);
             border-radius: 4px;
+        }
+
+        /* Ornamen Tipis Menyilang di Belakang Layar Surat agar Mengisi Kekosongan */
+        .screen-luxury-bg {
+            position: absolute;
+            top: 10%; left: 10%; right: 10%; bottom: 10%;
+            border: 1px dashed rgba(212, 175, 55, 0.05);
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* Ornamen di Sudut Bingkai */
         .screen::before {
-            content: ''; position: absolute; top: 15px; left: 15px; width: 12px; height: 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.4); border-left: 1px solid rgba(212, 175, 55, 0.4);
+            content: ''; position: absolute; top: 15px; left: 15px; width: 14px; height: 14px;
+            border-top: 2px solid rgba(212, 175, 55, 0.5); border-left: 2px solid rgba(212, 175, 55, 0.5);
         }
         .screen::after {
-            content: ''; position: absolute; bottom: 15px; right: 15px; width: 12px; height: 12px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.4); border-right: 1px solid rgba(212, 175, 55, 0.4);
+            content: ''; position: absolute; bottom: 15px; right: 15px; width: 14px; height: 14px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.5); border-right: 2px solid rgba(212, 175, 55, 0.5);
         }
 
         .active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
 
         /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
-        h1 { font-size: 18px; font-weight: 300; margin-bottom: 20px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
-        p { font-size: 13px; font-weight: 300; line-height: 2; color: #b8b8b8; margin-bottom: 20px; letter-spacing: 0.5px; }
-        .small-text { font-size: 10px; color: #444; font-style: italic; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; }
+        h1 { font-size: 18px; font-weight: 300; margin-bottom: 15px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
+        
+        /* Ornamen Pembatas (Flourish Divider) di Bawah Judul Surat */
+        .gold-divider {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 60%; margin: 0 auto 25px auto; color: rgba(212, 175, 55, 0.4); font-size: 10px;
+        }
+        .gold-divider::before, .gold-divider::after {
+            content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+        }
+
+        p { font-size: 13.5px; font-weight: 300; line-height: 2.1; color: #d0d0d0; margin-bottom: 20px; letter-spacing: 0.6px; }
+        .small-text { font-size: 10px; color: #555; font-style: italic; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; }
 
         .btn {
             background: none; border: 1px solid rgba(212, 175, 55, 0.4); color: #fcf6ba;
@@ -198,18 +224,18 @@
 
         /* --- AMPLOP MINI INTERAKTIF --- */
         .envelope-wrapper {
-            margin-top: 15px; cursor: pointer; display: none;
-            font-size: 28px; animation: bounce 2.5s infinite ease-in-out;
-            filter: drop-shadow(0 0 8px rgba(212,175,55,0.4));
+            margin-top: 20px; cursor: pointer; display: none;
+            font-size: 32px; animation: bounce 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 8px rgba(212,175,55,0.5));
         }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         
         .secret-popup-box {
             position: absolute; bottom: -100%; left: 0; width: 100%; height: 75%;
-            background: #0d0a12; border-top: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px 8px 0 0;
+            background: #09070d; border-top: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px 8px 0 0;
             padding: 30px 25px; z-index: 500; transition: bottom 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            box-shadow: 0 -20px 40px rgba(0,0,0,0.9);
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.95);
             outline: 4px solid rgba(212, 175, 55, 0.02); outline-offset: -10px;
         }
         .secret-popup-box::before {
@@ -246,11 +272,11 @@
         #audio-control.playing { animation: rotateDisk 5s linear infinite; color: #fcf6ba; border-color: #bf953f; box-shadow: 0 0 10px rgba(212,175,55,0.2); }
         @keyframes rotateDisk { to { transform: rotate(360deg); } }
 
-        /* --- EFEK VISUAL ANIMASI DIOPTIMALKAN (ANTI FLICKER) --- */
+        /* --- EFEK VISUAL ANIMASI DIOPTIMALKAN --- */
         .petal { 
             position: absolute; pointer-events: none; 
             animation: fall linear infinite;
-            will-change: transform; /* Optimalisasi GPU */
+            will-change: transform;
         }
         @keyframes fall {
             0% { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0.8; }
@@ -261,7 +287,7 @@
             position: absolute; background: radial-gradient(circle, #fcf6ba 0%, transparent 70%);
             border-radius: 50%; pointer-events: none; 
             animation: floatDust linear infinite;
-            will-change: transform; /* Optimalisasi GPU */
+            will-change: transform;
         }
         @keyframes floatDust {
             0% { transform: translate3d(0, 105vh, 0) scale(0.5); opacity: 0; }
@@ -269,18 +295,17 @@
             100% { transform: translate3d(0, -5vh, 0) scale(1.2); opacity: 0; }
         }
 
-        /* ANIMASI GELOMBANG GLOW DI SEKITAR TEKS SURAT */
+        /* ANIMASI GELOMBANG GLOW */
         .glow-active {
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.15), inset 0 0 25px rgba(212, 175, 55, 0.05);
-            border-color: rgba(212, 175, 55, 0.4) !important;
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.2), inset 0 0 30px rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.5) !important;
             animation: pulseGlow 2.5s infinite ease-in-out;
         }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 25px rgba(212,175,55,0.1), inset 0 0 20px rgba(212,175,55,0.02); }
-            50% { box-shadow: 0 0 45px rgba(212,175,55,0.3), inset 0 0 30px rgba(212,175,55,0.08); }
+            0%, 100% { box-shadow: 0 0 30px rgba(212,175,55,0.15), inset 0 0 25px rgba(212,175,55,0.05); }
+            50% { box-shadow: 0 0 50px rgba(212,175,55,0.35), inset 0 0 35px rgba(212,175,55,0.12); }
         }
 
-        /* ANIMASI PERCIKAN DI SEKITAR HURUF YANG SEDANG DIKETIK */
         .text-sparkle {
             position: absolute; pointer-events: none; z-index: 999;
             font-size: 10px; color: #fcf6ba; text-shadow: 0 0 5px #bf953f;
@@ -356,7 +381,9 @@
 
     <!-- LAYER 1: RESERVED -->
     <div class="screen active" id="sc-reserved">
+        <div class="screen-luxury-bg"></div>
         <h1>🎁 A Gift Just For You</h1>
+        <div class="gold-divider">✦ 👑 ✦</div>
         <p style="color: rgba(212,175,55,0.4); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;">Reserved Privilege</p>
         <p>This gift has been reserved for one special person.<br>If this isn’t you, please close this page.</p>
         <button class="btn" onclick="nextScreen('sc-verification')">Continue →</button>
@@ -364,7 +391,9 @@
 
     <!-- LAYER 2: VERIFIKASI -->
     <div class="screen" id="sc-verification">
+        <div class="screen-luxury-bg"></div>
         <h1>🔒 Identity Verification</h1>
+        <div class="gold-divider">✦ ✦ ✦</div>
         <p>Enter your code name</p>
         <input type="text" id="nameInput" placeholder="write here..." autocomplete="off">
         <button class="btn" onclick="verifyName()">Unlock</button>
@@ -372,7 +401,9 @@
 
     <!-- LAYER 3: THE GIFT -->
     <div class="screen" id="sc-gift">
+        <div class="screen-luxury-bg"></div>
         <h1>🎁 The Gift</h1>
+        <div class="gold-divider">✦ ✨ ✦</div>
         <div class="box-container" id="boxPack" onclick="openGift()">
             <div class="ribbon-top"></div>
             <div class="gift-box"></div>
@@ -383,15 +414,19 @@
 
     <!-- LAYER 4: SURAT UTAMA -->
     <div class="screen" id="sc-letter">
-        <h1 class="gold-text" style="font-size: 16px; margin-bottom: 25px;">💌 A Letter</h1>
-        <p id="typewriter" style="min-height: 130px; font-size: 14px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0; width: 100%; position: relative;"></p>
+        <div class="screen-luxury-bg"></div>
+        <h1 class="gold-text" style="font-size: 16px; margin-bottom: 5px;">💌 A Letter</h1>
+        <div class="gold-divider">✦ 🤍 ✦</div>
+        <!-- Wadah pengetikan dengan ukuran lebar penuh (width: 100%) agar teks tidak terpotong canggung -->
+        <p id="typewriter" style="min-height: 140px; font-size: 14px; text-align: center; font-style: italic; line-height: 2.1; color: #e8e8e8; width: 100%; word-wrap: break-word; padding: 0 5px;"></p>
         
         <!-- Pemicu Amplop Kecil -->
         <div class="envelope-wrapper" id="miniEnvelope" onclick="openSecretPopup()">📩</div>
         
         <!-- POPUP SURAT RAHASIA -->
         <div class="secret-popup-box" id="secretPopup">
-            <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ For My Princess ✨</p>
+            <p class="gold-text" style="font-size: 14px; margin-bottom: 5px;">✨ For My Princess ✨</p>
+            <div class="gold-divider" style="width:40%; margin-bottom:15px;">✦</div>
             <p style="font-size: 14px; color: #fcf6ba; text-align: center; font-style: italic; line-height: 2;">
                 "Aku tidak pernah bosan untuk selalu memanggil kamu dengan senyuman yang tulus dari hati, karena aku tau bahwa seorang Princess bisa secantik ini karena kerja keras Princess ku sendiri🤍"
             </p>
@@ -401,7 +436,9 @@
 
     <!-- LAYER 4.5: POLAROID SURPRISE -->
     <div class="screen" id="sc-polaroid">
+        <div class="screen-luxury-bg"></div>
         <h1>📸 Captured Moment</h1>
+        <div class="gold-divider">✦ 📸 ✦</div>
         <p style="font-size: 11px; color: #777; margin-bottom: 5px; letter-spacing: 1px;">Ketuk foto di bawah untuk mencetak memori</p>
         <div class="polaroid-frame" onclick="revealPhoto()">
             <div class="polaroid-img" id="secretPhoto" style="background-image: url('6A5E6247-9BDE-4E72-BA45-230070A69F55.jpeg');"></div>
@@ -412,13 +449,16 @@
 
     <!-- LAYER 5: FLOWERS -->
     <div class="screen" id="sc-flowers">
+        <div class="screen-luxury-bg"></div>
         <div class="bouquet">💐🌼🌸</div>
-        <p id="flowerText" style="font-size: 15px; min-height: 80px; font-style: italic;"></p>
+        <p id="flowerText" style="font-size: 15px; min-height: 80px; font-style: italic; color:#fcf6ba;"></p>
     </div>
 
     <!-- LAYER 6: MEMORIES -->
     <div class="screen" id="sc-memories">
+        <div class="screen-luxury-bg"></div>
         <h1>⭐ Memories</h1>
+        <div class="gold-divider">✦ ⭐ ✦</div>
         <p style="font-size: 11px; color: #777; margin-bottom: 0; letter-spacing: 1px;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
         <div class="sky-memories" id="skyArea"></div>
         <div class="message-display-box" id="msgBox">Klik salah satu bintang di atas...</div>
@@ -427,7 +467,9 @@
 
     <!-- LAYER 6.5: PERTANYAAN INTERAKTIF -->
     <div class="screen" id="sc-question">
+        <div class="screen-luxury-bg"></div>
         <h1 class="gold-text">A Quick Question...</h1>
+        <div class="gold-divider">✦ ✦ ✦</div>
         <p style="font-size: 15px; margin-top: 25px;">Apakah kamu bahagia hari ini?</p>
         <div class="btn-wrap">
             <button class="btn" style="margin-top:0;" onclick="answerYes()">Mau / Iya! 😊</button>
@@ -437,10 +479,12 @@
 
     <!-- LAYER 7: ENDING -->
     <div class="screen" id="sc-ending">
+        <div class="screen-luxury-bg"></div>
         <h1 class="gold-text" style="font-size: 18px; letter-spacing: 5px;">🌙 Ending</h1>
+        <div class="gold-divider">✦ 🌙 ✦</div>
         <p id="endingText" style="font-size: 14px; white-space: pre-line; line-height: 2.2; color: #dcdcdc; font-style: italic;"></p>
         <p class="gold-text" style="font-size: 20px; margin-top: 15px;">🤍</p>
-        <p class="small-text" style="color:#333; letter-spacing: 1px;">This page was made especially for one person.</p>
+        <p class="small-text" style="color:#444; letter-spacing: 1px;">This page was made especially for one person.</p>
     </div>
 
     <script>
@@ -512,7 +556,7 @@
             } else { alert("Maaf, halaman ini tidak ditujukan untukmu."); }
         }
 
-        // KELOPAK BUNGA GUGUR ELEGAN (DIOPTIMALKAN)
+        // KELOPAK BUNGA GUGUR ELEGAN
         const warnaBunga = ['#fffef0', '#ffccd5', '#ffe5ec', '#f8f9fa'];
         let startFlowers = false;
 
@@ -534,7 +578,7 @@
         }
         setInterval(buatKelopak, 600);
 
-        // ANIMASI MAGIC DUST / KUNANG-KUNANG (DIOPTIMALKAN)
+        // ANIMASI MAGIC DUST / KUNANG-KUNANG
         function buatGlowDust() {
             if (!startFlowers) return;
             if (animContainer.querySelectorAll('.glow-dust').length > 10) return;
