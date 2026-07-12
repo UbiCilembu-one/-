@@ -25,6 +25,21 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* --- WADAH ISOLASI ANIMASI (SOLUSI ANTI KEDAP-KEDIP) --- */
+        #animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            overflow: hidden;
+            /* Memaksa GPU memproses area ini agar tidak mengganggu UI Browser */
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+        }
+
         /* --- EFEK AURORA DI BACKGROUND --- */
         body::before {
             content: '';
@@ -228,22 +243,27 @@
         #audio-control.playing { animation: rotateDisk 5s linear infinite; color: #fcf6ba; border-color: #bf953f; box-shadow: 0 0 10px rgba(212,175,55,0.2); }
         @keyframes rotateDisk { to { transform: rotate(360deg); } }
 
-        /* --- EFEK VISUAL ANIMASI BARU & LAMA --- */
-        .petal { position: absolute; pointer-events: none; z-index: 5; animation: fall linear infinite; }
+        /* --- EFEK VISUAL ANIMASI DIOPTIMALKAN (ANTI FLICKER) --- */
+        .petal { 
+            position: absolute; pointer-events: none; 
+            animation: fall linear infinite;
+            will-change: transform; /* Optimalisasi GPU */
+        }
         @keyframes fall {
-            0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0.8; }
-            100% { top: 110%; transform: translateX(80px) rotate(360deg); opacity: 0; }
+            0% { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translate3d(80px, 105vh, 0) rotate(360deg); opacity: 0; }
         }
 
-        /* ANIMASI KUNANG-KUNANG / GLOW DUST TAMBAHAN */
         .glow-dust {
             position: absolute; background: radial-gradient(circle, #fcf6ba 0%, transparent 70%);
-            border-radius: 50%; pointer-events: none; z-index: 1; animation: floatDust linear infinite;
+            border-radius: 50%; pointer-events: none; 
+            animation: floatDust linear infinite;
+            will-change: transform; /* Optimalisasi GPU */
         }
         @keyframes floatDust {
-            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            0% { transform: translate3d(0, 105vh, 0) scale(0.5); opacity: 0; }
             50% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+            100% { transform: translate3d(0, -5vh, 0) scale(1.2); opacity: 0; }
         }
 
         /* ANIMASI GELOMBANG GLOW DI SEKITAR TEKS SURAT */
@@ -276,9 +296,10 @@
             0% { transform: translate(-50%, -50%) scale(0.6); opacity: 1; }
             100% { transform: translate(-50%, -140px) scale(1.1); opacity: 0; }
         }
+        
         .fw-particle {
             position: absolute; width: 2px; height: 2px; border-radius: 50%;
-            pointer-events: none; z-index: 1; animation: fwExplode 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            pointer-events: none; z-index: 6; animation: fwExplode 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
         @keyframes fwExplode {
             0% { transform: translate(0, 0) scale(1); opacity: 1; box-shadow: 0 0 4px currentColor; }
@@ -313,6 +334,9 @@
 <body>
 
     <div id="audio-control" onclick="toggleAudio()">🎵</div>
+
+    <!-- WADAH ISOLASI KHUSUS ANIMASI -->
+    <div id="animation-container"></div>
 
     <!-- INTRO SCREEN -->
     <div id="sc-intro">
@@ -417,6 +441,8 @@
     </div>
 
     <script>
+        const animContainer = document.getElementById('animation-container');
+
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
             intro.style.opacity = '0';
@@ -439,7 +465,7 @@
             heart.innerHTML = ['🤍','✨','🌸'][Math.floor(Math.random()*3)];
             heart.style.left = e.clientX + 'px';
             heart.style.top = e.clientY + 'px';
-            document.body.appendChild(heart);
+            animContainer.appendChild(heart);
             setTimeout(() => heart.remove(), 1200);
         });
 
@@ -452,16 +478,16 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 40; i++) {
             stars.push({
                 x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                radius: Math.random() * 1.2, vx: (Math.random() - 0.5) * 0.15, vy: Math.random() * 0.15 + 0.05
+                radius: Math.random() * 1.2, vx: (Math.random() - 0.5) * 0.1, vy: Math.random() * 0.1 + 0.05
             });
         }
 
         function animateStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
             stars.forEach(s => {
                 ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI); ctx.fill();
                 s.x += s.vx; s.y += s.vy;
@@ -483,40 +509,45 @@
             } else { alert("Maaf, halaman ini tidak ditujukan untukmu."); }
         }
 
-        // KELOPAK BUNGA GUGUR ELEGAN
+        // KELOPAK BUNGA GUGUR ELEGAN (DIOPTIMALKAN)
         const warnaBunga = ['#fffef0', '#ffccd5', '#ffe5ec', '#f8f9fa'];
         let startFlowers = false;
 
         function buatKelopak() {
             if (!startFlowers) return;
+            // Cegah elemen terlalu banyak menumpuk di DOM
+            if (animContainer.querySelectorAll('.petal').length > 15) return;
+
             const petal = document.createElement('div');
             petal.classList.add('petal');
-            const size = Math.random() * 8 + 6;
+            const size = Math.random() * 7 + 6;
             petal.style.width = size + 'px'; petal.style.height = size + 'px';
             petal.style.backgroundColor = warnaBunga[Math.floor(Math.random() * warnaBunga.length)];
             petal.style.borderRadius = '50% 0 50% 50%';
             petal.style.left = Math.random() * window.innerWidth + 'px';
             const duration = Math.random() * 4 + 5;
             petal.style.animationDuration = duration + 's';
-            document.body.appendChild(petal);
+            animContainer.appendChild(petal);
             setTimeout(() => petal.remove(), duration * 1000);
         }
-        setInterval(buatKelopak, 400);
+        setInterval(buatKelopak, 600);
 
-        // ANIMASI MAGIC DUST / KUNANG-KUNANG BARU
+        // ANIMASI MAGIC DUST / KUNANG-KUNANG (DIOPTIMALKAN)
         function buatGlowDust() {
             if (!startFlowers) return;
+            if (animContainer.querySelectorAll('.glow-dust').length > 10) return;
+
             const dust = document.createElement('div');
             dust.classList.add('glow-dust');
-            const size = Math.random() * 4 + 2;
+            const size = Math.random() * 3 + 2;
             dust.style.width = size + 'px'; dust.style.height = size + 'px';
             dust.style.left = Math.random() * window.innerWidth + 'px';
             const duration = Math.random() * 5 + 6;
             dust.style.animationDuration = duration + 's';
-            document.body.appendChild(dust);
+            animContainer.appendChild(dust);
             setTimeout(() => dust.remove(), duration * 1000);
         }
-        setInterval(buatGlowDust, 600);
+        setInterval(buatGlowDust, 800);
 
         function openGift() {
             const box = document.getElementById('boxPack');
@@ -552,7 +583,6 @@
 
         function jalankanSurat() {
             const letterScreen = document.getElementById('sc-letter');
-            // Menambahkan efek gelombang glow di sekeliling kotak ketika teks mulai berjalan
             letterScreen.classList.add('glow-active');
 
             if (indeksBaris < barisSurat.length) {
@@ -564,7 +594,6 @@
                             jalankanSurat(); 
                         } 
                         else { 
-                            // Menghapus efek glow ketika ketikan selesai sepenuhnya
                             letterScreen.classList.remove('glow-active');
                             document.getElementById('miniEnvelope').style.display = 'block'; 
                         }
@@ -579,22 +608,19 @@
                 if (i < teks.length) { 
                     elemen.innerHTML += teks.charAt(i); 
                     
-                    // MEMBUAT PERCIKAN BINTANG DI SEKITAR TEKS SAAT BERJALAN
-                    if (Math.random() > 0.4) { // Muncul acak biar natural
+                    if (Math.random() > 0.5) { 
                         const pSparkle = document.createElement('div');
                         pSparkle.classList.add('text-sparkle');
                         pSparkle.innerHTML = ['✨', '⭐'][Math.floor(Math.random() * 2)];
                         
-                        // Posisi acak aman di dalam wilayah kotak teks
                         const rect = elemen.getBoundingClientRect();
                         pSparkle.style.left = (rect.left + (rect.width / 2) + (Math.random() * 160 - 80)) + 'px';
                         pSparkle.style.top = (rect.top + (rect.height / 2) + (Math.random() * 40 - 20)) + 'px';
                         
-                        // Jarak lemparan percikan acak
                         pSparkle.style.setProperty('--tx', (Math.random() * 30 - 15) + 'px');
                         pSparkle.style.setProperty('--ty', (Math.random() * 30 - 15) + 'px');
                         
-                        document.body.appendChild(pSparkle);
+                        animContainer.appendChild(pSparkle);
                         setTimeout(() => pSparkle.remove(), 600);
                     }
 
@@ -606,11 +632,9 @@
             setTimeout(ketik, 100);
         }
 
-        // KONTROL AMPLOP RAHASIA
         function openSecretPopup() { document.getElementById('secretPopup').classList.add('open'); }
         function closeSecretPopup(e) { e.stopPropagation(); document.getElementById('secretPopup').classList.remove('open'); nextScreen('sc-polaroid'); }
 
-        // FOTO POLAROID
         function revealPhoto() {
             const img = document.getElementById('secretPhoto');
             const cap = document.getElementById('photoCaption');
@@ -632,7 +656,6 @@
             }, 3000);
         }
 
-        // BINTANG MEMORI
         const dataBintang = [
             "My Incess Selamanya. 👑",
             "Beautiful Princess 🧚\u200D♀️",
@@ -657,7 +680,7 @@
                 starBtn.onclick = function(e) {
                     e.preventDefault();
                     const rect = starBtn.getBoundingClientRect();
-                    for(let k=0; k<8; k++) {
+                    for(let k=0; k<6; k++) {
                         const sp = document.createElement('div');
                         sp.classList.add('sparkle');
                         sp.style.left = (rect.left + rect.width/2) + 'px';
@@ -666,7 +689,7 @@
                         const dist = Math.random() * 35 + 15;
                         sp.style.setProperty('--mx', Math.cos(angle) * dist + 'px');
                         sp.style.setProperty('--my', Math.sin(angle) * dist + 'px');
-                        document.body.appendChild(sp);
+                        animContainer.appendChild(sp);
                         setTimeout(() => sp.remove(), 900);
                     }
                     msgBox.innerText = pesan; msgBox.classList.add('show');
@@ -675,11 +698,10 @@
             });
         }
 
-        // BUTTON KABUR
         function moveNoButton() {
             const noBtn = document.getElementById('btn-no');
-            const x = Math.random() * 180 - 90;
-            const y = Math.random() * 120 - 60;
+            const x = Math.random() * 160 - 80;
+            const y = Math.random() * 100 - 50;
             noBtn.style.transform = `translate(${x}px, ${y}px)`;
         }
 
@@ -689,33 +711,33 @@
             nextScreen('sc-ending');
             isEndingActive = true;
             jalankanEndingTeks();
-            setInterval(launchFirework, 900);
+            setInterval(launchFirework, 1000);
         }
 
-        // KEMBANG API EMAS DI ENDING SCREEN
         function launchFirework() {
             if(!isEndingActive) return;
+            if (animContainer.querySelectorAll('.fw-particle').length > 40) return;
+
             const colors = ['#fcf6ba', '#bf953f', '#ffffff', '#ffe5ec'];
             const fx = Math.random() * window.innerWidth;
             const fy = Math.random() * (window.innerHeight * 0.45);
             const color = colors[Math.floor(Math.random()*colors.length)];
             
-            for(let i=0; i<14; i++) {
+            for(let i=0; i<12; i++) {
                 const p = document.createElement('div');
                 p.classList.add('fw-particle');
                 p.style.color = color;
                 p.style.backgroundColor = color;
                 p.style.left = fx + 'px'; p.style.top = fy + 'px';
-                const angle = (i / 14) * Math.PI * 2;
-                const speed = Math.random() * 45 + 35;
+                const angle = (i / 12) * Math.PI * 2;
+                const speed = Math.random() * 40 + 30;
                 p.style.setProperty('--x', Math.cos(angle)*speed + 'px');
                 p.style.setProperty('--y', Math.sin(angle)*speed + 'px');
-                document.body.appendChild(p);
+                animContainer.appendChild(p);
                 setTimeout(() => p.remove(), 1500);
             }
         }
 
-        // ENDING TEXT
         const barisEnding = [
             "Before you leave…",
             "I hope this page made your day just a little brighter.",
