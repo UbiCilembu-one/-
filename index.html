@@ -320,7 +320,7 @@
         <button class="btn" id="btnOpenGift" onclick="openGift()">🎁 Open Gift</button>
     </div>
 
-    <!-- LAYER 4: SURAT UTAMA (PESAN PANJANG ASLI KAMU TETAP DI SINI) -->
+    <!-- LAYER 4: SURAT UTAMA (PESAN PANJANG ASLI KAMU SUDAH DIKEMBALIKAN) -->
     <div class="screen" id="sc-letter">
         <h1 class="gold-text" style="font-size: 16px; margin-bottom: 25px;">💌 A Letter</h1>
         <p id="typewriter" style="min-height: 130px; font-size: 14px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
@@ -328,7 +328,7 @@
         <!-- Pemicu Amplop Kecil -->
         <div class="envelope-wrapper" id="miniEnvelope" onclick="openSecretPopup()">📩</div>
         
-        <!-- POPUP SURAT RAHASIA (KALIMAT PRINCESS DI MASUKKAN KE SINI) -->
+        <!-- POPUP SURAT RAHASIA (KALIMAT PRINCESS AMAN DI SINI) -->
         <div class="secret-popup-box" id="secretPopup">
             <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ For My Princess ✨</p>
             <p style="font-size: 14px; color: #fcf6ba; text-align: center; font-style: italic; line-height: 2;">
@@ -486,15 +486,18 @@
             }, 1000);
         }
 
-        // --- DI SINI PESAN PANJANG UTAMA DIKEMBALIKAN ---
+        // --- BERHASIL DIKEMBALIKAN SESUAI TANGKAPAN LAYAR KAMU ---
         const barisSurat = [
-            "Halo kamu,",
-            "Mungkin ini cuma halaman web sederhana,",
-            "tapi di dalamnya ada banyak ketulusan yang sengaja ditulis.",
-            "Semoga hari-hari yang kamu lewati selalu dipenuhi kebaikan,",
-            "dan semoga lelahmu hari ini lekas memudar ya.",
-            "Terima kasih sudah bertahan dan berjuang sejauh ini.",
-            "Jangan lupa tersenyum setelah membaca ini..."
+            "Mungkin kamu bertanya-tanya kenapa ada hadiah ini,",
+            "Because in my eyes...",
+            "Someone like you deserves something tailored just for you.",
+            "Semoga kamu tetap menemukan alasan untuk tersenyum, meskipun hadiah ini memang sederhana.",
+            "Aku cuma ingin mengingatkan satu hal.",
+            "Kamu berharga.",
+            "Jangan terlalu keras sama diri sendiri.",
+            "Dan kalau suatu hari terasa berat...",
+            "Semoga kamu selalu ingat...",
+            "Kalau ada seseorang yang diam-diam mendoakan kebahagiaanmu."
         ];
         let indeksBaris = 0;
         const wadahKetik = document.getElementById('typewriter');
