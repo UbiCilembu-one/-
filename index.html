@@ -133,9 +133,42 @@
 
         .active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
 
+        /* --- STYLING KHUSUS UNTUK TAMPILAN BUNGA MAJESTIK (LATAR PUTIH) --- */
+        #sc-flowers {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a1a;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            outline: 4px solid rgba(0, 0, 0, 0.02);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+        }
+        #sc-flowers::before { border-top-color: rgba(0,0,0,0.15); border-left-color: rgba(0,0,0,0.15); }
+        #sc-flowers::after { border-bottom-color: rgba(0,0,0,0.15); border-right-color: rgba(0,0,0,0.15); }
+        
+        .gerbera-container {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            /* Efek Animasi Tertiup Angin Lembut */
+            animation: windSway 4s ease-in-out infinite alternate;
+            transform-origin: bottom center;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+        }
+
+        @keyframes windSway {
+            0% { transform: rotate(-3deg) translateX(-2px); }
+            50% { transform: rotate(4deg) translateX(3px) skewX(2deg); }
+            100% { transform: rotate(-2deg) translateX(-1px); }
+        }
+
         /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
         h1 { font-size: 18px; font-weight: 300; margin-bottom: 20px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
+        #sc-flowers h1 { color: #1a1a1a; }
         p { font-size: 13px; font-weight: 300; line-height: 2; color: #b8b8b8; margin-bottom: 20px; letter-spacing: 0.5px; }
+        #sc-flowers p { color: #555555; }
         .small-text { font-size: 10px; color: #444; font-style: italic; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; }
 
         .btn {
@@ -146,6 +179,18 @@
             border-radius: 2px;
         }
         .btn:hover { background: rgba(212, 175, 55, 0.15); color: #fff; box-shadow: 0 0 20px rgba(212,175,55,0.2); border-color: #fcf6ba; letter-spacing: 4px; }
+        
+        #sc-flowers .btn {
+            border-color: rgba(0, 0, 0, 0.2);
+            color: #1a1a1a;
+            background: rgba(0, 0, 0, 0.01);
+        }
+        #sc-flowers .btn:hover {
+            background: #1a1a1a;
+            color: #ffffff;
+            border-color: #1a1a1a;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
 
         input[type="text"] {
             background: transparent; border: none; border-bottom: 1px solid rgba(212,175,55,0.3);
@@ -261,7 +306,6 @@
             100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
         }
 
-        .bouquet { font-size: 45px; margin-bottom: 20px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4)); opacity: 0.85; }
         .sky-memories { position: relative; width: 100%; height: 30vh; margin: 15px 0; }
         .clickable-star-btn { position: absolute; width: 36px; height: 36px; background: transparent; border: none; font-size: 14px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 99; filter: drop-shadow(0 0 6px rgba(255,235,59,0.5)); transition: transform 0.3s; }
         .clickable-star-btn:hover { transform: scale(1.2); }
@@ -320,7 +364,7 @@
         <button class="btn" id="btnOpenGift" onclick="openGift()">🎁 Open Gift</button>
     </div>
 
-    <!-- LAYER 4: SURAT UTAMA (PESAN PANJANG ASLI KAMU SUDAH DIKEMBALIKAN) -->
+    <!-- LAYER 4: SURAT UTAMA -->
     <div class="screen" id="sc-letter">
         <h1 class="gold-text" style="font-size: 16px; margin-bottom: 25px;">💌 A Letter</h1>
         <p id="typewriter" style="min-height: 130px; font-size: 14px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
@@ -328,7 +372,7 @@
         <!-- Pemicu Amplop Kecil -->
         <div class="envelope-wrapper" id="miniEnvelope" onclick="openSecretPopup()">📩</div>
         
-        <!-- POPUP SURAT RAHASIA (KALIMAT PRINCESS AMAN DI SINI) -->
+        <!-- POPUP SURAT RAHASIA -->
         <div class="secret-popup-box" id="secretPopup">
             <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ For My Princess ✨</p>
             <p style="font-size: 14px; color: #fcf6ba; text-align: center; font-style: italic; line-height: 2;">
@@ -349,10 +393,70 @@
         <button class="btn" id="btnAfterPhoto" style="display:none;" onclick="nextScreen('sc-flowers'); jalankanBuketBunga();">Next →</button>
     </div>
 
-    <!-- LAYER 5: FLOWERS -->
+    <!-- LAYER 5: FLOWERS (DIUBAH MENJADI SATU BUNGA GERBERA BESAR DENGAN ANIMASI TERTIUP ANGIN DAN LATAR BELAKANG PUTIH MAJESTIK) -->
     <div class="screen" id="sc-flowers">
-        <div class="bouquet">💐🌼🌸</div>
-        <p id="flowerText" style="font-size: 15px; min-height: 80px; font-style: italic;"></p>
+        <div class="gerbera-container">
+            <!-- Vektor Bunga Gerbera Indah Cantik -->
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+                <circle cx="50" cy="50" r="8" fill="#e67e22"/>
+                <circle cx="50" cy="50" r="5" fill="#d35400"/>
+                <!-- Kelopak Bunga Melingkar Rapih -->
+                <g fill="#ff7675" opacity="0.95">
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(0 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(15 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(30 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(45 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(60 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(75 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(90 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(105 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(120 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(135 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(150 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(165 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(180 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(195 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(210 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(225 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(240 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(255 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(270 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(285 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(300 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(315 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(330 50 50)"/>
+                    <ellipse cx="50" cy="22" rx="4" ry="16" transform="rotate(345 50 50)"/>
+                </g>
+                <!-- Layer Lapisan Kelopak Dalam -->
+                <g fill="#fab1a0" opacity="0.9">
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(7.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(22.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(37.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(52.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(67.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(82.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(97.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(112.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(127.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(142.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(157.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(172.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(187.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(202.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(217.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(232.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(247.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(262.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(277.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(292.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(307.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(322.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(337.5 50 50)"/>
+                    <ellipse cx="50" cy="26" rx="3" ry="12" transform="rotate(352.5 50 50)"/>
+                </g>
+            </svg>
+        </div>
+        <p id="flowerText" style="font-size: 15px; min-height: 80px; font-style: italic; font-weight: 400; letter-spacing: 0.5px;"></p>
     </div>
 
     <!-- LAYER 6: MEMORIES -->
@@ -486,7 +590,7 @@
             }, 1000);
         }
 
-        // --- BERHASIL DIKEMBALIKAN SESUAI TANGKAPAN LAYAR KAMU ---
+        // ISI BARIS SURAT SESUAI SCREENSHOT KAMU
         const barisSurat = [
             "Mungkin kamu bertanya-tanya kenapa ada hadiah ini,",
             "Because in my eyes...",
@@ -536,15 +640,23 @@
             setTimeout(() => { btn.style.display = "inline-block"; }, 3000);
         }
 
+        // TEXT DI LAYER BUNGA GERBERA
         function jalankanBuketBunga() {
             const txt = document.getElementById('flowerText');
+            const scFlower = document.getElementById('sc-flowers');
             txt.innerHTML = "Flowers fade.<br>Kindness doesn't.";
             setTimeout(() => {
                 txt.style.opacity = 0;
                 setTimeout(() => {
-                    txt.innerHTML = "These flowers will never wilt.<br>Because they're made from appreciation.";
+                    txt.innerHTML = "This Gerbera flower will never wilt.<br>Because it's built from pure appreciation.";
                     txt.style.opacity = 1;
-                    setTimeout(() => { nextScreen('sc-memories'); buatBintangMemori(); }, 4500);
+                    
+                    // Membuat tombol lanjut otomatis muncul di bawah bunga setelah teks selesai
+                    const nextBtn = document.createElement('button');
+                    nextBtn.classList.add('btn');
+                    nextBtn.innerText = "Next →";
+                    nextBtn.onclick = () => { nextScreen('sc-memories'); buatBintangMemori(); };
+                    scFlower.appendChild(nextBtn);
                 }, 1000);
             }, 3000);
         }
