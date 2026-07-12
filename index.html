@@ -14,7 +14,7 @@
         }
 
         body {
-            background: radial-gradient(circle at center, #16121e 0%, #050508 100%);
+            background: radial-gradient(circle at center, #110d1a 0%, #030205 100%);
             color: #fff;
             height: 100vh;
             display: flex;
@@ -31,19 +31,19 @@
             position: absolute;
             width: 150%;
             height: 150%;
-            background: radial-gradient(circle at 30% 20%, rgba(103, 58, 183, 0.1) 0%, transparent 40%),
-                        radial-gradient(circle at 70% 60%, rgba(233, 30, 99, 0.08) 0%, transparent 40%);
-            animation: auroraFlow 20s ease-in-out infinite alternate;
+            background: radial-gradient(circle at 30% 20%, rgba(147, 112, 219, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 70% 60%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+            animation: auroraFlow 25s ease-in-out infinite alternate;
             z-index: 0;
             pointer-events: none;
         }
 
         @keyframes auroraFlow {
             0% { transform: translate(-5%, -5%) rotate(0deg); }
-            100% { transform: translate(5%, 5%) rotate(10deg); }
+            100% { transform: translate(5%, 5%) rotate(5deg); }
         }
 
-        /* --- SCREEN INTRO PREMIUM (PUTIH POLOS) --- */
+        /* --- SCREEN INTRO PREMIUM (PUTIH MAJESTIK) --- */
         #sc-intro {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -55,195 +55,223 @@
             align-items: center;
             z-index: 9999;
             opacity: 1;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .intro-text {
-            font-size: 20px; font-weight: 300; letter-spacing: 4px;
+            font-size: 18px; font-weight: 300; letter-spacing: 5px;
             text-transform: uppercase; color: #2c2c2c;
-            opacity: 0; transform: translateY(10px);
-            animation: fadeInUp 1.8s forwards 0.5s;
+            opacity: 0; transform: translateY(15px);
+            animation: fadeInUp 2s forwards 0.5s;
         }
 
         .intro-btn {
             background: none; border: 1px solid #1a1a1a; color: #1a1a1a;
-            padding: 8px 24px; font-size: 11px; text-transform: uppercase;
-            letter-spacing: 2px; cursor: pointer; margin-top: 35px;
-            opacity: 0; transition: all 0.4s ease;
-            animation: fadeIn 1.2s forwards 2.2s;
+            padding: 10px 30px; font-size: 10px; text-transform: uppercase;
+            letter-spacing: 3px; cursor: pointer; margin-top: 40px;
+            opacity: 0; transition: all 0.5s ease;
+            animation: fadeIn 1.5s forwards 2.5s;
         }
-        .intro-btn:hover { background: #1a1a1a; color: #ffffff; }
+        .intro-btn:hover { background: #1a1a1a; color: #ffffff; letter-spacing: 5px; }
 
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { to { opacity: 0.8; } }
+        @keyframes fadeIn { to { opacity: 0.7; } }
 
-        /* --- TEXT GRADASI EMAS (GOLD GRADIENT) --- */
+        /* --- TEXT GRADASI EMAS MENGKILAP (SHIMMER GOLD) --- */
         .gold-text {
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            background: linear-gradient(90deg, #aa771c, #fcf6ba, #bf953f, #fcf6ba, #aa771c);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(187, 143, 40, 0.3);
+            font-weight: 400;
+            letter-spacing: 2px;
+            animation: shineGold 4s linear infinite;
         }
 
-        /* --- EFEK BINTANG BERGERAK (BACKGROUND) --- */
+        @keyframes shineGold {
+            to { background-position: 200% center; }
+        }
+
         #starfield {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
         }
 
-        /* --- WADAH KONTEN DENGAN BINGKAI MEWAH --- */
+        /* --- WADAH KONTEN DENGAN BINGKAI EMAS ANGGUN --- */
         .screen {
             position: absolute;
-            width: 85%; max-width: 420px; height: 80vh;
+            width: 85%; max-width: 400px; height: 75vh;
             text-align: center; z-index: 2;
             opacity: 0; pointer-events: none;
-            transition: opacity 1.5s ease, transform 1.5s ease;
-            transform: scale(0.95);
+            transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.97) translateY(10px);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(10, 8, 15, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.03), 0 20px 50px rgba(0, 0, 0, 0.6);
-            border-radius: 8px;
-        }
-
-        .active { opacity: 1; pointer-events: auto; transform: scale(1); }
-
-        /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
-        h1 { font-size: 22px; font-weight: 300; margin-bottom: 15px; letter-spacing: 3px; color: #f5f5f5; text-transform: uppercase; }
-        p { font-size: 14px; font-weight: 300; line-height: 1.8; color: #ccc; margin-bottom: 20px; }
-        .small-text { font-size: 11px; color: #555; font-style: italic; margin-top: 15px; letter-spacing: 1px; }
-
-        .btn {
-            background: none; border: 1px solid rgba(255, 255, 255, 0.5); color: #fff;
-            padding: 10px 28px; font-size: 11px; text-transform: uppercase;
-            cursor: pointer; letter-spacing: 2px; transition: all 0.4s ease;
-            margin-top: 15px; z-index: 30; background: rgba(255, 255, 255, 0.02);
+            padding: 40px 30px;
+            
+            /* Bingkai Ganda Mewah */
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            outline: 4px solid rgba(212, 175, 55, 0.03);
+            outline-offset: -10px;
+            
+            background: rgba(13, 10, 18, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.02);
             border-radius: 4px;
         }
-        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.4); border-color: #fff; }
+
+        /* Ornamen di Sudut Bingkai */
+        .screen::before {
+            content: ''; position: absolute; top: 15px; left: 15px; width: 12px; height: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.4); border-left: 1px solid rgba(212, 175, 55, 0.4);
+        }
+        .screen::after {
+            content: ''; position: absolute; bottom: 15px; right: 15px; width: 12px; height: 12px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.4); border-right: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
+
+        /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
+        h1 { font-size: 18px; font-weight: 300; margin-bottom: 20px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
+        p { font-size: 13px; font-weight: 300; line-height: 2; color: #b8b8b8; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .small-text { font-size: 10px; color: #444; font-style: italic; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; }
+
+        .btn {
+            background: none; border: 1px solid rgba(212, 175, 55, 0.4); color: #fcf6ba;
+            padding: 12px 30px; font-size: 10px; text-transform: uppercase;
+            cursor: pointer; letter-spacing: 3px; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 20px; z-index: 30; background: rgba(212, 175, 55, 0.02);
+            border-radius: 2px;
+        }
+        .btn:hover { background: rgba(212, 175, 55, 0.15); color: #fff; box-shadow: 0 0 20px rgba(212,175,55,0.2); border-color: #fcf6ba; letter-spacing: 4px; }
 
         input[type="text"] {
-            background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.4);
-            color: #fff; text-align: center; font-size: 18px; padding: 8px;
-            margin: 20px 0; outline: none; width: 80%; letter-spacing: 2px;
-            transition: border-color 0.3s;
+            background: transparent; border: none; border-bottom: 1px solid rgba(212,175,55,0.3);
+            color: #fff; text-align: center; font-size: 16px; padding: 10px;
+            margin: 25px 0; outline: none; width: 75%; letter-spacing: 3px;
+            transition: all 0.4s;
         }
-        input[type="text"]:focus { border-color: #bf953f; }
+        input[type="text"]:focus { border-color: #fcf6ba; width: 85%; box-shadow: 0 5px 15px rgba(212,175,55,0.05); }
 
         /* --- INTERAKTIF TOMBOL KABUR --- */
         .btn-wrap {
-            display: flex; gap: 20px; margin-top: 20px;
+            display: flex; gap: 20px; margin-top: 25px;
             position: relative; width: 100%; justify-content: center; height: 50px;
         }
-        #btn-no { position: absolute; transition: all 0.2s ease; }
+        #btn-no { position: absolute; transition: all 0.3s ease; }
 
         /* --- FOTO POLAROID RAHASIA --- */
         .polaroid-frame {
-            background: #f7f5f0; padding: 12px 12px 30px 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7); transform: rotate(-3deg);
-            cursor: pointer; width: 180px; margin: 15px 0; transition: transform 0.5s ease;
+            background: #fdfcf9; padding: 12px 12px 35px 12px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.8); transform: rotate(-2deg);
+            cursor: pointer; width: 185px; margin: 20px 0; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .polaroid-frame:hover { transform: rotate(0deg) scale(1.05); }
+        .polaroid-frame:hover { transform: rotate(0deg) scale(1.04); box-shadow: 0 25px 55px rgba(212,175,55,0.15); }
         .polaroid-img {
-            width: 156px; height: 160px; background: #222;
+            width: 161px; height: 165px; background: #1a1a1a;
             background-size: cover; background-position: center;
-            opacity: 0; filter: grayscale(30%) sepia(20%);
-            transition: opacity 4s ease-in-out;
+            opacity: 0; filter: grayscale(15%) sepia(10%);
+            transition: opacity 3.5s ease-in-out;
         }
-        .polaroid-caption { color: #444; font-size: 11px; font-family: 'Courier New', monospace; margin-top: 12px; }
+        .polaroid-caption { color: #555; font-size: 10px; font-family: 'Courier New', monospace; margin-top: 15px; letter-spacing: 1px; }
 
         /* --- AMPLOP MINI INTERAKTIF --- */
         .envelope-wrapper {
-            margin-top: 10px; cursor: pointer; display: none;
-            font-size: 30px; animation: bounce 2s infinite;
+            margin-top: 15px; cursor: pointer; display: none;
+            font-size: 28px; animation: bounce 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 8px rgba(212,175,55,0.4));
         }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         
         .secret-popup-box {
-            position: absolute; bottom: -100%; left: 0; width: 100%; height: 70%;
-            background: #15131c; border-top: 2px solid #bf953f; border-radius: 16px 16px 0 0;
-            padding: 25px; z-index: 500; transition: bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute; bottom: -100%; left: 0; width: 100%; height: 65%;
+            background: #0d0a12; border-top: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px 8px 0 0;
+            padding: 30px 25px; z-index: 500; transition: bottom 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            box-shadow: 0 -15px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.9);
+            outline: 4px solid rgba(212, 175, 55, 0.02); outline-offset: -10px;
+        }
+        .secret-popup-box::before {
+            content: ''; position: absolute; top: 15px; left: 15px; width: 10px; height: 10px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3); border-left: 1px solid rgba(212, 175, 55, 0.3);
         }
         .secret-popup-box.open { bottom: 0; }
 
         /* --- KOTAK KADO & PITA --- */
-        .box-container { width: 130px; height: 130px; position: relative; margin: 25px 0; cursor: pointer; }
+        .box-container { width: 120px; height: 120px; position: relative; margin: 30px 0; cursor: pointer; }
         .gift-box {
-            width: 100%; height: 100%; background-color: #121016; border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            width: 100%; height: 100%; background-color: #0d0a12; border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
         }
-        .gift-box::before { content: ''; position: absolute; left: 47%; top: 0; width: 6%; height: 100%; background: linear-gradient(to right, #bf953f, #fcf6ba, #aa771c); }
-        .gift-box::after { content: ''; position: absolute; left: 0; top: 47%; width: 100%; height: 6%; background: linear-gradient(to bottom, #bf953f, #fcf6ba, #aa771c); }
+        .gift-box::before { content: ''; position: absolute; left: 48%; top: 0; width: 4%; height: 100%; background: linear-gradient(to right, #aa771c, #fcf6ba, #aa771c); }
+        .gift-box::after { content: ''; position: absolute; left: 0; top: 48%; width: 100%; height: 4%; background: linear-gradient(to bottom, #aa771c, #fcf6ba, #aa771c); }
         .ribbon-top {
-            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            width: 30px; height: 15px; border: 2px solid #bf953f; border-bottom: none;
-            border-radius: 15px 15px 0 0; transition: opacity 0.5s;
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            width: 24px; height: 12px; border: 1px solid #bf953f; border-bottom: none;
+            border-radius: 12px 12px 0 0; transition: opacity 0.5s;
         }
-        .box-container.open .gift-box { transform: scale(0) rotate(15deg); opacity: 0; }
+        .box-container.open .gift-box { transform: scale(0) rotate(20deg); opacity: 0; }
         .box-container.open .ribbon-top { opacity: 0; }
 
-        /* --- KONTROL AUDIO --- */
+        /* --- KONTROL AUDIO DISK --- */
         #audio-control {
-            position: absolute; top: 20px; right: 20px; z-index: 10000;
-            font-size: 18px; color: rgba(255, 255, 255, 0.5); cursor: pointer;
-            width: 40px; height: 40px; display: none; justify-content: center; align-items: center;
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; background: rgba(0,0,0,0.4);
+            position: absolute; top: 25px; right: 25px; z-index: 10000;
+            font-size: 15px; color: rgba(212, 175, 55, 0.4); cursor: pointer;
+            width: 36px; height: 36px; display: none; justify-content: center; align-items: center;
+            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 50%; background: rgba(0,0,0,0.5);
+            transition: all 0.4s;
         }
-        #audio-control.playing { animation: rotateDisk 4s linear infinite; color: #fcf6ba; border-color: #bf953f; }
+        #audio-control.playing { animation: rotateDisk 5s linear infinite; color: #fcf6ba; border-color: #bf953f; box-shadow: 0 0 10px rgba(212,175,55,0.2); }
         @keyframes rotateDisk { to { transform: rotate(360deg); } }
 
-        /* --- EFEK KELOPAK GUGUR, HATI & KEMBANG API --- */
+        /* --- EFEK VISUAL (KELOPAK, HATI, FIREWORKS) --- */
         .petal { position: absolute; pointer-events: none; z-index: 5; animation: fall linear infinite; }
         @keyframes fall {
-            0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 1; }
-            100% { top: 110%; transform: translateX(100px) rotate(360deg); opacity: 0; }
+            0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0.8; }
+            100% { top: 110%; transform: translateX(80px) rotate(360deg); opacity: 0; }
         }
         .click-heart {
-            position: absolute; pointer-events: none; font-size: 18px; z-index: 99999;
-            animation: heartFloat 1s ease-out forwards; color: rgba(255, 255, 255, 0.8);
+            position: absolute; pointer-events: none; font-size: 16px; z-index: 99999;
+            animation: heartFloat 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards; color: rgba(255, 255, 255, 0.7);
         }
         @keyframes heartFloat {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            100% { transform: translate(-50%, -120px) scale(1.2); opacity: 0; }
+            0% { transform: translate(-50%, -50%) scale(0.6); opacity: 1; }
+            100% { transform: translate(-50%, -140px) scale(1.1); opacity: 0; }
         }
         .fw-particle {
-            position: absolute; width: 3px; height: 3px; border-radius: 50%;
-            pointer-events: none; z-index: 1; animation: fwExplode 1.2s ease-out forwards;
+            position: absolute; width: 2px; height: 2px; border-radius: 50%;
+            pointer-events: none; z-index: 1; animation: fwExplode 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
         @keyframes fwExplode {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            0% { transform: translate(0, 0) scale(1); opacity: 1; box-shadow: 0 0 4px currentColor; }
             100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
         }
 
-        /* --- GLITTER SPARKLE --- */
         .sparkle {
-            position: absolute; width: 4px; height: 4px; background: #fcf6ba;
-            border-radius: 50%; box-shadow: 0 0 10px #bf953f; pointer-events: none;
-            z-index: 999; animation: flySparkle 0.8s ease-out forwards;
+            position: absolute; width: 3px; height: 3px; background: #fcf6ba;
+            border-radius: 50%; box-shadow: 0 0 8px #bf953f; pointer-events: none;
+            z-index: 999; animation: flySparkle 0.9s ease-out forwards;
         }
         @keyframes flySparkle {
             0% { transform: translate(0, 0) scale(1); opacity: 1; }
             100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
         }
 
-        .bouquet { font-size: 50px; margin-bottom: 15px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
-        .sky-memories { position: relative; width: 100%; height: 32vh; margin: 10px 0; }
-        .clickable-star-btn { position: absolute; width: 40px; height: 40px; background: transparent; border: none; font-size: 16px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 99; filter: drop-shadow(0 0 5px rgba(255,235,59,0.6)); }
+        .bouquet { font-size: 45px; margin-bottom: 20px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4)); opacity: 0.85; }
+        .sky-memories { position: relative; width: 100%; height: 30vh; margin: 15px 0; }
+        .clickable-star-btn { position: absolute; width: 36px; height: 36px; background: transparent; border: none; font-size: 14px; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 99; filter: drop-shadow(0 0 6px rgba(255,235,59,0.5)); transition: transform 0.3s; }
+        .clickable-star-btn:hover { transform: scale(1.2); }
         
         .message-display-box {
-            width: 100%; min-height: 60px; background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            border-radius: 4px; display: flex; justify-content: center; align-items: center;
-            padding: 12px; font-size: 13px; color: #fcf6ba; transition: opacity 0.4s ease;
-            margin-bottom: 10px; opacity: 0;
+            width: 100%; min-height: 55px; background: rgba(212, 175, 55, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.15); backdrop-filter: blur(10px);
+            border-radius: 2px; display: flex; justify-content: center; align-items: center;
+            padding: 12px 15px; font-size: 12px; color: #fcf6ba; transition: opacity 0.5s ease;
+            margin-bottom: 15px; opacity: 0; letter-spacing: 0.5px; line-height: 1.6;
         }
         .message-display-box.show { opacity: 1; }
     </style>
@@ -268,15 +296,15 @@
     <!-- LAYER 1: RESERVED -->
     <div class="screen active" id="sc-reserved">
         <h1>🎁 A Gift Just For You</h1>
-        <p style="color: #555; font-size: 12px; letter-spacing: 1px;">Reserved For You</p>
-        <p>This gift has been reserved for one person.<br>If this isn’t you, please close this page.</p>
+        <p style="color: rgba(212,175,55,0.4); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;">Reserved Privilege</p>
+        <p>This gift has been reserved for one special person.<br>If this isn’t you, please close this page.</p>
         <button class="btn" onclick="nextScreen('sc-verification')">Continue →</button>
     </div>
 
     <!-- LAYER 2: VERIFIKASI -->
     <div class="screen" id="sc-verification">
         <h1>🔒 Identity Verification</h1>
-        <p>Enter your name</p>
+        <p>Enter your code name</p>
         <input type="text" id="nameInput" placeholder="write here..." autocomplete="off">
         <button class="btn" onclick="verifyName()">Unlock</button>
     </div>
@@ -292,34 +320,30 @@
         <button class="btn" id="btnOpenGift" onclick="openGift()">🎁 Open Gift</button>
     </div>
 
-    <!-- LAYER 4: SURAT MESIN TIK & AMPLOP RAHASIA -->
+    <!-- LAYER 4: SURAT MESIN TIK (KALIMAT BARU SUDAH TERPASANG) -->
     <div class="screen" id="sc-letter">
-        <h1 class="gold-text" style="font-size: 18px; margin-bottom: 25px;">💌 A Letter</h1>
-        <p id="typewriter" style="min-height: 120px; font-size: 16px; text-align: center;"></p>
+        <h1 class="gold-text" style="font-size: 16px; margin-bottom: 25px;">💌 A Letter</h1>
+        <p id="typewriter" style="min-height: 130px; font-size: 15px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
         
         <div class="envelope-wrapper" id="miniEnvelope" onclick="openSecretPopup()">📩</div>
         
         <!-- POPUP SURAT RAHASIA -->
         <div class="secret-popup-box" id="secretPopup">
-            <p class="gold-text" style="font-size: 15px; margin-bottom: 10px;">✨ Catatan Kecil ✨</p>
-            <p style="font-size: 13px; color: #ddd; text-align: center; font-style: italic;">
-                "Haloo incess ku",
-                "aku tidak perna bosan sama sekali untuk memamnggil kamu cantik dengan senyuman yang tulus dari hati aku.",
-                "karena aku tau, bahwa seorang princess bisa secantik ini karena kerja keras princess aku sendiri",
-                " Semangat terus! 🤍"
+            <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ Catatan Kecil ✨</p>
+            <p style="font-size: 13px; color: #ccc; text-align: center; font-style: italic; line-height: 1.8;">
+                "Jangan lupa minum air putih yang banyak hari ini, dan kurangi kebiasaan overthinking-mu yaa. Semangat terus! 🤍"
             </p>
             <button class="btn" onclick="closeSecretPopup(event)">Tutup & Lanjut</button>
         </div>
     </div>
 
-    <!-- LAYER 4.5: POLAROID SURPRISE -->
+    <!-- LAYER 4.5: POLAROID SURPRISE (NAMA FOTO HP SUDAH DI-SET) -->
     <div class="screen" id="sc-polaroid">
-        <h1 style="font-size: 16px;">📸 Captured Moment</h1>
-        <p style="font-size: 12px; color: #888; margin-bottom: 5px;">Ketuk foto di bawah untuk mencetak memori</p>
+        <h1>📸 Captured Moment</h1>
+        <p style="font-size: 11px; color: #777; margin-bottom: 5px; letter-spacing: 1px;">Ketuk foto di bawah untuk mencetak memori</p>
         <div class="polaroid-frame" onclick="revealPhoto()">
-            <!-- SILAHKAN GANTI IMG_0212.png DENGAN NAMA ASLI FILE FOTOMU -->
             <div class="polaroid-img" id="secretPhoto" style="background-image: url('6A5E6247-9BDE-4E72-BA45-230070A69F55.jpeg');"></div>
-            <div class="polaroid-caption" id="photoCaption">Tap here...</div>
+            <div class="polaroid-caption" id="photoCaption">Tap to develop...</div>
         </div>
         <button class="btn" id="btnAfterPhoto" style="display:none;" onclick="nextScreen('sc-flowers'); jalankanBuketBunga();">Next →</button>
     </div>
@@ -327,13 +351,13 @@
     <!-- LAYER 5: FLOWERS -->
     <div class="screen" id="sc-flowers">
         <div class="bouquet">💐🌼🌸</div>
-        <p id="flowerText" style="font-size: 16px; min-height: 80px;"></p>
+        <p id="flowerText" style="font-size: 15px; min-height: 80px; font-style: italic;"></p>
     </div>
 
     <!-- LAYER 6: MEMORIES -->
     <div class="screen" id="sc-memories">
         <h1>⭐ Memories</h1>
-        <p style="font-size: 12px; color: #888; margin-bottom: 0;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
+        <p style="font-size: 11px; color: #777; margin-bottom: 0; letter-spacing: 1px;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
         <div class="sky-memories" id="skyArea"></div>
         <div class="message-display-box" id="msgBox">Klik salah satu bintang di atas...</div>
         <button class="btn" onclick="nextScreen('sc-question')" style="margin-bottom: 5px;">🤍 One Last Thing</button>
@@ -342,7 +366,7 @@
     <!-- LAYER 6.5: PERTANYAAN INTERAKTIF -->
     <div class="screen" id="sc-question">
         <h1 class="gold-text">A Quick Question...</h1>
-        <p style="font-size: 16px; margin-top: 20px;">Apakah kamu bahagia hari ini?</p>
+        <p style="font-size: 15px; margin-top: 25px;">Apakah kamu bahagia hari ini?</p>
         <div class="btn-wrap">
             <button class="btn" style="margin-top:0;" onclick="answerYes()">Mau / Iya! 😊</button>
             <button class="btn" style="margin-top:0;" id="btn-no" onmouseover="moveNoButton()" onclick="moveNoButton()">Nggak 😜</button>
@@ -351,17 +375,17 @@
 
     <!-- LAYER 7: ENDING -->
     <div class="screen" id="sc-ending">
-        <h1 class="gold-text" style="font-size: 20px; letter-spacing: 4px;">🌙 Ending</h1>
-        <p id="endingText" style="font-size: 15px; white-space: pre-line; line-height: 2; color: #e5e5e5;"></p>
-        <p class="gold-text" style="font-size: 22px; margin-top: 15px;">🤍</p>
-        <p class="small-text" style="color:#444;">This page was made especially for one person.</p>
+        <h1 class="gold-text" style="font-size: 18px; letter-spacing: 5px;">🌙 Ending</h1>
+        <p id="endingText" style="font-size: 14px; white-space: pre-line; line-height: 2.2; color: #dcdcdc; font-style: italic;"></p>
+        <p class="gold-text" style="font-size: 20px; margin-top: 15px;">🤍</p>
+        <p class="small-text" style="color:#333; letter-spacing: 1px;">This page was made especially for one person.</p>
     </div>
 
     <script>
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
             intro.style.opacity = '0';
-            setTimeout(() => { intro.style.display = 'none'; }, 1500);
+            setTimeout(() => { intro.style.display = 'none'; }, 2000);
         }
 
         const audio = document.getElementById('bgMusic');
@@ -372,19 +396,19 @@
             else { audio.pause(); audioCtrl.classList.remove('playing'); }
         }
 
-        // 1. EFEK TEKANAN LAYAR MEMUNCULKAN HATI
+        // EFEK TEKANAN LAYAR MEMUNCULKAN HATI ANGGUN
         document.body.addEventListener('click', function(e) {
             if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame')) return;
             const heart = document.createElement('div');
             heart.classList.add('click-heart');
-            heart.innerHTML = ['🤍','💖','✨','🌸'][Math.floor(Math.random()*4)];
+            heart.innerHTML = ['🤍','✨','🌸'][Math.floor(Math.random()*3)];
             heart.style.left = e.clientX + 'px';
             heart.style.top = e.clientY + 'px';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
+            setTimeout(() => heart.remove(), 1200);
         });
 
-        // KANVAS BINTANG
+        // KANVAS BINTANG LEMBUT
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -393,16 +417,16 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 50; i++) {
             stars.push({
                 x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                radius: Math.random() * 1.5, vx: (Math.random() - 0.5) * 0.2, vy: Math.random() * 0.2 + 0.1
+                radius: Math.random() * 1.2, vx: (Math.random() - 0.5) * 0.15, vy: Math.random() * 0.15 + 0.05
             });
         }
 
         function animateStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             stars.forEach(s => {
                 ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI); ctx.fill();
                 s.x += s.vx; s.y += s.vy;
@@ -424,25 +448,25 @@
             } else { alert("Maaf, halaman ini tidak ditujukan untukmu."); }
         }
 
-        // KELOPAK BUNGA GUGUR
-        const warnaBunga = ['#fffde0', '#ff6b8b', '#ff4757', '#f1f2f6'];
+        // KELOPAK BUNGA GUGUR ELEGAN
+        const warnaBunga = ['#fffef0', '#ffccd5', '#ffe5ec', '#f8f9fa'];
         let startFlowers = false;
 
         function buatKelopak() {
             if (!startFlowers) return;
             const petal = document.createElement('div');
             petal.classList.add('petal');
-            const size = Math.random() * 10 + 8;
+            const size = Math.random() * 8 + 6;
             petal.style.width = size + 'px'; petal.style.height = size + 'px';
             petal.style.backgroundColor = warnaBunga[Math.floor(Math.random() * warnaBunga.length)];
-            petal.style.borderRadius = '50%';
+            petal.style.borderRadius = '50% 0 50% 50%';
             petal.style.left = Math.random() * window.innerWidth + 'px';
-            const duration = Math.random() * 3 + 4;
+            const duration = Math.random() * 4 + 5;
             petal.style.animationDuration = duration + 's';
             document.body.appendChild(petal);
             setTimeout(() => petal.remove(), duration * 1000);
         }
-        setInterval(buatKelopak, 300);
+        setInterval(buatKelopak, 400);
 
         function openGift() {
             const box = document.getElementById('boxPack');
@@ -456,25 +480,20 @@
 
             setTimeout(() => {
                 startFlowers = true; 
-                document.getElementById('boxPack').innerHTML = "<p style='font-size:13px; color:#fcf6ba; font-style:italic;'>Not every gift comes inside a box.<br>Some arrive as a reminder...<br>that someone genuinely wishes you well.</p>";
-                setTimeout(() => { nextScreen('sc-letter'); jalankanSurat(); }, 4500);
+                document.getElementById('boxPack').innerHTML = "<p style='font-size:12px; color:#fcf6ba; font-style:italic; line-height:1.8;'>Not every gift comes inside a box.<br>Some arrive as a reminder...<br>that someone genuinely wishes you well.</p>";
+                setTimeout(() => { nextScreen('sc-letter'); jalankanSurat(); }, 5000);
             }, 1000);
         }
 
-        // TEKS SURAT
+        // KELOMPOK BARIS SURAT BARU
         const barisSurat = [
             "Hai.",
-            "Mungkin kamu bertanya-tanya kenapa ada hadiah ini.",
-            "Because in my eyes…",
-            "someone like you deserves something tailored just for them.",
-            "Semoga kamu tetap menemukan alasan untuk tersenyum hari ini.",
-            "Hadiah ini memang sederhana.",
-            "Aku cuma ingin mengingatkan satu hal.",
-            "Kamu berharga.",
-            "Jangan terlalu keras sama diri sendiri.",
-            "Dan kalau suatu hari terasa berat…",
-            "semoga kamu selalu ingat…",
-            "kalau ada seseorang yang diam-diam mendoakan kebahagiaanmu."
+            "Aku tidak pernah bosan",
+            "untuk selalu memanggil kamu",
+            "dengan senyuman yang tulus dari hati...",
+            "karena aku tau",
+            "bahwa seorang Princess bisa secantik ini",
+            "karena kerja keras Princess ku sendiri. 🤍"
         ];
         let indeksBaris = 0;
         const wadahKetik = document.getElementById('typewriter');
@@ -486,7 +505,7 @@
                         indeksBaris++;
                         if (indeksBaris < barisSurat.length) { wadahKetik.innerHTML = ""; jalankanSurat(); } 
                         else { document.getElementById('miniEnvelope').style.display = 'block'; }
-                    }, 2000);
+                    }, 2200);
                 });
             }
         }
@@ -494,10 +513,10 @@
         function ketikTeks(teks, elemen, callback) {
             let i = 0; elemen.innerHTML = "";
             function ketik() {
-                if (i < teks.length) { elemen.innerHTML += teks.charAt(i); i++; setTimeout(ketik, 45); } 
+                if (i < teks.length) { elemen.innerHTML += teks.charAt(i); i++; setTimeout(ketik, 50); } 
                 else if (callback) { callback(); }
             }
-            setTimeout(ketik, 40);
+            setTimeout(ketik, 100);
         }
 
         // KONTROL AMPLOP RAHASIA
@@ -509,8 +528,8 @@
             const img = document.getElementById('secretPhoto');
             const cap = document.getElementById('photoCaption');
             const btn = document.getElementById('btnAfterPhoto');
-            img.style.opacity = '1'; cap.innerText = "✨ Beautiful ✨";
-            setTimeout(() => { btn.style.display = "inline-block"; }, 3500);
+            img.style.opacity = '1'; cap.innerText = "✨ Truly Elegant ✨";
+            setTimeout(() => { btn.style.display = "inline-block"; }, 3000);
         }
 
         function jalankanBuketBunga() {
@@ -557,11 +576,11 @@
                         sp.style.left = (rect.left + rect.width/2) + 'px';
                         sp.style.top = (rect.top + rect.height/2) + 'px';
                         const angle = Math.random() * Math.PI * 2;
-                        const dist = Math.random() * 40 + 20;
+                        const dist = Math.random() * 35 + 15;
                         sp.style.setProperty('--mx', Math.cos(angle) * dist + 'px');
                         sp.style.setProperty('--my', Math.sin(angle) * dist + 'px');
                         document.body.appendChild(sp);
-                        setTimeout(() => sp.remove(), 800);
+                        setTimeout(() => sp.remove(), 900);
                     }
                     msgBox.innerText = pesan; msgBox.classList.add('show');
                 };
@@ -572,8 +591,8 @@
         // BUTTON KABUR
         function moveNoButton() {
             const noBtn = document.getElementById('btn-no');
-            const x = Math.random() * 200 - 100;
-            const y = Math.random() * 150 - 75;
+            const x = Math.random() * 180 - 90;
+            const y = Math.random() * 120 - 60;
             noBtn.style.transform = `translate(${x}px, ${y}px)`;
         }
 
@@ -583,28 +602,29 @@
             nextScreen('sc-ending');
             isEndingActive = true;
             jalankanEndingTeks();
-            setInterval(launchFirework, 800);
+            setInterval(launchFirework, 900);
         }
 
-        // 3. KEMBANG API DI ENDING SCREEN
+        // KEMBANG API EMAS DI ENDING SCREEN
         function launchFirework() {
             if(!isEndingActive) return;
-            const colors = ['#fcf6ba', '#bf953f', '#ff6b8b', '#ffffff'];
+            const colors = ['#fcf6ba', '#bf953f', '#ffffff', '#ffe5ec'];
             const fx = Math.random() * window.innerWidth;
-            const fy = Math.random() * (window.innerHeight * 0.5);
+            const fy = Math.random() * (window.innerHeight * 0.45);
             const color = colors[Math.floor(Math.random()*colors.length)];
             
-            for(let i=0; i<16; i++) {
+            for(let i=0; i<14; i++) {
                 const p = document.createElement('div');
                 p.classList.add('fw-particle');
+                p.style.color = color;
                 p.style.backgroundColor = color;
                 p.style.left = fx + 'px'; p.style.top = fy + 'px';
-                const angle = (i / 16) * Math.PI * 2;
-                const speed = Math.random() * 50 + 40;
+                const angle = (i / 14) * Math.PI * 2;
+                const speed = Math.random() * 45 + 35;
                 p.style.setProperty('--x', Math.cos(angle)*speed + 'px');
                 p.style.setProperty('--y', Math.sin(angle)*speed + 'px');
                 document.body.appendChild(p);
-                setTimeout(() => p.remove(), 1200);
+                setTimeout(() => p.remove(), 1500);
             }
         }
 
@@ -622,7 +642,7 @@
             const wadahEnding = document.getElementById('endingText');
             if(indeksEnding < barisEnding.length - 1) {
                 wadahEnding.innerHTML = barisEnding[indeksEnding];
-                setTimeout(() => { indeksEnding++; jalankanEndingTeks(); }, 3000); 
+                setTimeout(() => { indeksEnding++; jalankanEndingTeks(); }, 3500); 
             } else {
                 wadahEnding.innerHTML = barisEnding[barisEnding.length - 1];
             }
