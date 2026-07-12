@@ -16,13 +16,15 @@
         body {
             background: radial-gradient(circle at center, #110d1a 0%, #030205 100%);
             color: #fff;
-            height: 100vh;
+            min-height: 100dvh; /* Menggunakan dvh agar dinamis mengikuti ukuran layar browser Instagram */
+            height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             perspective: 1000px;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
         }
 
         /* --- WADAH ISOLASI ANIMASI (SOLUSI ANTI KEDAP-KEDIP) --- */
@@ -116,7 +118,8 @@
         /* --- WADAH KONTEN DENGAN BINGKAI EMAS ANGGUN --- */
         .screen {
             position: absolute;
-            width: 85%; max-width: 400px; height: 75vh;
+            width: 85%; max-width: 400px; 
+            height: 75dvh; /* Menggunakan dvh agar tingginya presisi di dalam Instagram */
             text-align: center; z-index: 2;
             opacity: 0; pointer-events: none;
             transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -129,10 +132,10 @@
             outline: 4px solid rgba(212, 175, 55, 0.03);
             outline-offset: -10px;
             
-            background: rgba(13, 10, 18, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.02);
+            background: rgba(13, 10, 18, 0.75); /* Sedikit ditebalkan agar background putih luar tidak menerawang */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(212, 175, 55, 0.02);
             border-radius: 4px;
         }
 
@@ -515,7 +518,6 @@
 
         function buatKelopak() {
             if (!startFlowers) return;
-            // Cegah elemen terlalu banyak menumpuk di DOM
             if (animContainer.querySelectorAll('.petal').length > 15) return;
 
             const petal = document.createElement('div');
