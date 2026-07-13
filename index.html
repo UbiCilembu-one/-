@@ -41,22 +41,35 @@
             -webkit-transform: translate3d(0, 0, 0);
         }
 
-        /* --- EFEK AURORA DI BACKGROUND --- */
+        /* --- EFEK AURORA DI BACKGROUND (DIUPGRADE: BREATHING GLOW) --- */
         body::before {
             content: '';
             position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle at 30% 20%, rgba(147, 112, 219, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 70% 60%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
-            animation: auroraFlow 25s ease-in-out infinite alternate;
+            width: 160%;
+            height: 160%;
+            top: -30%;
+            left: -30%;
+            background: radial-gradient(circle at 30% 20%, rgba(147, 112, 219, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 40%, rgba(186, 85, 211, 0.06) 0%, transparent 40%);
+            animation: auroraBreathing 12s ease-in-out infinite alternate;
             z-index: 0;
             pointer-events: none;
         }
 
-        @keyframes auroraFlow {
-            0% { transform: translate(-5%, -5%) rotate(0deg); }
-            100% { transform: translate(5%, 5%) rotate(5deg); }
+        @keyframes auroraBreathing {
+            0% {
+                transform: scale(1) rotate(0deg) translate(-2%, -2%);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.08) rotate(3deg) translate(2%, 1%);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.02) rotate(-2deg) translate(-1%, 3%);
+                opacity: 0.8;
+            }
         }
 
         /* --- SCREEN INTRO PREMIUM --- */
@@ -114,7 +127,7 @@
             z-index: 1; pointer-events: none;
         }
 
-        /* --- WADAH KONTEN DENGAN ORNAMEN ROYAL DAN WARNA AGAN YANG ELEGAN --- */
+        /* --- WADAH KONTEN DENGAN ORNAMEN ROYAL ELEGAN --- */
         .screen {
             position: absolute;
             width: 85%; max-width: 400px; 
@@ -131,7 +144,7 @@
             outline: 4px solid rgba(212, 175, 55, 0.04);
             outline-offset: -10px;
             
-            /* BACKGROUND BARU: Efek Pola Royal Damask Anggun & Tekstur Halus */
+            /* BACKGROUND: Efek Pola Royal Damask Anggun & Tekstur Halus */
             background-color: #0d0a14;
             background-image: 
                 radial-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 0),
@@ -155,15 +168,31 @@
             z-index: -1;
         }
 
-        /* Ornamen di Sudut Bingkai */
+        /* Sumbu Garis Sudut Sederhana (Tetap Dipertahankan) */
         .screen::before {
             content: ''; position: absolute; top: 15px; left: 15px; width: 14px; height: 14px;
             border-top: 2px solid rgba(212, 175, 55, 0.5); border-left: 2px solid rgba(212, 175, 55, 0.5);
+            z-index: 10;
         }
         .screen::after {
             content: ''; position: absolute; bottom: 15px; right: 15px; width: 14px; height: 14px;
             border-bottom: 2px solid rgba(212, 175, 55, 0.5); border-right: 2px solid rgba(212, 175, 55, 0.5);
+            z-index: 10;
         }
+
+        /* ORNAMEN ELEGANT FLORAL CORNER (Saran No. 3) */
+        .floral-corner {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            fill: rgba(212, 175, 55, 0.35);
+            pointer-events: none;
+            z-index: 9;
+        }
+        .floral-top-left { top: 12px; left: 12px; }
+        .floral-top-right { top: 12px; right: 12px; transform: scaleX(-1); }
+        .floral-bottom-left { bottom: 12px; left: 12px; transform: scaleY(-1); }
+        .floral-bottom-right { bottom: 12px; right: 12px; transform: scale(-1); }
 
         .active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
 
@@ -417,7 +446,6 @@
         <div class="screen-luxury-bg"></div>
         <h1 class="gold-text" style="font-size: 16px; margin-bottom: 5px;">💌 A Letter</h1>
         <div class="gold-divider">✦ 🤍 ✦</div>
-        <!-- Wadah pengetikan dengan ukuran lebar penuh (width: 100%) agar teks tidak terpotong canggung -->
         <p id="typewriter" style="min-height: 140px; font-size: 14px; text-align: center; font-style: italic; line-height: 2.1; color: #e8e8e8; width: 100%; word-wrap: break-word; padding: 0 5px;"></p>
         
         <!-- Pemicu Amplop Kecil -->
@@ -488,6 +516,45 @@
     </div>
 
     <script>
+        // --- INJEKSI DINAMIS ORNAMEN BUNGA EMAS KE SETIAP SCREEN ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const screens = document.querySelectorAll('.screen, .secret-popup-box');
+            
+            // Definisikan bentuk SVG Floral Ornament yang mewah dan tipis
+            const svgFlowerHtml = `
+                <svg class="floral-corner floral-top-left" viewBox="0 0 100 100">
+                    <path d="M 0,0 L 40,0 C 35,10 25,15 20,20 C 15,25 10,35 0,40 Z" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+                    <path d="M 0,0 Q 25,25 25,50 Q 15,35 0,30" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <path d="M 0,0 Q 25,25 50,25 Q 35,15 30,0" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <circle cx="20" cy="20" r="2" />
+                    <circle cx="32" cy="12" r="1.5" />
+                    <circle cx="12" cy="32" r="1.5" />
+                </svg>
+                <svg class="floral-corner floral-top-right" viewBox="0 0 100 100">
+                    <path d="M 0,0 L 40,0 C 35,10 25,15 20,20 C 15,25 10,35 0,40 Z" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+                    <path d="M 0,0 Q 25,25 25,50 Q 15,35 0,30" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <path d="M 0,0 Q 25,25 50,25 Q 35,15 30,0" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <circle cx="20" cy="20" r="2" />
+                </svg>
+                <svg class="floral-corner floral-bottom-left" viewBox="0 0 100 100">
+                    <path d="M 0,0 L 40,0 C 35,10 25,15 20,20 C 15,25 10,35 0,40 Z" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+                    <path d="M 0,0 Q 25,25 25,50 Q 15,35 0,30" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <path d="M 0,0 Q 25,25 50,25 Q 35,15 30,0" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <circle cx="20" cy="20" r="2" />
+                </svg>
+                <svg class="floral-corner floral-bottom-right" viewBox="0 0 100 100">
+                    <path d="M 0,0 L 40,0 C 35,10 25,15 20,20 C 15,25 10,35 0,40 Z" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+                    <path d="M 0,0 Q 25,25 25,50 Q 15,35 0,30" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <path d="M 0,0 Q 25,25 50,25 Q 35,15 30,0" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="0.8"/>
+                    <circle cx="20" cy="20" r="2" />
+                </svg>
+            `;
+            
+            screens.forEach(scr => {
+                scr.insertAdjacentHTML('beforeend', svgFlowerHtml);
+            });
+        });
+
         const animContainer = document.getElementById('animation-container');
 
         function closeIntro() {
@@ -506,7 +573,7 @@
 
         // EFEK TEKANAN LAYAR MEMUNCULKAN HATI ANGGUN
         document.body.addEventListener('click', function(e) {
-            if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame')) return;
+            if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame') || e.target.closest('svg')) return;
             const heart = document.createElement('div');
             heart.classList.add('click-heart');
             heart.innerHTML = ['🤍','✨','🌸'][Math.floor(Math.random()*3)];
@@ -669,138 +736,187 @@
                         animContainer.appendChild(pSparkle);
                         setTimeout(() => pSparkle.remove(), 600);
                     }
-
-                    i++; 
-                    setTimeout(ketik, 50); 
-                } 
-                else if (callback) { callback(); }
+                    
+                    i++;
+                    setTimeout(ketik, Math.random() * 45 + 55);
+                } else if (callback) {
+                    callback();
+                }
             }
-            setTimeout(ketik, 100);
+            ketik();
         }
 
-        function openSecretPopup() { document.getElementById('secretPopup').classList.add('open'); }
-        function closeSecretPopup(e) { e.stopPropagation(); document.getElementById('secretPopup').classList.remove('open'); nextScreen('sc-polaroid'); }
+        function openSecretPopup() {
+            document.getElementById('secretPopup').classList.add('open');
+        }
+
+        function closeSecretPopup(e) {
+            e.stopPropagation();
+            document.getElementById('secretPopup').classList.remove('open');
+            setTimeout(() => { nextScreen('sc-polaroid'); }, 800);
+        }
 
         function revealPhoto() {
-            const img = document.getElementById('secretPhoto');
-            const cap = document.getElementById('photoCaption');
-            const btn = document.getElementById('btnAfterPhoto');
-            img.style.opacity = '1'; cap.innerText = "✨ Truly Elegant ✨";
-            setTimeout(() => { btn.style.display = "inline-block"; }, 3000);
-        }
-
-        function jalankanBuketBunga() {
-            const txt = document.getElementById('flowerText');
-            txt.innerHTML = "Flowers fade.<br>Kindness doesn't.";
-            setTimeout(() => {
-                txt.style.opacity = 0;
-                setTimeout(() => {
-                    txt.innerHTML = "These flowers will never wilt.<br>Because they're made from appreciation.";
-                    txt.style.opacity = 1;
-                    setTimeout(() => { nextScreen('sc-memories'); buatBintangMemori(); }, 4500);
-                }, 1000);
-            }, 3000);
-        }
-
-        const dataBintang = [
-            "My Incess Selamanya. 👑",
-            "Beautiful Princess 🧚\u200D♀️",
-            "Selalu Minum Air Putih. 💧",
-            "Selalu Tersenyum. 😊",
-            "Jangan Overthinking. ✨",
-            "Istirahat Yang Cukup. 🛌",
-            "Kamu Itu Kuat Dari Yang Kamu Kira. 💪"
-        ];
-
-        function buatBintangMemori() {
-            const sky = document.getElementById('skyArea');
-            const msgBox = document.getElementById('msgBox');
-            sky.innerHTML = "";
-            dataBintang.forEach((pesan) => {
-                const starBtn = document.createElement('button');
-                starBtn.classList.add('clickable-star-btn');
-                starBtn.innerHTML = "⭐"; 
-                starBtn.style.left = Math.random() * 80 + 10 + '%';
-                starBtn.style.top = Math.random() * 70 + 10 + '%';
-                
-                starBtn.onclick = function(e) {
-                    e.preventDefault();
-                    const rect = starBtn.getBoundingClientRect();
-                    for(let k=0; k<6; k++) {
-                        const sp = document.createElement('div');
-                        sp.classList.add('sparkle');
-                        sp.style.left = (rect.left + rect.width/2) + 'px';
-                        sp.style.top = (rect.top + rect.height/2) + 'px';
-                        const angle = Math.random() * Math.PI * 2;
-                        const dist = Math.random() * 35 + 15;
-                        sp.style.setProperty('--mx', Math.cos(angle) * dist + 'px');
-                        sp.style.setProperty('--my', Math.sin(angle) * dist + 'px');
-                        animContainer.appendChild(sp);
-                        setTimeout(() => sp.remove(), 900);
-                    }
-                    msgBox.innerText = pesan; msgBox.classList.add('show');
-                };
-                sky.appendChild(starBtn);
-            });
-        }
-
-        function moveNoButton() {
-            const noBtn = document.getElementById('btn-no');
-            const x = Math.random() * 160 - 80;
-            const y = Math.random() * 100 - 50;
-            noBtn.style.transform = `translate(${x}px, ${y}px)`;
-        }
-
-        let isEndingActive = false;
-        function answerYes() {
-            alert("Hehehe, makasih yaaa! ✨");
-            nextScreen('sc-ending');
-            isEndingActive = true;
-            jalankanEndingTeks();
-            setInterval(launchFirework, 1000);
-        }
-
-        function launchFirework() {
-            if(!isEndingActive) return;
-            if (animContainer.querySelectorAll('.fw-particle').length > 40) return;
-
-            const colors = ['#fcf6ba', '#bf953f', '#ffffff', '#ffe5ec'];
-            const fx = Math.random() * window.innerWidth;
-            const fy = Math.random() * (window.innerHeight * 0.45);
-            const color = colors[Math.floor(Math.random()*colors.length)];
+            const pPhoto = document.getElementById('secretPhoto');
+            const pCaption = document.getElementById('photoCaption');
+            pPhoto.style.opacity = '1';
+            pCaption.innerText = "Captured🤍";
             
-            for(let i=0; i<12; i++) {
+            // Efek kilatan kamera mewah singkat saat foto terbuka
+            const flash = document.createElement('div');
+            flash.style.position = 'fixed'; flash.style.top = '0'; flash.style.left = '0';
+            flash.style.width = '100vw'; flash.style.height = '100vh';
+            flash.style.backgroundColor = '#fff'; flash.style.zIndex = '99999';
+            flash.style.opacity = '0.8'; flash.style.transition = 'opacity 0.6s ease';
+            document.body.appendChild(flash);
+            setTimeout(() => { flash.style.opacity = '0'; setTimeout(() => flash.remove(), 600); }, 50);
+
+            // Munculkan kembang api mini di sekitar polaroid sebagai selebrasi
+            for(let i=0; i<6; i++) {
+                setTimeout(() => {
+                    const rx = window.innerWidth/2 + (Math.random()*160 - 80);
+                    const ry = window.innerHeight/2 + (Math.random()*160 - 80);
+                    createFireworkExplosion(rx, ry);
+                }, i * 200);
+            }
+
+            document.getElementById('btnAfterPhoto').style.display = 'inline-block';
+        }
+
+        function createFireworkExplosion(x, y) {
+            const colors = ['#fcf6ba', '#bf953f', '#ffccd5', '#ffffff'];
+            for (let i = 0; i < 15; i++) {
                 const p = document.createElement('div');
                 p.classList.add('fw-particle');
-                p.style.color = color;
-                p.style.backgroundColor = color;
-                p.style.left = fx + 'px'; p.style.top = fy + 'px';
-                const angle = (i / 12) * Math.PI * 2;
-                const speed = Math.random() * 40 + 30;
-                p.style.setProperty('--x', Math.cos(angle)*speed + 'px');
-                p.style.setProperty('--y', Math.sin(angle)*speed + 'px');
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                p.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 45 + 25;
+                p.style.setProperty('--x', Math.cos(angle) * speed + 'px');
+                p.style.setProperty('--y', Math.sin(angle) * speed + 'px');
+                
                 animContainer.appendChild(p);
                 setTimeout(() => p.remove(), 1500);
             }
         }
 
-        const barisEnding = [
-            "Before you leave…",
-            "I hope this page made your day just a little brighter.",
-            "If life ever feels heavy… Come back here.",
-            "This page will always wait for you.",
-            "And remember... You always Have Me. 🤍",
-            "Semoga kamu bahagia dengan apa yang membuatmu merasa bahagia.\nKamu selalu cantik, my Incess."
+        // SC-FLOWERS TEXT SYSTEM
+        const bungaTeksArr = [
+            "Bunga ini tidak akan pernah layu,",
+            "Sama seperti doa-doa baik yang dikirimkan untukmu.",
+            "Semoga hari-harimu selalu dipenuhi kehangatan,",
+            "Princess... 🤍"
         ];
-        let indeksEnding = 0;
-        function jalankanEndingTeks() {
-            const wadahEnding = document.getElementById('endingText');
-            if(indeksEnding < barisEnding.length - 1) {
-                wadahEnding.innerHTML = barisEnding[indeksEnding];
-                setTimeout(() => { indeksEnding++; jalankanEndingTeks(); }, 3500); 
-            } else {
-                wadahEnding.innerHTML = barisEnding[barisEnding.length - 1];
+        
+        function jalankanBuketBunga() {
+            const wFlowers = document.getElementById('flowerText');
+            let idx = 0;
+            wFlowers.innerHTML = "";
+            
+            function nextLine() {
+                if(idx < bungaTeksArr.length) {
+                    wFlowers.style.opacity = "0";
+                    setTimeout(() => {
+                        wFlowers.innerText = bungaTeksArr[idx];
+                        wFlowers.style.transition = "opacity 0.8s";
+                        wFlowers.style.opacity = "1";
+                        idx++;
+                        setTimeout(nextLine, 3000);
+                    }, 600);
+                } else {
+                    setTimeout(() => { nextScreen('sc-memories'); initStarsMemories(); }, 1500);
+                }
             }
+            setTimeout(nextLine, 500);
+        }
+
+        // SC-MEMORIES SYSTEM
+        const listMemoriBintang = [
+            "Terima kasih sudah bertahan sampai sejauh ini ya.",
+            "Senyumanmu itu berharga, jangan biarkan hilang.",
+            "Kamu luar biasa dengan segala usahamu.",
+            "Semoga tidurmu malam ini nyenyak dan mimpi indah.",
+            "Ingat, kamu tidak sendirian menghadapi dunia."
+        ];
+
+        function initStarsMemories() {
+            const sky = document.getElementById('skyArea');
+            sky.innerHTML = "";
+            listMemoriBintang.forEach((msg, i) => {
+                const sBtn = document.createElement('button');
+                sBtn.classList.add('clickable-star-btn');
+                sBtn.innerHTML = "⭐";
+                sBtn.style.left = (15 + (i * 18) + Math.random()*5) + "%";
+                sBtn.style.top = (20 + (Math.sin(i) * 35) + 30) + "%";
+                sBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    const msgBox = document.getElementById('msgBox');
+                    msgBox.classList.remove('show');
+                    
+                    // Efek letupan bintang kecil saat ditekan
+                    for(let k=0; k<8; k++){
+                        const sp = document.createElement('div');
+                        sp.classList.add('sparkle');
+                        sp.style.left = e.clientX + 'px'; sp.style.top = e.clientY + 'px';
+                        const mx = (Math.random()*40 - 20);
+                        const my = (Math.random()*40 - 20);
+                        sp.style.setProperty('--mx', mx+'px');
+                        sp.style.setProperty('--my', my+'px');
+                        animContainer.appendChild(sp);
+                        setTimeout(() => sp.remove(), 900);
+                    }
+
+                    setTimeout(() => {
+                        msgBox.innerText = msg;
+                        msgBox.classList.add('show');
+                    }, 200);
+                };
+                sky.appendChild(sBtn);
+            });
+        }
+
+        // INTERAKTIF TOMBOL NGGA KABUR-KABURAN
+        function moveNoButton() {
+            const btnNo = document.getElementById('btn-no');
+            const maxX = window.innerWidth * 0.25;
+            const maxY = window.innerHeight * 0.25;
+            const rx = (Math.random() * maxX * 2) - maxX;
+            const ry = (Math.random() * maxY * 2) - maxY;
+            btnNo.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+        }
+
+        function answerYes() {
+            // Selebrasi kembang api besar saat jawaban iya dipilih
+            for(let i=0; i<12; i++) {
+                setTimeout(() => {
+                    createFireworkExplosion(Math.random()*window.innerWidth, Math.random()*window.innerHeight);
+                }, i * 150);
+            }
+            nextScreen('sc-ending');
+            jalankanEnding();
+        }
+
+        // ENDING TEXT WRITER
+        const barisEnding = 
+            "Dan petualangan halaman ini berakhir di sini.\n" +
+            "Namun tidak dengan doa-doa tulus untukmu.\n\n" +
+            "Tetaplah bersinar bagai berlian yang utuh,\n" +
+            "Sebab duniamu jauh lebih indah saat kamu bahagia.\n\n" +
+            "Have a wonderful time ahead, Princess. ✨";
+
+        function jalankanEnding() {
+            const eText = document.getElementById('endingText');
+            eText.innerHTML = "";
+            let i = 0;
+            function ketik() {
+                if(i < barisEnding.length) {
+                    eText.innerHTML += barisEnding.charAt(i);
+                    i++;
+                    setTimeout(ketik, 40);
+                }
+            }
+            setTimeout(ketik, 800);
         }
     </script>
 </body>
