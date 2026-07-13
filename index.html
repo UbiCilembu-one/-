@@ -671,24 +671,16 @@
             }
         }
 
-        // ENDING TEXT
-        const barisEnding = [
-            "Before you leave…",
-            "I hope this page made your day just a little brighter.",
-            "If life ever feels heavy… Come back here.",
-            "This page will always wait for you.",
-            "And remember... You always Have Me. 🤍",
-            "Semoga kamu bahagia dengan apa yang membuatmu merasa bahagia.\nKamu selalu cantik, my Incess."
-        ];
-        let indeksEnding = 0;
+        // Fungsi Teks Ending yang Elok & Puitis
         function jalankanEndingTeks() {
-            const wadahEnding = document.getElementById('endingText');
-            if(indeksEnding < barisEnding.length - 1) {
-                wadahEnding.innerHTML = barisEnding[indeksEnding];
-                setTimeout(() => { indeksEnding++; jalankanEndingTeks(); }, 3500); 
-            } else {
-                wadahEnding.innerHTML = barisEnding[barisEnding.length - 1];
-            }
+            const endingTxt = document.getElementById('endingText');
+            endingTxt.innerText = `Terima kasih sudah berjalan sejauh ini...
+
+Kamu adalah pembuktian bahwa keanggunan tidak selalu bersuara lantang. Ia bisa berwujud ketulusan, senyuman yang menenangkan, dan caramu memperlakukan duniamu.
+
+Semoga malam-malammu selalu dipenuhi kedamaian, dan semoga kamu tidak pernah lupa seberapa berharganya dirimu di mata seseorang.
+
+Sleep tight, my Princess. 🌙✨`;
         }
     </script>
 </body>
