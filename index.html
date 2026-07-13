@@ -41,7 +41,7 @@
             -webkit-transform: translate3d(0, 0, 0);
         }
 
-        /* --- EFEK AURORA DI BACKGROUND (DIUPGRADE: BREATHING GLOW) --- */
+        /* --- EFEK AURORA DI BACKGROUND (BREATHING GLOW) --- */
         body::before {
             content: '';
             position: absolute;
@@ -159,7 +159,6 @@
             border-radius: 4px;
         }
 
-        /* Ornamen Tipis Menyilang di Belakang Layar Surat agar Mengisi Kekosongan */
         .screen-luxury-bg {
             position: absolute;
             top: 10%; left: 10%; right: 10%; bottom: 10%;
@@ -168,7 +167,6 @@
             z-index: -1;
         }
 
-        /* Sumbu Garis Sudut Sederhana (Tetap Dipertahankan) */
         .screen::before {
             content: ''; position: absolute; top: 15px; left: 15px; width: 14px; height: 14px;
             border-top: 2px solid rgba(212, 175, 55, 0.5); border-left: 2px solid rgba(212, 175, 55, 0.5);
@@ -180,7 +178,7 @@
             z-index: 10;
         }
 
-        /* ORNAMEN ELEGANT FLORAL CORNER (Saran No. 3) */
+        /* ORNAMEN ELEGANT FLORAL CORNER */
         .floral-corner {
             position: absolute;
             width: 45px;
@@ -199,7 +197,6 @@
         /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
         h1 { font-size: 18px; font-weight: 300; margin-bottom: 15px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
         
-        /* Ornamen Pembatas (Flourish Divider) di Bawah Judul Surat */
         .gold-divider {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 60%; margin: 0 auto 25px auto; color: rgba(212, 175, 55, 0.4); font-size: 10px;
@@ -324,7 +321,6 @@
             100% { transform: translate3d(0, -5vh, 0) scale(1.2); opacity: 0; }
         }
 
-        /* ANIMASI GELOMBANG GLOW */
         .glow-active {
             box-shadow: 0 0 35px rgba(212, 175, 55, 0.2), inset 0 0 30px rgba(212, 175, 55, 0.08);
             border-color: rgba(212, 175, 55, 0.5) !important;
@@ -520,7 +516,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             const screens = document.querySelectorAll('.screen, .secret-popup-box');
             
-            // Definisikan bentuk SVG Floral Ornament yang mewah dan tipis
             const svgFlowerHtml = `
                 <svg class="floral-corner floral-top-left" viewBox="0 0 100 100">
                     <path d="M 0,0 L 40,0 C 35,10 25,15 20,20 C 15,25 10,35 0,40 Z" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
@@ -571,7 +566,6 @@
             else { audio.pause(); audioCtrl.classList.remove('playing'); }
         }
 
-        // EFEK TEKANAN LAYAR MEMUNCULKAN HATI ANGGUN
         document.body.addEventListener('click', function(e) {
             if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame') || e.target.closest('svg')) return;
             const heart = document.createElement('div');
@@ -583,7 +577,6 @@
             setTimeout(() => heart.remove(), 1200);
         });
 
-        // KANVAS BINTANG LEMBUT
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -623,7 +616,6 @@
             } else { alert("Maaf, halaman ini tidak ditujukan untukmu."); }
         }
 
-        // KELOPAK BUNGA GUGUR ELEGAN
         const warnaBunga = ['#fffef0', '#ffccd5', '#ffe5ec', '#f8f9fa'];
         let startFlowers = false;
 
@@ -645,7 +637,6 @@
         }
         setInterval(buatKelopak, 600);
 
-        // ANIMASI MAGIC DUST / KUNANG-KUNANG
         function buatGlowDust() {
             if (!startFlowers) return;
             if (animContainer.querySelectorAll('.glow-dust').length > 10) return;
@@ -762,7 +753,6 @@
             pPhoto.style.opacity = '1';
             pCaption.innerText = "Captured🤍";
             
-            // Efek kilatan kamera mewah singkat saat foto terbuka
             const flash = document.createElement('div');
             flash.style.position = 'fixed'; flash.style.top = '0'; flash.style.left = '0';
             flash.style.width = '100vw'; flash.style.height = '100vh';
@@ -771,7 +761,6 @@
             document.body.appendChild(flash);
             setTimeout(() => { flash.style.opacity = '0'; setTimeout(() => flash.remove(), 600); }, 50);
 
-            // Munculkan kembang api mini di sekitar polaroid sebagai selebrasi
             for(let i=0; i<6; i++) {
                 setTimeout(() => {
                     const rx = window.innerWidth/2 + (Math.random()*160 - 80);
@@ -801,7 +790,6 @@
             }
         }
 
-        // SC-FLOWERS TEXT SYSTEM
         const bungaTeksArr = [
             "Bunga ini tidak akan pernah layu,",
             "Sama seperti doa-doa baik yang dikirimkan untukmu.",
@@ -831,7 +819,6 @@
             setTimeout(nextLine, 500);
         }
 
-        // SC-MEMORIES SYSTEM
         const listMemoriBintang = [
             "Terima kasih sudah bertahan sampai sejauh ini ya.",
             "Senyumanmu itu berharga, jangan biarkan hilang.",
@@ -854,7 +841,6 @@
                     const msgBox = document.getElementById('msgBox');
                     msgBox.classList.remove('show');
                     
-                    // Efek letupan bintang kecil saat ditekan
                     for(let k=0; k<8; k++){
                         const sp = document.createElement('div');
                         sp.classList.add('sparkle');
@@ -876,7 +862,6 @@
             });
         }
 
-        // INTERAKTIF TOMBOL NGGA KABUR-KABURAN
         function moveNoButton() {
             const btnNo = document.getElementById('btn-no');
             const maxX = window.innerWidth * 0.25;
@@ -887,7 +872,6 @@
         }
 
         function answerYes() {
-            // Selebrasi kembang api besar saat jawaban iya dipilih
             for(let i=0; i<12; i++) {
                 setTimeout(() => {
                     createFireworkExplosion(Math.random()*window.innerWidth, Math.random()*window.innerHeight);
@@ -897,13 +881,12 @@
             jalankanEnding();
         }
 
-        // ENDING TEXT WRITER
+        /* --- TEKS ASLI ENDING KAMU YANG SUDAH DIKEMBALIKAN --- */
         const barisEnding = 
-            "Dan petualangan halaman ini berakhir di sini.\n" +
-            "Namun tidak dengan doa-doa tulus untukmu.\n\n" +
-            "Tetaplah bersinar bagai berlian yang utuh,\n" +
-            "Sebab duniamu jauh lebih indah saat kamu bahagia.\n\n" +
-            "Have a wonderful time ahead, Princess. ✨";
+            "Maaf ya aku lancang bikinin kamu ginian wkwkw,\n" +
+            "tapi jujur aku seneng banget bikin ginian buat orang spesial kyk kamu,\n" +
+            "makasi ya udh mau mampir ke sini princess,\n" +
+            "semoga hari-hari kamu menyenangkan.";
 
         function jalankanEnding() {
             const eText = document.getElementById('endingText');
@@ -913,7 +896,7 @@
                 if(i < barisEnding.length) {
                     eText.innerHTML += barisEnding.charAt(i);
                     i++;
-                    setTimeout(ketik, 40);
+                    setTimeout(ketik, 45);
                 }
             }
             setTimeout(ketik, 800);
