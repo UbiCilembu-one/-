@@ -466,6 +466,7 @@
         <p style="font-size: 11px; color: #777; margin-bottom: 5px; letter-spacing: 1px;">Ketuk foto di bawah untuk mencetak memori</p>
         <div class="polaroid-frame" onclick="revealPhoto()">
             <div class="polaroid-img" id="secretPhoto" style="background-image: url('6A5E6247-9BDE-4E72-BA45-230070A69F55.jpeg');"></div>
+            <!-- PESAN RAHASIA TERSEMBUNYI DI MANA AKAN MUNCUL SETELAH FOTO DI-TAP -->
             <div class="polaroid-caption" id="photoCaption">Tap to develop...</div>
         </div>
         <button class="btn" id="btnAfterPhoto" style="display:none;" onclick="nextScreen('sc-flowers'); jalankanBuketBunga();">Next →</button>
@@ -751,7 +752,9 @@
             const pPhoto = document.getElementById('secretPhoto');
             const pCaption = document.getElementById('photoCaption');
             pPhoto.style.opacity = '1';
-            pCaption.innerText = "Captured🤍";
+            
+            /* --- INI DIA PESAN TERSEMBUNYI YANG DI-REVEAL DI BAWAH POLAROID --- */
+            pCaption.innerText = "Captured. (I Love You) 🤍";
             
             const flash = document.createElement('div');
             flash.style.position = 'fixed'; flash.style.top = '0'; flash.style.left = '0';
@@ -881,12 +884,12 @@
             jalankanEnding();
         }
 
-        /* --- TEKS ASLI ENDING KAMU YANG SUDAH DIKEMBALIKAN --- */
+        /* --- TEKS ASLI ENDING --- */
         const barisEnding = 
-            "Maaf ya aku lancang bikinin kamu ginian,\n" +
-            "tapi jujur aku seneng banget bikin ginian buat orang spesial kayak kamu,\n" +
-            "makasi ya udh mau mampir ke sini yaaa,\n" +
-            "semoga hari-hari kamu menyenangkan, My Incess Selamanya🤍.";
+            "Maaf ya aku lancang bikinin kamu ginian wkwkw,\n" +
+            "tapi jujur aku seneng banget bikin ginian buat orang spesial kyk kamu,\n" +
+            "makasi ya udh mau mampir ke sini princess,\n" +
+            "semoga hari-hari kamu menyenangkan.";
 
         function jalankanEnding() {
             const eText = document.getElementById('endingText');
