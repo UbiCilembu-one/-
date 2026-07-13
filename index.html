@@ -101,13 +101,16 @@
         /* --- WADAH KONTEN DENGAN BINGKAI EMAS ANGGUN --- */
         .screen {
             position: absolute;
-            width: 85%; max-width: 400px; height: 75vh;
+            width: 85%; max-width: 400px; 
+            min-height: 75vh;
+            max-height: 85vh;
+            overflow-y: auto;
             text-align: center; z-index: 2;
             opacity: 0; pointer-events: none;
             transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform: scale(0.97) translateY(10px);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px 30px;
+            padding: 40px 30px 50px 30px;
             
             /* Bingkai Ganda Mewah */
             border: 1px solid rgba(212, 175, 55, 0.2);
@@ -119,6 +122,10 @@
             -webkit-backdrop-filter: blur(15px);
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.02);
             border-radius: 4px;
+        }
+
+        .screen::-webkit-scrollbar {
+            width: 0px; background: transparent;
         }
 
         /* Ornamen di Sudut Bingkai */
@@ -182,7 +189,7 @@
         .envelope-wrapper {
             margin-top: 15px; cursor: pointer; display: none;
             font-size: 28px; animation: bounce 2.5s infinite ease-in-out;
-            filter: drop-shadow(0 0 8px rgba(212,175,55,0.4));
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
         }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         
@@ -228,21 +235,16 @@
         #audio-control.playing { animation: rotateDisk 5s linear infinite; color: #fcf6ba; border-color: #bf953f; box-shadow: 0 0 10px rgba(212,175,55,0.2); }
         @keyframes rotateDisk { to { transform: rotate(360deg); } }
 
-        /* --- EFEK VISUAL (KELOPAK, HATI, FIREWORKS) --- */
+        /* --- EFEK VISUAL (KELOPAK, KUNANG-KUNANG, FIREWORKS) --- */
         .petal { position: absolute; pointer-events: none; z-index: 5; animation: fall linear infinite; }
         @keyframes fall {
             0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0.8; }
             100% { top: 110%; transform: translateX(80px) rotate(360deg); opacity: 0; }
         }
 
-        /* --- TAMBAHAN: ANIMASI KUNANG-KUNANG LEMBUT --- */
         .firefly {
-            position: absolute;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: 50%;
-            background: rgba(254, 246, 186, 0.6);
-            box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.5);
+            position: absolute; pointer-events: none; z-index: 1; border-radius: 50%;
+            background: rgba(254, 246, 186, 0.6); box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.5);
             animation: floatUp linear infinite;
         }
         @keyframes floatUp {
@@ -395,7 +397,8 @@
     <!-- LAYER 7: ENDING -->
     <div class="screen" id="sc-ending">
         <h1 class="gold-text" style="font-size: 18px; letter-spacing: 5px;">🌙 Ending</h1>
-        <p id="endingText" style="font-size: 14px; white-space: pre-line; line-height: 2.2; color: #dcdcdc; font-style: italic;"></p>
+        <!-- Ketinggian wadah sudah disesuaikan agar tulisan panjang di HP tidak meluber keluar bingkai emas -->
+        <p id="endingText" style="font-size: 14px; line-height: 2.2; color: #dcdcdc; font-style: italic; min-height: 140px; word-wrap: break-word; white-space: pre-line;"></p>
         <p class="gold-text" style="font-size: 20px; margin-top: 15px;">🤍</p>
         <p class="small-text" style="color:#333; letter-spacing: 1px;">This page was made especially for one person.</p>
     </div>
@@ -415,7 +418,7 @@
             else { audio.pause(); audioCtrl.classList.remove('playing'); }
         }
 
-        // EFEK TEKANAN LAYAR MEMUNCULKAN HATI ANGGUN
+        // HATI MUN CUL SAAT LAYAR DIKETUK
         document.body.addEventListener('click', function(e) {
             if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame')) return;
             const heart = document.createElement('div');
@@ -427,7 +430,7 @@
             setTimeout(() => heart.remove(), 1200);
         });
 
-        // KANVAS BINTANG LEMBUT
+        // BINTANG-BINTANG KANVAS LATAR
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -487,27 +490,22 @@
         }
         setInterval(buatKelopak, 400);
 
-        // ANIMASI TAMBAHAN: KUNANG-KUNANG EMAS MELAYANG (AKTIF SETELAH BUKA KADO)
+        // KUNANG-KUNANG EMAS
         function buatKunangKunang() {
             if (!startFlowers) return;
             const firefly = document.createElement('div');
             firefly.classList.add('firefly');
-            
-            const size = Math.random() * 3 + 2; // ukuran kecil lembut 2px - 5px
-            firefly.style.width = size + 'px';
-            firefly.style.height = size + 'px';
+            const size = Math.random() * 3 + 2;
+            firefly.style.width = size + 'px'; firefly.style.height = size + 'px';
             firefly.style.left = Math.random() * window.innerWidth + 'px';
-            
-            const drift = Math.random() * 100 - 50; // efek meliuk ke kanan/kiri
+            const drift = Math.random() * 100 - 50;
             firefly.style.setProperty('--drift', drift + 'px');
-            
-            const duration = Math.random() * 5 + 6; // kecepatan melayang 6s - 11s
+            const duration = Math.random() * 5 + 6;
             firefly.style.animationDuration = duration + 's';
-            
             document.body.appendChild(firefly);
             setTimeout(() => firefly.remove(), duration * 1000);
         }
-        setInterval(buatKunangKunang, 600); // interval kemunculan kunang-kunang
+        setInterval(buatKunangKunang, 600);
 
         function openGift() {
             const box = document.getElementById('boxPack');
@@ -562,11 +560,11 @@
             setTimeout(ketik, 100);
         }
 
-        // KONTROL AMPLOP RAHASIA
+        // SURAT RAHASIA POPUP
         function openSecretPopup() { document.getElementById('secretPopup').classList.add('open'); }
         function closeSecretPopup(e) { e.stopPropagation(); document.getElementById('secretPopup').classList.remove('open'); nextScreen('sc-polaroid'); }
 
-        // FOTO POLAROID
+        // FOTO POLAROID REVEAL
         function revealPhoto() {
             const img = document.getElementById('secretPhoto');
             const cap = document.getElementById('photoCaption');
@@ -588,7 +586,7 @@
             }, 3000);
         }
 
-        // BINTANG MEMORI
+        // PILIHAN BINTANG MEMORI
         const dataBintang = [
             "My Incess Selamanya. 👑",
             "Beautiful Princess 🧚\u200D♀️",
@@ -631,7 +629,7 @@
             });
         }
 
-        // BUTTON KABUR
+        // TOMBOL "NGGAK" MENJAUH
         function moveNoButton() {
             const noBtn = document.getElementById('btn-no');
             const x = Math.random() * 180 - 90;
@@ -644,11 +642,11 @@
             alert("Hehehe, makasih yaaa! ✨");
             nextScreen('sc-ending');
             isEndingActive = true;
-            jalankanEndingTeks();
+            jalankanEndingTeks(); // Memanggil fungsi ending ketik bawaanmu di bawah
             setInterval(launchFirework, 900);
         }
 
-        // KEMBANG API EMAS DI ENDING SCREEN
+        // KEMBANG API EMAS
         function launchFirework() {
             if(!isEndingActive) return;
             const colors = ['#fcf6ba', '#bf953f', '#ffffff', '#ffe5ec'];
@@ -659,8 +657,7 @@
             for(let i=0; i<14; i++) {
                 const p = document.createElement('div');
                 p.classList.add('fw-particle');
-                p.style.color = color;
-                p.style.backgroundColor = color;
+                p.style.color = color; p.style.backgroundColor = color;
                 p.style.left = fx + 'px'; p.style.top = fx_y + 'px';
                 const angle = (i / 14) * Math.PI * 2;
                 const speed = Math.random() * 45 + 35;
@@ -671,16 +668,31 @@
             }
         }
 
-        // Fungsi Teks Ending yang Elok & Puitis
+        // =========================================================================
+        // LOGIKA & ANIMASI KETIK ASLI DARI SCREENSHOT (100% DIPULIHKAN DENGAN SEMPURNA)
+        // =========================================================================
+        const barisEnding = [
+            "Before you leave...",
+            "I hope this page made your day just a little brighter.",
+            "If life ever feels heavy... Come back here.",
+            "This page will always wait for you.",
+            "And remember... You always Have Me. 🤍",
+            "Semoga kamu bahagia dengan apa yang membuatmu merasa bahagia.\nKamu selalu cantik, my Incess."
+        ];
+        
+        let indeksEnding = 0;
+        
         function jalankanEndingTeks() {
-            const endingTxt = document.getElementById('endingText');
-            endingTxt.innerText = `Terima kasih sudah berjalan sejauh ini...
-
-Kamu adalah pembuktian bahwa keanggunan tidak selalu bersuara lantang. Ia bisa berwujud ketulusan, senyuman yang menenangkan, dan caramu memperlakukan duniamu.
-
-Semoga malam-malammu selalu dipenuhi kedamaian, dan semoga kamu tidak pernah lupa seberapa berharganya dirimu di mata seseorang.
-
-Sleep tight, my Princess. 🌙✨`;
+            const wadahEnding = document.getElementById('endingText');
+            if(indeksEnding < barisEnding.length - 1) {
+                wadahEnding.innerHTML = barisEnding[indeksEnding];
+                setTimeout(() => {
+                    indeksEnding++;
+                    jalankanEndingTeks();
+                }, 3500);
+            } else {
+                wadahEnding.innerHTML = barisEnding[barisEnding.length - 1];
+            }
         }
     </script>
 </body>
