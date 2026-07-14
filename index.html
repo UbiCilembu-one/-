@@ -53,7 +53,7 @@
             align-items: center;
             z-index: 9999;
             opacity: 1;
-            transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .intro-text {
@@ -334,6 +334,22 @@
             margin-bottom: 15px; opacity: 0; letter-spacing: 0.5px; line-height: 1.6;
         }
         .message-display-box.show { opacity: 1; }
+
+        /* --- STYLE UNTUK TEKS RAHASIA DI ENDING --- */
+        .secret-love-text {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            margin-top: 10px;
+            letter-spacing: 3px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .secret-love-text.reveal {
+            opacity: 1;
+            transform: scale(1);
+        }
     </style>
 </head>
 <body>
@@ -453,30 +469,39 @@
         </div>
     </div>
 
-    <!-- LAYER 7: ENDING (100% KALIMAT ASLI PILIHANMU) -->
+    <!-- LAYER 7: ENDING -->
     <div class="screen" id="sc-ending">
         <div class="screen-luxury-bg"></div>
         <h1 class="gold-text" style="font-size: 18px; letter-spacing: 5px;">🌙 Ending</h1>
         <div class="gold-divider">✦ 🌙 ✦</div>
         
-        <!-- Di sini teks aslimu yang berbahasa Inggris sudah aman -->
         <p id="endingText" style="font-size: 14px; white-space: pre-line; line-height: 2.2; color: #4a3728; font-style: italic;">I'm glad to hear that.
 
         Keep moving forward with confidence. This page will always be here as a small reminder whenever you need it.
         
         Have a beautiful journey ahead.</p>
         
-        <p class="gold-text" style="font-size: 20px; margin-top: 15px;">🤍</p>
-        <p class="small-text" style="color:#887261; letter-spacing: 1px;">This page was made especially for one person.</p>
+        <!-- Pemicu Ketuk 2x -->
+        <p class="gold-text" id="heartTrigger" style="font-size: 20px; margin-top: 15px; cursor: pointer; user-select: none;">🤍</p>
+        
+        <!-- Kalimat Tersembunyi Efek Elegan -->
+        <div class="gold-text secret-love-text" id="secretLoveMessage">I Love You 🤍</div>
+
+        <p class="small-text" style="color:#887261; letter-spacing: 1px; margin-top: 25px;">This page was made especially for one person.</p>
     </div>
 
     <script>
         const animContainer = document.getElementById('animation-container');
 
+        // Memperbaiki isu "ngestuk" di awal intro screen
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
             intro.style.opacity = '0';
-            setTimeout(() => { intro.style.display = 'none'; }, 2000);
+            
+            // Menggunakan event transitionend agar benar-benar aman terhapus setelah animasi fade-out selesai
+            intro.addEventListener('transitionend', function() {
+                intro.style.display = 'none';
+            }, { once: true });
         }
 
         const audio = document.getElementById('bgMusic');
@@ -488,7 +513,7 @@
         }
 
         document.body.addEventListener('click', function(e) {
-            if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame')) return;
+            if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame') || e.target.id === 'heartTrigger') return;
             const heart = document.createElement('div');
             heart.classList.add('click-heart');
             heart.innerHTML = ['🤍','✨','🌸'][Math.floor(Math.random()*3)];
@@ -655,7 +680,7 @@
                     callback();
                 }
             }
-            ketik();
+            letik();
         }
 
         function openSecretPopup() {
@@ -673,90 +698,100 @@
             const caption = document.getElementById('photoCaption');
             photo.style.opacity = '1';
             caption.innerText = "Captured Memories ✨";
-            
-            for(let i=0; i<15; i++) {
-                setTimeout(() => {
-                    const fw = document.createElement('div');
-                    fw.classList.add('fw-particle');
-                    fw.style.backgroundColor = ['#8c6239','#aa7c4c','#4a3728'][Math.floor(Math.random()*3)];
-                    fw.style.left = (window.innerWidth/2 + (Math.random()*100 - 50)) + 'px';
-                    fw.style.top = (window.innerHeight/2 + (Math.random()*100 - 50)) + 'px';
-                    fw.style.setProperty('--x', (Math.random()*160 - 80)+'px');
-                    fw.style.setProperty('--y', (Math.random()*160 - 80)+'px');
-                    animContainer.appendChild(fw);
-                    setTimeout(() => fw.remove(), 1500);
-                }, i*60);
-            }
-            
             document.getElementById('btnAfterPhoto').style.display = 'inline-block';
         }
 
+        const teksBunga = [
+            "Bunga ini tidak akan pernah layu,",
+            "Sama seperti rasa peduli dan ketulusan yang ada di balik halaman ini.",
+            "Semoga keindahan kecil ini bisa menemani harimu."
+        ];
+        let idxBunga = 0;
         function jalankanBuketBunga() {
-            const txt = "Bunga-bunga ini mekar untuk mendoakan hari-harimu agar selalu dipenuhi dengan kebaikan dan kedamaian... 🌸";
-            const target = document.getElementById('flowerText');
-            ketikTeks(txt, target, () => {
-                setTimeout(() => { nextScreen('sc-memories'); generateStarsArea(); }, 4000);
-            });
+            const el = document.getElementById('flowerText');
+            if(idxBunga < teksBunga.length) {
+                ketikTeks(teksBunga[idxBunga], el, () => {
+                    setTimeout(() => {
+                        idxBunga++;
+                        if(idxBunga < teksBunga.length) { el.innerHTML = ""; jalankanBuketBunga(); }
+                        else { setTimeout(() => { nextScreen('sc-memories'); inisialisasiBintang(); }, 2500); }
+                    }, 2200);
+                });
+            }
         }
 
-        /* --- DATA TEXT BINTANG ASLI MILIKMU (DIKEMBALIKAN KE SINI) --- */
-        const pesanBintang = [
-            "Before you leave...",
-            "I hope this page made your day just a little brighter.",
-            "If life ever feels heavy... Come back here.",
-            "This page will always wait for you.",
-            "And remember... You always Have Me. 🤍",
-            "Semoga kamu bahagia dengan apa yang membuatmu merasa bahagia.\nKamu selalu cantik, my Incess."
-            "Senyumanmu adalah hal terindah, jadi tolong jangan biarkan dunia menghilangkan senyuman itu"
+        const kumpulanPesanBintang = [
+            "Kamu adalah bagian terbaik dari cerita hari ini. ✨",
+            "Ketika malam tiba, ingatlah ada doa yang selalu menjagamu. ⭐",
+            "Jangan lupa mengapresiasi dirimu sendiri atas semua lelahmu. 👑",
+            "Senyumanmu itu berharga, jangan biarkan redup ya? 🤍",
+            "Setiap tantangan hari ini adalah proses hebatmu. Terus melangkah! 💫"
         ];
-
-        function generateStarsArea() {
-            const area = document.getElementById('skyArea');
-            area.innerHTML = "";
-            for(let i=0; i<5; i++) {
+        function inisialisasiBintang() {
+            const sky = document.getElementById('skyArea');
+            sky.innerHTML = "";
+            const posisiBintang = [
+                {t:'15%', l:'15%'}, {t:'20%', l:'75%'}, {t:'50%', l:'45%'}, {t:'70%', l:'20%'}, {t:'75%', l:'80%'}
+            ];
+            kumpulanPesanBintang.forEach((pesan, idx) => {
                 const btn = document.createElement('button');
                 btn.classList.add('clickable-star-btn');
                 btn.innerHTML = "⭐";
-                btn.style.left = (15 + (i * 18)) + "%";
-                btn.style.top = (20 + (Math.random() * 50)) + "px";
+                btn.style.top = posisiBintang[idx].t;
+                btn.style.left = posisiBintang[idx].l;
                 btn.onclick = () => {
-                    document.getElementById('msgBox').innerText = pesanBintang[i];
-                    document.getElementById('msgBox').classList.add('show');
-                    
-                    for(let k=0; k<6; k++) {
-                        const sp = document.createElement('div');
-                        sp.classList.add('sparkle');
-                        const rect = btn.getBoundingClientRect();
-                        sp.style.left = (rect.left + 15) + 'px';
-                        sp.style.top = (rect.top + 15) + 'px';
-                        sp.style.setProperty('--mx', (Math.random()*60 - 30)+'px');
-                        sp.style.setProperty('--my', (Math.random()*60 - 30)+'px');
-                        animContainer.appendChild(sp);
-                        setTimeout(() => sp.remove(), 900);
-                    }
+                    const box = document.getElementById('msgBox');
+                    box.classList.remove('show');
+                    setTimeout(() => {
+                        box.innerText = pesan;
+                        box.classList.add('show');
+                        buatKembangApi(window.innerWidth/2, window.innerHeight/3);
+                    }, 200);
                 };
-                area.appendChild(btn);
+                sky.appendChild(btn);
+            });
+        }
+
+        function buatKembangApi(x, y) {
+            const warna = ['#aa7c4c', '#8c6239', '#6b4c2b', '#ffffff'];
+            for(let i=0; i<24; i++) {
+                const p = document.createElement('div');
+                p.classList.add('fw-particle');
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                p.style.backgroundColor = warna[Math.floor(Math.random()*warna.length)];
+                const sudut = (i / 24) * Math.PI * 2;
+                const jarak = Math.random() * 50 + 40;
+                p.style.setProperty('--x', Math.cos(sudut)*jarak + 'px');
+                p.style.setProperty('--y', Math.sin(sudut)*jarak + 'px');
+                animContainer.appendChild(p);
+                setTimeout(() => p.remove(), 1500);
             }
         }
 
         function moveNoButton() {
-            const btnNo = document.getElementById('btn-no');
-            const x = Math.random() * (window.innerWidth - 100) - (window.innerWidth/2 - 50);
-            const y = Math.random() * 150 - 75;
-            btnNo.style.transform = `translate(${x}px, ${y}px)`;
+            const btn = document.getElementById('btn-no');
+            const x = Math.random() * 140 - 70;
+            const y = Math.random() * 60 - 30;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
         }
 
-        /* --- KUNCI LOGIKA BIAR TIDAK MENIMPA TEKS ASLI DI HTML --- */
         function answerYes() {
-            nextScreen('sc-ending');
-            const endingElement = document.getElementById('endingText');
-            // Mengambil teks asli Inggris yang ada di tag HTML endingText
-            const endingTxt = endingElement.innerText || "Have a beautiful journey ahead."; 
-            endingElement.innerText = ""; 
-            ketikTeks(endingTxt, endingElement);
+            buatKembangApi(window.innerWidth/2, window.innerHeight/2);
+            setTimeout(() => { nextScreen('sc-ending'); }, 1000);
         }
+
+        // --- SISTEM DETEKSI KLIK 2X UNTUK KALIMAT TERSEMBUNYI DI ENDING ---
+        const heartTrigger = document.getElementById('heartTrigger');
+        const secretLoveMessage = document.getElementById('secretLoveMessage');
+
+        heartTrigger.addEventListener('dblclick', function() {
+            // Memberikan efek kembang api kecil di sekitar love saat berhasil diketuk 2x
+            const rect = heartTrigger.getBoundingClientRect();
+            buatKembangApi(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
+            
+            // Menampilkan teks tersembunyi dengan elegan
+            secretLoveMessage.classList.add('reveal');
+        });
     </script>
 </body>
 </html>
-
-```
