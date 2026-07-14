@@ -14,7 +14,6 @@
         }
 
         body {
-            /* Diubah sedikit ke arah deep rose-wine & violet agar lebih romantis */
             background: radial-gradient(circle at center, #1a0b16 0%, #030205 100%);
             color: #fff;
             height: 100vh;
@@ -123,7 +122,7 @@
             z-index: 1; pointer-events: none;
         }
 
-        /* --- WADAH KONTEN DENGAN BINGKAI EMAS ANGGUN --- */
+        /* --- WADAH KONTEN/KERTAS (UPGRADED: LUXURY ROMANTIC VIBE) --- */
         .screen {
             position: absolute;
             width: 85%; max-width: 400px; 
@@ -138,37 +137,42 @@
             padding: 40px 30px 50px 30px;
             
             /* Bingkai Ganda Mewah */
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            outline: 4px solid rgba(212, 175, 55, 0.03);
-            outline-offset: -10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            outline: 1px solid rgba(255, 182, 193, 0.15);
+            outline-offset: -6px;
             
-            background: rgba(13, 10, 18, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.02);
-            border-radius: 4px;
+            /* Mengubah warna polos hitam menjadi gradasi kertas malam romantis yang lembut */
+            background: linear-gradient(135deg, rgba(23, 13, 26, 0.85) 0%, rgba(13, 10, 18, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            
+            /* Memberikan efek pendaran luar romantis (Soft Glow) berwarna rose & gold */
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 
+                        inset 0 0 30px rgba(255, 192, 203, 0.03),
+                        0 0 25px rgba(212, 175, 55, 0.05);
+            border-radius: 8px;
         }
 
         .screen::-webkit-scrollbar {
             width: 0px; background: transparent;
         }
 
-        /* Ornamen di Sudut Bingkai */
+        /* Ornamen Garis Sudut di Sudut Bingkai Kertas */
         .screen::before {
-            content: ''; position: absolute; top: 15px; left: 15px; width: 12px; height: 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.4); border-left: 1px solid rgba(212, 175, 55, 0.4);
+            content: ''; position: absolute; top: 15px; left: 15px; width: 14px; height: 14px;
+            border-top: 1px solid rgba(212, 175, 55, 0.5); border-left: 1px solid rgba(212, 175, 55, 0.5);
         }
         .screen::after {
-            content: ''; position: absolute; bottom: 15px; right: 15px; width: 12px; height: 12px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.4); border-right: 1px solid rgba(212, 175, 55, 0.4);
+            content: ''; position: absolute; bottom: 15px; right: 15px; width: 14px; height: 14px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.5); border-right: 1px solid rgba(212, 175, 55, 0.5);
         }
 
         .active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
 
         /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
         h1 { font-size: 18px; font-weight: 300; margin-bottom: 10px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
-        p { font-size: 13px; font-weight: 300; line-height: 2; color: #b8b8b8; margin-bottom: 20px; letter-spacing: 0.5px; }
-        .small-text { font-size: 10px; color: #444; font-style: italic; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; }
+        p { font-size: 13px; font-weight: 300; line-height: 2; color: #e0e0e0; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .small-text { font-size: 10px; color: #555; font-style: italic; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; }
 
         .btn {
             background: none; border: 1px solid rgba(212, 175, 55, 0.4); color: #fcf6ba;
@@ -227,15 +231,16 @@
         
         .secret-popup-box {
             position: absolute; bottom: -100%; left: 0; width: 100%; height: 75%;
-            background: #0d0a12; border-top: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px 8px 0 0;
+            background: linear-gradient(135deg, #180d1b 0%, #0d0a12 100%);
+            border-top: 1px solid rgba(212, 175, 55, 0.4); border-radius: 8px 8px 0 0;
             padding: 30px 25px; z-index: 500; transition: bottom 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             box-shadow: 0 -20px 40px rgba(0,0,0,0.9);
-            outline: 4px solid rgba(212, 175, 55, 0.02); outline-offset: -10px;
+            outline: 1px solid rgba(255, 182, 193, 0.1); outline-offset: -6px;
         }
         .secret-popup-box::before {
             content: ''; position: absolute; top: 15px; left: 15px; width: 10px; height: 10px;
-            border-top: 1px solid rgba(212, 175, 55, 0.3); border-left: 1px solid rgba(212, 175, 55, 0.3);
+            border-top: 1px solid rgba(212, 175, 55, 0.4); border-left: 1px solid rgba(212, 175, 55, 0.4);
         }
         .secret-popup-box.open { bottom: 0; }
 
@@ -267,14 +272,13 @@
         #audio-control.playing { animation: rotateDisk 5s linear infinite; color: #fcf6ba; border-color: #bf953f; box-shadow: 0 0 10px rgba(212,175,55,0.2); }
         @keyframes rotateDisk { to { transform: rotate(360deg); } }
 
-        /* --- EFEK VISUAL (KELOPAK, KUNANG-KUNANG, FIREWORKS, DEKORASI HATI) --- */
+        /* --- EFEK VISUAL --- */
         .petal { position: absolute; pointer-events: none; z-index: 5; animation: fall linear infinite; }
         @keyframes fall {
             0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0.8; }
             100% { top: 110%; transform: translateX(80px) rotate(360deg); opacity: 0; }
         }
 
-        /* Dekorasi Hati Melayang Romantis */
         .ambient-heart {
             position: absolute; pointer-events: none; z-index: 2; color: rgba(255, 182, 193, 0.35);
             animation: floatUpHeart linear infinite; text-shadow: 0 0 5px rgba(255, 182, 193, 0.2);
@@ -286,7 +290,6 @@
             100% { transform: translateY(-10vh) translateX(var(--drift)) scale(1.1) rotate(45deg); opacity: 0; }
         }
 
-        /* Dekorasi Jejak Sentuhan Jari (Cursor/Touch Trail) */
         .trail-particle {
             position: absolute; pointer-events: none; z-index: 999999;
             font-size: 12px; animation: fadeOutTrail 0.8s linear forwards;
@@ -354,11 +357,9 @@
 
     <div id="audio-control" onclick="toggleAudio()">🎵</div>
 
-    <!-- INTRO SCREEN (UPGRADED WITH ROYAL SHIMMER GOLD) -->
+    <!-- INTRO SCREEN -->
     <div id="sc-intro">
-        <!-- Mahkota elegan pemikat perhatian -->
         <div class="gold-text" style="font-size: 24px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(212,175,55,0.3));">👑</div>
-        <!-- Teks tulisan yang bersinar mewah -->
         <div class="intro-text gold-text" style="font-size: 14px; font-weight: 300; letter-spacing: 4px; text-shadow: 0 0 10px rgba(212, 175, 55, 0.1);">
             Dari Ubi Cilembu Kamu.
         </div>
@@ -408,7 +409,6 @@
         <div class="heart-divider">🤍</div>
         <p id="typewriter" style="min-height: 130px; font-size: 14px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
         
-        <!-- Pemicu Amplop Kecil -->
         <div class="envelope-wrapper" id="miniEnvelope" onclick="openSecretPopup()">📩</div>
         
         <!-- POPUP SURAT RAHASIA -->
@@ -426,7 +426,7 @@
     <div class="screen" id="sc-polaroid">
         <h1>📸 Captured Moment</h1>
         <div class="heart-divider">🤍</div>
-        <p style="font-size: 11px; color: #777; margin-bottom: 5px; letter-spacing: 1px;">Ketuk foto di bawah untuk mencetak memori</p>
+        <p style="font-size: 11px; color: #888; margin-bottom: 5px; letter-spacing: 1px;">Ketuk foto di bawah untuk mencetak memori</p>
         <div class="polaroid-frame" onclick="revealPhoto()">
             <div class="polaroid-img" id="secretPhoto" style="background-image: url('6A5E6247-9BDE-4E72-BA45-230070A69F55.jpeg');"></div>
             <div class="polaroid-caption" id="photoCaption">Tap to develop...</div>
@@ -445,7 +445,7 @@
     <div class="screen" id="sc-memories">
         <h1>⭐ Memories</h1>
         <div class="heart-divider">🤍</div>
-        <p style="font-size: 11px; color: #777; margin-bottom: 0; letter-spacing: 1px;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
+        <p style="font-size: 11px; color: #888; margin-bottom: 0; letter-spacing: 1px;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
         <div class="sky-memories" id="skyArea"></div>
         <div class="message-display-box" id="msgBox">Klik salah satu bintang di atas...</div>
         <button class="btn" onclick="nextScreen('sc-question')" style="margin-bottom: 5px;">🤍 One Last Thing</button>
@@ -468,11 +468,11 @@
         <div class="heart-divider">🤍</div>
         <p id="endingText" style="font-size: 14px; line-height: 2.2; color: #dcdcdc; font-style: italic; min-height: 140px; word-wrap: break-word; white-space: pre-line;"></p>
         <p class="gold-text" style="font-size: 20px; margin-top: 15px;">🤍</p>
-        <p class="small-text" style="color:#333; letter-spacing: 1px;">This page was made especially for one person.</p>
+        <p class="small-text" style="color:#444; letter-spacing: 1px;">This page was made especially for one person.</p>
     </div>
 
     <script>
-        // HATI MELAYANG ELEGAN (LATAR BELAKANG AKTIF SEBELUM KADO DIBUKA)
+        // HATI MELAYANG ELEGAN
         let ambientHeartsActive = false;
         function buatHatiMelayang() {
             if (!ambientHeartsActive) return;
@@ -492,7 +492,7 @@
         }
         setInterval(buatHatiMelayang, 800);
 
-        // JEJAK SENTUHAN (TOUCH TRAIL SPARKLES) AGAR LATAR BELAKANG HIDUP SAAT DISENTUH/DIGESER
+        // JEJAK SENTUHAN (TOUCH TRAIL SPARKLES)
         function buatJejakSentuhan(x, y) {
             const trail = document.createElement('div');
             trail.classList.add('trail-particle');
@@ -500,13 +500,11 @@
             trail.style.left = x + 'px';
             trail.style.top = y + 'px';
             
-            // Randomize pergeseran arah terbang kecil
             const mx = (Math.random() - 0.5) * 40 + 'px';
-            const my = (Math.random() - 0.5) * 40 - 20 + 'px'; // Cenderung melayang ke atas sedikit
+            const my = (Math.random() - 0.5) * 40 - 20 + 'px';
             trail.style.setProperty('--mx', mx);
             trail.style.setProperty('--my', my);
             
-            // Beri sentuhan warna acak emas/putih/pink lembut
             const colors = ['#fcf6ba', '#ffffff', '#ffccd5', '#ffe5ec'];
             trail.style.color = colors[Math.floor(Math.random() * colors.length)];
             
@@ -515,7 +513,7 @@
         }
 
         window.addEventListener('mousemove', (e) => {
-            if (Math.random() < 0.25) buatJejakSentuhan(e.clientX, e.clientY); // Batasi intensitas agar halus
+            if (Math.random() < 0.25) buatJejakSentuhan(e.clientX, e.clientY);
         });
         window.addEventListener('touchmove', (e) => {
             if (Math.random() < 0.3) buatJejakSentuhan(e.touches[0].clientX, e.touches[0].clientY);
@@ -526,7 +524,6 @@
             intro.style.opacity = '0';
             setTimeout(() => { 
                 intro.style.display = 'none'; 
-                // Mulai aktifkan hati melayang tipis sejak layar pertama dibuka agar romantis
                 ambientHeartsActive = true; 
             }, 2000);
         }
@@ -763,7 +760,7 @@
             alert("Hehehe, makasih yaaa! ✨");
             nextScreen('sc-ending');
             isEndingActive = true;
-            jalankanEndingTeks(); // Memanggil fungsi ending ketik bawaanmu di bawah
+            jalankanEndingTeks();
             setInterval(launchFirework, 900);
         }
 
@@ -789,9 +786,7 @@
             }
         }
 
-        // =========================================================================
-        // LOGIKA & ANIMASI KETIK ASLI DARI SCREENSHOT (100% DIPULIHKAN DENGAN SEMPURNA)
-        // =========================================================================
+        // LOGIKA KETIK ASLI
         const barisEnding = [
             "Before you leave...",
             "I hope this page made your day just a little brighter.",
