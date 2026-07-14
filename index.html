@@ -2,93 +2,73 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Special Surprise</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Georgia', serif; }
-        body { background-color: #0d0c0a !important; color: #f2f2f2; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; text-align: center; padding: 20px; position: relative; }
+        body { background-color: #0d0c0a !important; color: #f2f2f2; display: flex; justify-content: center; align-items: center; min-height: 100vh; text-align: center; overflow-x: hidden; }
         
-        /* BOKEH BACKGROUND */
-        .bokeh-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .bubble { position: absolute; background: radial-gradient(circle, rgba(245, 235, 215, 0.14) 0%, rgba(245, 235, 215, 0) 70%); border-radius: 50%; filter: blur(8px); animation: floatUp 12s infinite ease-in-out; }
-        .bubble:nth-child(1) { width: 140px; height: 140px; left: 10%; animation-delay: 0s; }
-        .bubble:nth-child(2) { width: 220px; height: 220px; left: 60%; animation-delay: 2s; }
-        .bubble:nth-child(3) { width: 90px; height: 90px; left: 40%; animation-delay: 4s; }
-        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
-
-        .container { position: relative; z-index: 2; max-width: 450px; width: 100%; }
-        .page { display: none; animation: fadeIn 1s ease-in-out forwards; }
-        .page.active { display: block; }
+        .container { position: relative; max-width: 450px; width: 100%; }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 1s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        h1 { font-size: 1.6rem; color: #f7f4eb; margin-bottom: 10px; }
-        .subtitle { font-size: 0.75rem; color: #a8a090; margin-bottom: 20px; letter-spacing: 3px; text-transform: uppercase; }
-        
-        .btn { background: transparent; color: #dfba73; border: 1px solid #dfba73; padding: 10px 25px; cursor: pointer; margin-top: 25px; text-transform: uppercase; letter-spacing: 2px; }
-        .btn:hover { background: #dfba73; color: #0d0c0a; }
+
+        /* GAYA GEMBOK */
+        .lock-icon { font-size: 5rem; cursor: pointer; color: #dfba73; margin-bottom: 20px; transition: 0.3s; }
+        .lock-icon:hover { transform: scale(1.1); }
 
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
-        .clickable-img { width: 100%; height: 160px; object-fit: cover; filter: grayscale(100%); cursor: pointer; border: 1px solid #333; transition: 0.4s; }
-        .clickable-img:hover { filter: grayscale(0%); transform: scale(1.05); }
-
-        /* MODAL GAYA TIKTOK */
-        #photoModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:999; padding:20px; align-items:center; justify-content:center; }
-        .modal-content { display:flex; max-width:800px; width:100%; gap:20px; align-items:center; }
-        #modalImg { width:50%; border:1px solid #dfba73; }
-        #modalText { width:50%; color:#fff; font-style:italic; text-align:left; line-height:1.6; }
+        .img-wrapper { position: relative; cursor: pointer; }
+        .img-wrapper img { width: 100%; height: 160px; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
+        
+        /* ZOOM STATE */
+        .img-wrapper.zoomed { position: fixed; top: 10%; left: 5%; width: 90%; z-index: 20; transform: none !important; }
+        .img-wrapper.zoomed img { height: 300px; filter: grayscale(0%); }
+        .msg-text { display: none; background: rgba(0,0,0,0.8); padding: 20px; color: #dfba73; font-style: italic; }
+        .img-wrapper.zoomed .msg-text { display: block; }
     </style>
 </head>
 <body>
 
-    <div class="bokeh-bg">
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-    </div>
-
+    <!-- HALAMAN GEMBOK -->
     <div class="container">
-        <!-- HALAMAN 1 -->
         <div class="page active" id="page1">
-            <p class="subtitle">PREPARING SOMETHING</p>
-            <h1>Untuk Seseorang yang Spesial</h1>
-            <button class="btn" onclick="nextPage(2)">LET IT BEGIN</button>
+            <p style="color:#a8a090; margin-bottom:20px;">TEKAN UNTUK MEMBUKA</p>
+            <div class="lock-icon" onclick="openGate()">🔒</div>
         </div>
 
-        <!-- HALAMAN 2: GALERI -->
+        <!-- HALAMAN FOTO -->
         <div class="page" id="page2">
-            <p class="subtitle">ALL ABOUT YOU</p>
-            <p>Klik foto untuk membaca isi hatiku:</p>
+            <p>Klik foto untuk melihat (Klik lagi untuk tutup):</p>
             <div class="photo-grid">
-                <img src="https://lh3.googleusercontent.com/d/1Y-blUCLnKi5g60rHD5fimV95lcya7EX9" class="clickable-img" onclick="openModal(this.src, 'Hangat saat pertama kali bertemu. Di antara 8 miliar manusia, aku tidak menyangka takdir menuntunku padamu. Aku sangat beruntung memilikimu, kamu adalah anugerah terindah yang pernah kumiliki.🤍')">
-                <img src="https://lh3.googleusercontent.com/d/1h_rYFcn0xHd31oAvDxr6KegfItuTTcBH" class="clickable-img" onclick="openModal(this.src, 'Kamu adalah warna baru dalam hidupku yang kelabu. Terima kasih telah mengajarkanku hal-hal yang sebelumnya tak kupahami, membuat hari-hariku jauh lebih bermakna. Bersamamu, dunia terasa jauh lebih indah.')">
-                <img src="https://lh3.googleusercontent.com/d/1toVqltCDJ4UYwG_PTsiaU2gJKA5sQSPj" class="clickable-img" onclick="openModal(this.src, 'Aku selalu suka mendengar ceritamu tentang apa pun. Semangatmu, tawamu, bahkan rasa kesal dan sedihmu, semuanya terasa nyata di hatiku. Aku akan selalu menjadi pendengar setiamu dalam kondisi apa pun.')">
-                <img src="https://lh3.googleusercontent.com/d/1lfN644wSMf_FcAsOoa5vVsrRNUVkEF06" class="clickable-img" onclick="openModal(this.src, 'Jadilah dirimu sendiri di depanku. Aku tidak akan pernah menghakimimu. Jangan ada gengsi di antara kita, karena dalam suka maupun duka, aku akan selalu ada tepat di sampingmu untuk menggenggam tanganmu.')">
+                <div class="img-wrapper" onclick="this.classList.toggle('zoomed')">
+                    <img src="https://lh3.googleusercontent.com/d/1Y-blUCLnKi5g60rHD5fimV95lcya7EX9">
+                    <p class="msg-text">Hangat saat pertama kali bertemu. Di antara 8 miliar manusia, aku tidak menyangka takdir menuntunku padamu. Aku sangat beruntung memilikimu, kamu adalah anugerah terindah yang pernah kumiliki.🤍</p>
+                </div>
+                <div class="img-wrapper" onclick="this.classList.toggle('zoomed')">
+                    <img src="https://lh3.googleusercontent.com/d/1h_rYFcn0xHd31oAvDxr6KegfItuTTcBH">
+                    <p class="msg-text">Kamu adalah warna baru dalam hidupku yang kelabu. Terima kasih telah mengajarkanku hal-hal yang sebelumnya tak kupahami, membuat hari-hariku jauh lebih bermakna.</p>
+                </div>
+                <div class="img-wrapper" onclick="this.classList.toggle('zoomed')">
+                    <img src="https://lh3.googleusercontent.com/d/1toVqltCDJ4UYwG_PTsiaU2gJKA5sQSPj">
+                    <p class="msg-text">Aku selalu suka mendengar ceritamu tentang apa pun. Semangatmu, tawamu, bahkan rasa kesal dan sedihmu, semuanya terasa nyata di hatiku.</p>
+                </div>
+                <div class="img-wrapper" onclick="this.classList.toggle('zoomed')">
+                    <img src="https://lh3.googleusercontent.com/d/1lfN644wSMf_FcAsOoa5vVsrRNUVkEF06">
+                    <p class="msg-text">Jadilah dirimu sendiri di depanku. Aku tidak akan pernah menghakimimu. Jangan ada gengsi di antara kita, karena aku akan selalu ada di sampingmu.</p>
+                </div>
             </div>
-            <button class="btn" onclick="nextPage(3)">NEXT</button>
-        </div>
-
-        <!-- HALAMAN 3: PENUTUP -->
-        <div class="page" id="page3">
-            <h1>Terima kasih sudah hadir di hidupku ❤️</h1>
-            <button class="btn" onclick="alert('I love you!')">FINISH</button>
         </div>
     </div>
 
-    <!-- MODAL POPUP -->
-    <div id="photoModal" onclick="this.style.display='none'">
-        <div class="modal-content">
-            <img id="modalImg">
-            <p id="modalText"></p>
-        </div>
-    </div>
+    <audio id="bgAudio" loop>
+        <source src="https://docs.google.com/uc?export=download&id=1vuawAtNNhIYS5V1mhceZ-KFdd52eNIS6" type="audio/mpeg">
+    </audio>
 
     <script>
-        function nextPage(n) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page' + n).classList.add('active');
-        }
-        function openModal(src, text) {
-            document.getElementById('modalImg').src = src;
-            document.getElementById('modalText').innerText = text;
-            document.getElementById('photoModal').style.display = 'flex';
+        function openGate() {
+            document.getElementById('bgAudio').play();
+            document.getElementById('page1').classList.remove('active');
+            document.getElementById('page2').classList.add('active');
         }
     </script>
 </body>
