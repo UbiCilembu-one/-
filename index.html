@@ -71,9 +71,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 99999;
+            z-index: 999999; /* Z-Index sangat tinggi agar selalu di depan sebelum diklik */
             opacity: 1;
-            transition: opacity 0.5s ease; /* Transisi dipercepat agar responsif */
         }
         
         .intro-text {
@@ -560,14 +559,19 @@
             if (Math.random() < 0.3) buatJejakSentuhan(e.touches[0].clientX, e.touches[0].clientY);
         });
 
-        // PERBAIKAN TOTAL: LANGSUNG DIHAPUS SECARA FISIK DARI DOM BEGITU DIKLIK
+        // TINDAKAN AGRESIF: MATIKAN INSTAN, HILANGKAN FISIK
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
-            intro.style.opacity = '0'; // Berikan transisi menghilang yang halus
-            setTimeout(() => { 
-                intro.remove(); // Hapus paksa elemen secara total dari HTML agar tidak menutupi apa-apa lagi!
-                ambientHeartsActive = true; 
-            }, 500); // Waktu dipercepat demi performa mulus di HP
+            if (intro) {
+                // Sembunyikan paksa dalam sekejap tanpa delay/animasi CSS agar tidak menutupi apa pun
+                intro.style.setProperty('display', 'none', 'important');
+                intro.style.setProperty('opacity', '0', 'important');
+                intro.style.setProperty('pointer-events', 'none', 'important');
+                
+                // Langsung didelete dari struktur HTML
+                intro.remove(); 
+            }
+            ambientHeartsActive = true; 
         }
 
         const audio = document.getElementById('bgMusic');
@@ -716,7 +720,7 @@
 
         function revealPhoto() {
             const img = document.getElementById('secretPhoto');
-            const cap = document.getElementById('photoCaption');
+            const "cap" = document.getElementById('photoCaption');
             const btn = document.getElementById('btnAfterPhoto');
             img.style.opacity = '1'; cap.innerText = "✨ Truly Elegant ✨";
             setTimeout(() => { btn.style.display = "inline-block"; }, 3000);
