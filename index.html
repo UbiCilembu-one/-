@@ -490,17 +490,14 @@
         <h1 class="gold-text" style="font-size: 18px; letter-spacing: 5px;">🌙 Ending</h1>
         <div class="gold-divider">✦ 🌙 ✦</div>
         
-        <p id="endingText" style="font-size: 14px; white-space: pre-line; line-height: 2.2; color: #4a3728; font-style: italic;">I'm glad to hear that.
-
-        Keep moving forward with confidence. This page will always be here as a small reminder whenever you need it.
-        
-        Have a beautiful journey ahead.</p>
+        <!-- Diubah menjadi area wadah efek ketik dinamis -->
+        <p id="endingText" style="min-height: 140px; font-size: 14px; text-align: center; font-style: italic; line-height: 2.2; color: #4a3728; width: 100%; word-wrap: break-word; padding: 0 5px;"></p>
         
         <!-- Pemicu Ketuk 2x -->
         <p class="gold-text" id="heartTrigger" style="font-size: 20px; margin-top: 15px; cursor: pointer; user-select: none;">🤍</p>
         
-        <!-- Kalimat Tersembunyi Efek Elegan -->
-        <div class="gold-text secret-love-text" id="secretLoveMessage">I Love You 🤍</div>
+        <!-- Kalimat Tersembunyi Efek Elegan yang Lebih Romantis -->
+        <div class="gold-text secret-love-text" id="secretLoveMessage">I Love You More, My Incess 🤍</div>
 
         <p class="small-text" style="color:#887261; letter-spacing: 1px; margin-top: 25px;">This page was made especially for one person.</p>
     </div>
@@ -508,11 +505,9 @@
     <script>
         const animContainer = document.getElementById('animation-container');
 
-        // Memperbaiki isu "ngestuk" di awal intro screen
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
             intro.style.opacity = '0';
-            
             intro.addEventListener('transitionend', function() {
                 intro.style.display = 'none';
             }, { once: true });
@@ -791,7 +786,43 @@
 
         function answerYes() {
             buatKembangApi(window.innerWidth/2, window.innerHeight/2);
-            setTimeout(() => { nextScreen('sc-ending'); }, 1000);
+            setTimeout(() => { 
+                nextScreen('sc-ending'); 
+                jalankanEndingTeks(); // Memulai animasi ketik pada screen ending
+            }, 1000);
+        }
+
+        // --- SISTEM CODE DARI SNAPSHOT USER: EFEK KETIK KUSTOM PADA ENDING SCREEN ---
+        const barisEnding = [
+            "Before you leave...",
+            "I hope this page made your day just a little brighter.",
+            "If life ever feels heavy... Come back here.",
+            "This page will always wait for you.",
+            "And remember... You always Have Me. 🤍",
+            "Semoga kamu bahagia dengan apa yang membuatmu merasa bahagia.\nKamu selalu cantik, my Incess."
+        ];
+        let indeksEnding = 0;
+        const wadahEnding = document.getElementById('endingText');
+
+        function jalankanEndingTeks() {
+            const endingScreen = document.getElementById('sc-ending');
+            
+            if (indeksEnding < barisEnding.length) {
+                // Menambahkan pemicu visual bersinar saat menulis kalimat akhir
+                endingScreen.classList.add('glow-active');
+                
+                ketikTeks(barisEnding[indeksEnding], wadahEnding, () => {
+                    setTimeout(() => {
+                        indeksEnding++;
+                        if (indeksEnding < barisEnding.length) {
+                            wadahEnding.innerHTML = "";
+                            jalankanEndingTeks();
+                        } else {
+                            endingScreen.classList.remove('glow-active');
+                        }
+                    }, 3500); // Durasi delay jeda antar teks 3.5 detik sesuai preferensi rancangan awal
+                });
+            }
         }
 
         // --- SISTEM DETEKSI KLIK 2X UNTUK KALIMAT TERSEMBUNYI DI ENDING ---
