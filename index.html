@@ -511,9 +511,38 @@
         <p class="small-text" style="color:#444; letter-spacing: 1px; margin-top: 20px;">This page was made especially for one person.</p>
     </div>
 
+    <!-- ============================================ -->
+    <!-- SCRIPT BLOK 1: CORE NAVIGATION (ANTI-LAG & BEBAS ERROR) -->
+    <!-- ============================================ -->
+    <script>
+        // Gunakan var dan ES5 agar benar-benar kompatibel di Android jadul / WebView manapun
+        var ambientHeartsActive = false;
+
+        function closeIntro() {
+            var intro = document.getElementById('sc-intro');
+            if (intro) {
+                intro.style.display = 'none'; // Langsung hilangkan fisiknya dari DOM
+            }
+            ambientHeartsActive = true;
+        }
+
+        function nextScreen(screenId) {
+            var screens = document.querySelectorAll('.screen');
+            for (var i = 0; i < screens.length; i++) {
+                screens[i].classList.remove('active');
+            }
+            var target = document.getElementById(screenId);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+    </script>
+
+    <!-- ============================================ -->
+    <!-- SCRIPT BLOK 2: ANIMASI & FITUR ROMANTIS (BEBAS ERROR) -->
+    <!-- ============================================ -->
     <script>
         // HATI MELAYANG ELEGAN
-        let ambientHeartsActive = false;
         function buatHatiMelayang() {
             if (!ambientHeartsActive) return;
             const heart = document.createElement('div');
@@ -558,18 +587,6 @@
         window.addEventListener('touchmove', (e) => {
             if (Math.random() < 0.3) buatJejakSentuhan(e.touches[0].clientX, e.touches[0].clientY);
         });
-
-        // TINDAKAN AGRESIF: MATIKAN INSTAN, HILANGKAN FISIK
-        function closeIntro() {
-            const intro = document.getElementById('sc-intro');
-            if (intro) {
-                intro.style.setProperty('display', 'none', 'important');
-                intro.style.setProperty('opacity', '0', 'important');
-                intro.style.setProperty('pointer-events', 'none', 'important');
-                intro.remove(); 
-            }
-            ambientHeartsActive = true; 
-        }
 
         const audio = document.getElementById('bgMusic');
         const audioCtrl = document.getElementById('audio-control');
@@ -616,11 +633,6 @@
             requestAnimationFrame(animateStars);
         }
         animateStars();
-
-        function nextScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        }
 
         function verifyName() {
             const name = document.getElementById('nameInput').value.trim().toLowerCase();
