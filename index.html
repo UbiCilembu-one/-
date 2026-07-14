@@ -8,76 +8,75 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Georgia', serif; }
         body { background-color: #0d0c0a !important; color: #f2f2f2; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; text-align: center; padding: 20px; position: relative; }
         
-        .bokeh-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none; }
+        /* BOKEH BACKGROUND */
+        .bokeh-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .bubble { position: absolute; background: radial-gradient(circle, rgba(245, 235, 215, 0.14) 0%, rgba(245, 235, 215, 0) 70%); border-radius: 50%; filter: blur(8px); animation: floatUp 12s infinite ease-in-out; }
-        .bubble:nth-child(1) { width: 140px; height: 140px; left: 10%; animation-delay: 0s; animation-duration: 14s; }
-        .bubble:nth-child(2) { width: 220px; height: 220px; left: 60%; animation-delay: 2s; animation-duration: 18s; }
-        .bubble:nth-child(3) { width: 90px; height: 90px; left: 40%; animation-delay: 4s; animation-duration: 12s; }
-        .bubble:nth-child(4) { width: 160px; height: 160px; left: 80%; animation-delay: 1s; animation-duration: 16s; }
-        .bubble:nth-child(5) { width: 110px; height: 110px; left: 25%; animation-delay: 6s; animation-duration: 15s; }
-
-        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0.8); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
+        .bubble:nth-child(1) { width: 140px; height: 140px; left: 10%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 220px; height: 220px; left: 60%; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 90px; height: 90px; left: 40%; animation-delay: 4s; }
+        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
 
         .container { position: relative; z-index: 2; max-width: 450px; width: 100%; }
-        .page { display: none; animation: fadeIn 1.5s ease-in-out forwards; }
+        .page { display: none; animation: fadeIn 1s ease-in-out forwards; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        h1 { font-size: 1.9rem; font-weight: 400; letter-spacing: 2px; margin-bottom: 10px; color: #f7f4eb; line-height: 1.4; }
-        .subtitle { font-size: 0.75rem; font-style: italic; color: #a8a090; margin-bottom: 30px; letter-spacing: 3px; text-transform: uppercase; }
-        p { font-size: 1.05rem; line-height: 1.7; color: #e0dad0; margin-bottom: 20px; font-style: italic; }
-        .btn { background: transparent; color: #dfba73; border: 1px solid #dfba73; padding: 10px 25px; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; margin-top: 25px; }
-        .btn:hover { background: #dfba73; color: #0d0c0a; box-shadow: 0 0 10px rgba(223, 186, 115, 0.3); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 25px 0; }
-        .photo-grid img { width: 100%; height: 160px; object-fit: cover; filter: grayscale(100%) contrast(105%) brightness(90%); border: 1px solid #2d2a24; cursor: pointer; }
+        h1 { font-size: 1.6rem; color: #f7f4eb; margin-bottom: 10px; }
+        .subtitle { font-size: 0.75rem; color: #a8a090; margin-bottom: 20px; letter-spacing: 3px; text-transform: uppercase; }
         
-        /* LAYOUT BARU ALA TIKTOK */
-        #detailView { display: none; margin-top: 20px; background: rgba(255, 255, 255, 0.05); padding: 15px; border: 1px solid #dfba73; display: flex; gap: 15px; align-items: center; }
-        #detailImg { width: 40%; height: 120px; object-fit: cover; border: 1px solid #2d2a24; }
-        #detailText { width: 60%; font-size: 0.85rem; color: #fff; text-align: left; }
+        .btn { background: transparent; color: #dfba73; border: 1px solid #dfba73; padding: 10px 25px; cursor: pointer; margin-top: 25px; text-transform: uppercase; letter-spacing: 2px; }
+        .btn:hover { background: #dfba73; color: #0d0c0a; }
+
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .clickable-img { width: 100%; height: 160px; object-fit: cover; filter: grayscale(100%); cursor: pointer; border: 1px solid #333; transition: 0.4s; }
+        .clickable-img:hover { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* MODAL GAYA TIKTOK */
+        #photoModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:999; padding:20px; align-items:center; justify-content:center; }
+        .modal-content { display:flex; max-width:800px; width:100%; gap:20px; align-items:center; }
+        #modalImg { width:50%; border:1px solid #dfba73; }
+        #modalText { width:50%; color:#fff; font-style:italic; text-align:left; line-height:1.6; }
     </style>
 </head>
 <body>
 
     <div class="bokeh-bg">
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
     </div>
 
     <div class="container">
+        <!-- HALAMAN 1 -->
         <div class="page active" id="page1">
-            <p style="font-style: italic; letter-spacing: 1px; color: #888;">PREPARING SOMETHING FOR YOU...</p>
+            <p class="subtitle">PREPARING SOMETHING</p>
+            <h1>Untuk Seseorang yang Spesial</h1>
             <button class="btn" onclick="nextPage(2)">LET IT BEGIN</button>
         </div>
 
+        <!-- HALAMAN 2: GALERI -->
         <div class="page" id="page2">
-            <p class="subtitle">YOU ARE CORDIALLY INVITED</p>
-            <h1>A Little Surprise<br>Made With Love</h1>
-            <button class="btn" onclick="nextPage(3)">CONTINUE</button>
-        </div>
-
-        <div class="page" id="page3">
             <p class="subtitle">ALL ABOUT YOU</p>
+            <p>Klik foto untuk membaca isi hatiku:</p>
             <div class="photo-grid">
-                <img src="https://lh3.googleusercontent.com/d/1Y-blUCLnKi5g60rHD5fimV95lcya7EX9" onclick="showDetail(this.src, 'Hangat saat pertama kali bertemu. Di antara 8 miliar manusia, aku tidak menyangka takdir menuntunku padamu. Aku sangat beruntung memilikimu, kamu adalah anugerah terindah yang pernah kumiliki.🤍')">
-                <img src="https://lh3.googleusercontent.com/d/1h_rYFcn0xHd31oAvDxr6KegfItuTTcBH" onclick="showDetail(this.src, 'Kamu adalah warna baru dalam hidupku yang kelabu. Terima kasih telah mengajarkanku hal-hal yang sebelumnya tak kupahami, membuat hari-hariku jauh lebih bermakna. Bersamamu, dunia terasa jauh lebih indah.')">
-                <img src="https://lh3.googleusercontent.com/d/1toVqltCDJ4UYwG_PTsiaU2gJKA5sQSPj" onclick="showDetail(this.src, 'Aku selalu suka mendengar ceritamu tentang apa pun. Semangatmu, tawamu, bahkan rasa kesal dan sedihmu, semuanya terasa nyata di hatiku. Aku akan selalu menjadi pendengar setiamu dalam kondisi apa pun.')">
-                <img src="https://lh3.googleusercontent.com/d/1lfN644wSMf_FcAsOoa5vVsrRNUVkEF06" onclick="showDetail(this.src, 'Jadilah dirimu sendiri di depanku. Aku tidak akan pernah menghakimimu. Jangan ada gengsi di antara kita, karena dalam suka maupun duka, aku akan selalu ada tepat di sampingmu untuk menggenggam tanganmu.')">
+                <img src="https://lh3.googleusercontent.com/d/1Y-blUCLnKi5g60rHD5fimV95lcya7EX9" class="clickable-img" onclick="openModal(this.src, 'Hangat saat pertama kali bertemu. Di antara 8 miliar manusia, aku tidak menyangka takdir menuntunku padamu. Aku sangat beruntung memilikimu, kamu adalah anugerah terindah yang pernah kumiliki.🤍')">
+                <img src="https://lh3.googleusercontent.com/d/1h_rYFcn0xHd31oAvDxr6KegfItuTTcBH" class="clickable-img" onclick="openModal(this.src, 'Kamu adalah warna baru dalam hidupku yang kelabu. Terima kasih telah mengajarkanku hal-hal yang sebelumnya tak kupahami, membuat hari-hariku jauh lebih bermakna. Bersamamu, dunia terasa jauh lebih indah.')">
+                <img src="https://lh3.googleusercontent.com/d/1toVqltCDJ4UYwG_PTsiaU2gJKA5sQSPj" class="clickable-img" onclick="openModal(this.src, 'Aku selalu suka mendengar ceritamu tentang apa pun. Semangatmu, tawamu, bahkan rasa kesal dan sedihmu, semuanya terasa nyata di hatiku. Aku akan selalu menjadi pendengar setiamu dalam kondisi apa pun.')">
+                <img src="https://lh3.googleusercontent.com/d/1lfN644wSMf_FcAsOoa5vVsrRNUVkEF06" class="clickable-img" onclick="openModal(this.src, 'Jadilah dirimu sendiri di depanku. Aku tidak akan pernah menghakimimu. Jangan ada gengsi di antara kita, karena dalam suka maupun duka, aku akan selalu ada tepat di sampingmu untuk menggenggam tanganmu.')">
             </div>
-            
-            <div id="detailView">
-                <img id="detailImg">
-                <p id="detailText"></p>
-            </div>
-            <button class="btn" onclick="nextPage(4)">CONTINUE</button>
+            <button class="btn" onclick="nextPage(3)">NEXT</button>
         </div>
 
-        <div class="page" id="page4">
-            <p class="subtitle">A MESSAGE JUST FOR YOU</p>
-            <div style="width: 100%; margin-bottom: 20px;">
-                <img src="https://lh3.googleusercontent.com/d/1WGFSn6JS7tv5C33IAMaCqGPbDnWOB3tv" style="width:100%; border:1px solid #2d2a24;">
-            </div>
-            <p>"Aku tidak butuh banyak hal untuk merasa bahagia, karena punya kamu saja, itu sudah lebih dari cukup."</p>
-            <button class="btn" onclick="alert('Terima kasih sudah hadir di hidupku ❤️')">CLOSE</button>
+        <!-- HALAMAN 3: PENUTUP -->
+        <div class="page" id="page3">
+            <h1>Terima kasih sudah hadir di hidupku ❤️</h1>
+            <button class="btn" onclick="alert('I love you!')">FINISH</button>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP -->
+    <div id="photoModal" onclick="this.style.display='none'">
+        <div class="modal-content">
+            <img id="modalImg">
+            <p id="modalText"></p>
         </div>
     </div>
 
@@ -86,10 +85,10 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page' + n).classList.add('active');
         }
-        function showDetail(src, text) {
-            document.getElementById('detailImg').src = src;
-            document.getElementById('detailText').innerText = text;
-            document.getElementById('detailView').style.display = 'flex';
+        function openModal(src, text) {
+            document.getElementById('modalImg').src = src;
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('photoModal').style.display = 'flex';
         }
     </script>
 </body>
