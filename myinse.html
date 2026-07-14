@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        body {
+            background-color: #0d0d0d;
+            color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
+        /* Efek latar belakang bintang/glitter */
+        .bg-stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 10.5%);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 400px;
+            width: 100%;
+        }
+        .page {
+            display: none;
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            color: #f5f5f5;
+        }
+        .subtitle {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #b3b3b3;
+            margin-bottom: 30px;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #d9d9d9;
+            margin-bottom: 20px;
+        }
+        /* Style Tombol Elegan */
+        .btn {
+            background: transparent;
+            color: #dfba73;
+            border: 1px solid #dfba73;
+            padding: 10px 25px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #dfba73;
+            color: #0d0d0d;
+        }
+        /* Style Galeri Foto Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .photo-grid img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(110%); /* Otomatis bikin foto hitam putih sinematik */
+            border: 1px solid #333;
+        }
+        .single-photo img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            margin-bottom: 20px;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-stars"></div>
+
+    <div class="container">
+        <!-- HALAMAN 1: INTRO -->
+        <div class="page active" id="page1">
+            <p style="font-style: italic; letter-spacing: 1px; color: #888;">PREPARING SOMETHING FOR YOU...</p>
+            <button class="btn" onclick="nextPage(2)">LET IT BEGIN</button>
+        </div>
+
+        <!-- HALAMAN 2: TITLE -->
+        <div class="page" id="page2">
+            <p class="subtitle">YOU ARE CORDIALLY INVITED</p>
+            <h1>A Little Surprise<br>Made With Love</h1>
+            <button class="btn" onclick="nextPage(3)">CONTINUE</button>
+        </div>
+
+        <!-- HALAMAN 3: GALERI FOTO GRID -->
+        <div class="page" id="page3">
+            <p class="subtitle">ALL ABOUT YOU</p>
+            <div class="photo-grid">
+                <!-- Ganti nama file foto1.jpg s/d foto4.jpg dengan foto cewekmu -->
+                <img src="foto1.jpg" alt="Kamu 1">
+                <img src="foto2.jpg" alt="Kamu 2">
+                <img src="foto3.jpg" alt="Kamu 3">
+                <img src="foto4.jpg" alt="Kamu 4">
+            </div>
+            <button class="btn" onclick="nextPage(4)">CONTINUE</button>
+        </div>
+
+        <!-- HALAMAN 4: PESAN ROMANTIS -->
+        <div class="page" id="page4">
+            <p class="subtitle">A MESSAGE JUST FOR YOU</p>
+            <div class="single-photo">
+                <!-- Foto utama di halaman pesan -->
+                <img src="foto5.jpg" alt="Kita">
+            </div>
+            <p>"Aku tidak butuh banyak hal untuk merasa bahagia, karena punya kamu saja, itu sudah lebih dari cukup."</p>
+            <button class="btn" onclick="alert('Terima kasih sudah hadir di hidupku ❤️')">CLOSE</button>
+        </div>
+    </div>
+
+    <script>
+        function nextPage(pageNumber) {
+            // Sembunyikan semua halaman
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Tampilkan halaman tujuan
+            document.getElementById('page' + pageNumber).classList.add('active');
+        }
+    </script>
+</body>
+</html>
