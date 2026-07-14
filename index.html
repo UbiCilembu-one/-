@@ -680,7 +680,7 @@
                     callback();
                 }
             }
-            letik();
+            ketik(); // Mengubah typo letik() menjadi ketik() agar teks tidak blank
         }
 
         function openSecretPopup() {
@@ -761,7 +761,7 @@
                 p.style.backgroundColor = warna[Math.floor(Math.random()*warna.length)];
                 const sudut = (i / 24) * Math.PI * 2;
                 const jarak = Math.random() * 50 + 40;
-                p.style.setProperty('--x', Math.cos(sudut)*jarak + 'px');
+                p.style.setProperty('--x', Math.cos(sudUT)*jarak + 'px');
                 p.style.setProperty('--y', Math.sin(sudut)*jarak + 'px');
                 animContainer.appendChild(p);
                 setTimeout(() => p.remove(), 1500);
