@@ -61,7 +61,7 @@
             background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.35), transparent);
         }
 
-        /* --- SCREEN INTRO PREMIUM (FIXED: TIDAK AKAN MENUTUPI LAYAR) --- */
+        /* --- SCREEN INTRO PREMIUM (PUTIH MAJESTIK) --- */
         #sc-intro {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -73,8 +73,7 @@
             align-items: center;
             z-index: 99999;
             opacity: 1;
-            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
-            visibility: visible;
+            transition: opacity 0.5s ease; /* Transisi dipercepat agar responsif */
         }
         
         .intro-text {
@@ -395,7 +394,7 @@
 
     <div id="audio-control" onclick="toggleAudio()">🎵</div>
 
-    <!-- INTRO SCREEN (FIXED LOGIC) -->
+    <!-- INTRO SCREEN -->
     <div id="sc-intro">
         <div class="gold-text" style="font-size: 24px; margin-bottom: 15px; filter: drop-shadow(0 0 8px rgba(212,175,55,0.3));">👑</div>
         <div class="intro-text gold-text" style="font-size: 14px; font-weight: 300; letter-spacing: 4px; text-shadow: 0 0 10px rgba(212, 175, 55, 0.1);">
@@ -561,15 +560,14 @@
             if (Math.random() < 0.3) buatJejakSentuhan(e.touches[0].clientX, e.touches[0].clientY);
         });
 
-        // FIXED: INTRO SEKARANG DIHAPUS TOTAL DARI LAYAR AGAR TIDAK MACET
+        // PERBAIKAN TOTAL: LANGSUNG DIHAPUS SECARA FISIK DARI DOM BEGITU DIKLIK
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
-            intro.style.opacity = '0';
-            intro.style.visibility = 'hidden';
+            intro.style.opacity = '0'; // Berikan transisi menghilang yang halus
             setTimeout(() => { 
-                intro.style.display = 'none'; 
+                intro.remove(); // Hapus paksa elemen secara total dari HTML agar tidak menutupi apa-apa lagi!
                 ambientHeartsActive = true; 
-            }, 1200);
+            }, 500); // Waktu dipercepat demi performa mulus di HP
         }
 
         const audio = document.getElementById('bgMusic');
