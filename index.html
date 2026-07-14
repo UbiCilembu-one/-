@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Gift Just For You</title>
     <style>
-        /* --- STYLING UTAMA & LATAR BELAKANG LUXURY --- */
+        /* --- STYLING UTAMA & LATAR BELAKANG ROMANTIC LUXURY --- */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +14,8 @@
         }
 
         body {
-            background: radial-gradient(circle at center, #110d1a 0%, #030205 100%);
+            /* Diubah sedikit ke arah deep rose-wine & violet agar lebih romantis */
+            background: radial-gradient(circle at center, #1a0b16 0%, #030205 100%);
             color: #fff;
             height: 100vh;
             display: flex;
@@ -31,7 +32,7 @@
             position: absolute;
             width: 150%;
             height: 150%;
-            background: radial-gradient(circle at 30% 20%, rgba(147, 112, 219, 0.08) 0%, transparent 40%),
+            background: radial-gradient(circle at 30% 20%, rgba(212, 112, 162, 0.08) 0%, transparent 40%),
                         radial-gradient(circle at 70% 60%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
             animation: auroraFlow 25s ease-in-out infinite alternate;
             z-index: 0;
@@ -41,6 +42,24 @@
         @keyframes auroraFlow {
             0% { transform: translate(-5%, -5%) rotate(0deg); }
             100% { transform: translate(5%, 5%) rotate(5deg); }
+        }
+
+        /* --- DEKORASI PEMBATAS HATI (ROMANTIC DIVIDER) --- */
+        .heart-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 80%;
+            margin: 0 auto 20px auto;
+            color: rgba(212, 175, 55, 0.4);
+            font-size: 10px;
+        }
+        .heart-divider::before, .heart-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.35), transparent);
         }
 
         /* --- SCREEN INTRO PREMIUM (PUTIH MAJESTIK) --- */
@@ -70,12 +89,18 @@
             padding: 10px 30px; font-size: 10px; text-transform: uppercase;
             letter-spacing: 3px; cursor: pointer; margin-top: 40px;
             opacity: 0; transition: all 0.5s ease;
-            animation: fadeIn 1.5s forwards 2.5s;
+            animation: fadeIn 1.5s forwards 2.5s, pulseIntro 2s infinite 3s;
         }
         .intro-btn:hover { background: #1a1a1a; color: #ffffff; letter-spacing: 5px; }
 
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { to { opacity: 0.7; } }
+        
+        @keyframes pulseIntro {
+            0% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.2); }
+            70% { box-shadow: 0 0 0 10px rgba(26, 26, 26, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0); }
+        }
 
         /* --- TEXT GRADASI EMAS MENGKILAP (SHIMMER GOLD) --- */
         .gold-text {
@@ -141,7 +166,7 @@
         .active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
 
         /* --- TYPOGRAPHY & TOMBOL PREMIUM --- */
-        h1 { font-size: 18px; font-weight: 300; margin-bottom: 20px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
+        h1 { font-size: 18px; font-weight: 300; margin-bottom: 10px; letter-spacing: 4px; color: #f5f5f5; text-transform: uppercase; }
         p { font-size: 13px; font-weight: 300; line-height: 2; color: #b8b8b8; margin-bottom: 20px; letter-spacing: 0.5px; }
         .small-text { font-size: 10px; color: #444; font-style: italic; margin-top: 20px; letter-spacing: 2px; text-transform: uppercase; }
 
@@ -151,8 +176,15 @@
             cursor: pointer; letter-spacing: 3px; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             margin-top: 20px; z-index: 30; background: rgba(212, 175, 55, 0.02);
             border-radius: 2px;
+            animation: pulseBtn 2.5s infinite;
         }
         .btn:hover { background: rgba(212, 175, 55, 0.15); color: #fff; box-shadow: 0 0 20px rgba(212,175,55,0.2); border-color: #fcf6ba; letter-spacing: 4px; }
+
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.15); }
+            70% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
 
         input[type="text"] {
             background: transparent; border: none; border-bottom: 1px solid rgba(212,175,55,0.3);
@@ -235,11 +267,23 @@
         #audio-control.playing { animation: rotateDisk 5s linear infinite; color: #fcf6ba; border-color: #bf953f; box-shadow: 0 0 10px rgba(212,175,55,0.2); }
         @keyframes rotateDisk { to { transform: rotate(360deg); } }
 
-        /* --- EFEK VISUAL (KELOPAK, KUNANG-KUNANG, FIREWORKS) --- */
+        /* --- EFEK VISUAL (KELOPAK, KUNANG-KUNANG, FIREWORKS, DEKORASI HATI) --- */
         .petal { position: absolute; pointer-events: none; z-index: 5; animation: fall linear infinite; }
         @keyframes fall {
             0% { top: -10%; transform: translateX(0) rotate(0deg); opacity: 0.8; }
             100% { top: 110%; transform: translateX(80px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Dekorasi Hati Melayang Romantis */
+        .ambient-heart {
+            position: absolute; pointer-events: none; z-index: 2; color: rgba(255, 182, 193, 0.35);
+            animation: floatUpHeart linear infinite; text-shadow: 0 0 5px rgba(255, 182, 193, 0.2);
+        }
+        @keyframes floatUpHeart {
+            0% { transform: translateY(105vh) translateX(0) scale(0.7) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(var(--drift)) scale(1.1) rotate(45deg); opacity: 0; }
         }
 
         .firefly {
@@ -316,6 +360,7 @@
     <!-- LAYER 1: RESERVED -->
     <div class="screen active" id="sc-reserved">
         <h1>🎁 A Gift Just For You</h1>
+        <div class="heart-divider">🤍</div>
         <p style="color: rgba(212,175,55,0.4); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;">Reserved Privilege</p>
         <p>This gift has been reserved for one special person.<br>If this isn’t you, please close this page.</p>
         <button class="btn" onclick="nextScreen('sc-verification')">Continue →</button>
@@ -324,6 +369,7 @@
     <!-- LAYER 2: VERIFIKASI -->
     <div class="screen" id="sc-verification">
         <h1>🔒 Identity Verification</h1>
+        <div class="heart-divider">🤍</div>
         <p>Enter your code name</p>
         <input type="text" id="nameInput" placeholder="write here..." autocomplete="off">
         <button class="btn" onclick="verifyName()">Unlock</button>
@@ -332,6 +378,7 @@
     <!-- LAYER 3: THE GIFT -->
     <div class="screen" id="sc-gift">
         <h1>🎁 The Gift</h1>
+        <div class="heart-divider">🤍</div>
         <div class="box-container" id="boxPack" onclick="openGift()">
             <div class="ribbon-top"></div>
             <div class="gift-box"></div>
@@ -342,7 +389,8 @@
 
     <!-- LAYER 4: SURAT UTAMA -->
     <div class="screen" id="sc-letter">
-        <h1 class="gold-text" style="font-size: 16px; margin-bottom: 25px;">💌 A Letter</h1>
+        <h1 class="gold-text" style="font-size: 16px; margin-bottom: 5px;">💌 A Letter</h1>
+        <div class="heart-divider">🤍</div>
         <p id="typewriter" style="min-height: 130px; font-size: 14px; text-align: center; font-style: italic; line-height: 2; color: #e0e0e0;"></p>
         
         <!-- Pemicu Amplop Kecil -->
@@ -350,7 +398,8 @@
         
         <!-- POPUP SURAT RAHASIA -->
         <div class="secret-popup-box" id="secretPopup">
-            <p class="gold-text" style="font-size: 14px; margin-bottom: 15px;">✨ For My Princess ✨</p>
+            <p class="gold-text" style="font-size: 14px; margin-bottom: 5px;">✨ For My Princess ✨</p>
+            <div class="heart-divider">🤍</div>
             <p style="font-size: 14px; color: #fcf6ba; text-align: center; font-style: italic; line-height: 2;">
                 "Aku tidak pernah bosan untuk selalu memanggil kamu dengan senyuman yang tulus dari hati, karena aku tau bahwa seorang Princess bisa secantik ini karena kerja keras Princess ku sendiri🤍"
             </p>
@@ -361,6 +410,7 @@
     <!-- LAYER 4.5: POLAROID SURPRISE -->
     <div class="screen" id="sc-polaroid">
         <h1>📸 Captured Moment</h1>
+        <div class="heart-divider">🤍</div>
         <p style="font-size: 11px; color: #777; margin-bottom: 5px; letter-spacing: 1px;">Ketuk foto di bawah untuk mencetak memori</p>
         <div class="polaroid-frame" onclick="revealPhoto()">
             <div class="polaroid-img" id="secretPhoto" style="background-image: url('6A5E6247-9BDE-4E72-BA45-230070A69F55.jpeg');"></div>
@@ -372,12 +422,14 @@
     <!-- LAYER 5: FLOWERS -->
     <div class="screen" id="sc-flowers">
         <div class="bouquet">💐🌼🌸</div>
+        <div class="heart-divider">🤍</div>
         <p id="flowerText" style="font-size: 15px; min-height: 80px; font-style: italic;"></p>
     </div>
 
     <!-- LAYER 6: MEMORIES -->
     <div class="screen" id="sc-memories">
         <h1>⭐ Memories</h1>
+        <div class="heart-divider">🤍</div>
         <p style="font-size: 11px; color: #777; margin-bottom: 0; letter-spacing: 1px;">Sentuh bintang malam untuk melihat pesan tersembunyi</p>
         <div class="sky-memories" id="skyArea"></div>
         <div class="message-display-box" id="msgBox">Klik salah satu bintang di atas...</div>
@@ -387,6 +439,7 @@
     <!-- LAYER 6.5: PERTANYAAN INTERAKTIF -->
     <div class="screen" id="sc-question">
         <h1 class="gold-text">A Quick Question...</h1>
+        <div class="heart-divider">🤍</div>
         <p style="font-size: 15px; margin-top: 25px;">Apakah kamu bahagia hari ini?</p>
         <div class="btn-wrap">
             <button class="btn" style="margin-top:0;" onclick="answerYes()">Mau / Iya! 😊</button>
@@ -397,17 +450,41 @@
     <!-- LAYER 7: ENDING -->
     <div class="screen" id="sc-ending">
         <h1 class="gold-text" style="font-size: 18px; letter-spacing: 5px;">🌙 Ending</h1>
-        <!-- Ketinggian wadah sudah disesuaikan agar tulisan panjang di HP tidak meluber keluar bingkai emas -->
+        <div class="heart-divider">🤍</div>
         <p id="endingText" style="font-size: 14px; line-height: 2.2; color: #dcdcdc; font-style: italic; min-height: 140px; word-wrap: break-word; white-space: pre-line;"></p>
         <p class="gold-text" style="font-size: 20px; margin-top: 15px;">🤍</p>
         <p class="small-text" style="color:#333; letter-spacing: 1px;">This page was made especially for one person.</p>
     </div>
 
     <script>
+        // HATI MELAYANG ELEGAN (LATAR BELAKANG AKTIF SEBELUM KADO DIBUKA)
+        let ambientHeartsActive = false;
+        function buatHatiMelayang() {
+            if (!ambientHeartsActive) return;
+            const heart = document.createElement('div');
+            heart.classList.add('ambient-heart');
+            heart.innerHTML = ['🤍', '💖', '🌸'][Math.floor(Math.random() * 3)];
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            
+            const drift = Math.random() * 80 - 40;
+            heart.style.setProperty('--drift', drift + 'px');
+            
+            const duration = Math.random() * 4 + 6;
+            heart.style.animationDuration = duration + 's';
+            
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), duration * 1000);
+        }
+        setInterval(buatHatiMelayang, 800);
+
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
             intro.style.opacity = '0';
-            setTimeout(() => { intro.style.display = 'none'; }, 2000);
+            setTimeout(() => { 
+                intro.style.display = 'none'; 
+                // Mulai aktifkan hati melayang tipis sejak layar pertama dibuka agar romantis
+                ambientHeartsActive = true; 
+            }, 2000);
         }
 
         const audio = document.getElementById('bgMusic');
@@ -418,7 +495,7 @@
             else { audio.pause(); audioCtrl.classList.remove('playing'); }
         }
 
-        // HATI MUN CUL SAAT LAYAR DIKETUK
+        // HATI MUNCUL SAAT LAYAR DIKETUK
         document.body.addEventListener('click', function(e) {
             if(e.target.tagName === 'BUTTON' || e.target.classList.contains('clickable-star-btn') || e.target.closest('.polaroid-frame')) return;
             const heart = document.createElement('div');
