@@ -12,7 +12,7 @@
             font-family: 'Georgia', serif;
         }
         body {
-            background-color: #0d0c0a !important; /* Memaksa warna latar belakang gelap gulita */
+            background-color: #0d0c0a !important;
             color: #f2f2f2;
             display: flex;
             justify-content: center;
@@ -24,7 +24,7 @@
             position: relative;
         }
         
-        /* EFESEN BOKEH BACKGROUND */
+        /* EFEK BOKEH BACKGROUND */
         .bokeh-bg {
             position: absolute;
             top: 0;
@@ -42,7 +42,6 @@
             filter: blur(8px);
             animation: floatUp 12s infinite ease-in-out;
         }
-        /* Posisi dan ukuran acak untuk bintik-bintik cahaya bokeh */
         .bubble:nth-child(1) { width: 140px; height: 140px; left: 10%; animation-delay: 0s; animation-duration: 14s; }
         .bubble:nth-child(2) { width: 220px; height: 220px; left: 60%; animation-delay: 2s; animation-duration: 18s; }
         .bubble:nth-child(3) { width: 90px; height: 90px; left: 40%; animation-delay: 4s; animation-duration: 12s; }
@@ -142,7 +141,6 @@
 </head>
 <body>
 
-    <!-- SCRIPT TAMPILAN BACKGROUND BOKEH CAHAYA -->
     <div class="bokeh-bg">
         <div class="bubble"></div>
         <div class="bubble"></div>
@@ -169,10 +167,10 @@
         <div class="page" id="page3">
             <p class="subtitle">ALL ABOUT YOU</p>
             <div class="photo-grid">
-                <img src="foto1.jpg" alt="Kamu 1">
-                <img src="foto2.jpg" alt="Kamu 2">
-                <img src="foto3.jpg" alt="Kamu 3">
-                <img src="foto4.jpg" alt="Kamu 4">
+                <img src="https://lh3.googleusercontent.com/d/1Y-blUCLnKi5g60rHD5fimV95lcya7EX9" alt="Foto 1">
+                <img src="https://lh3.googleusercontent.com/d/1h_rYFcn0xHd31oAvDxr6KegfItuTTcBH" alt="Foto 2">
+                <img src="https://lh3.googleusercontent.com/d/1toVqltCDJ4UYwG_PTsiaU2gJKA5sQSPj" alt="Foto 3">
+                <img src="https://lh3.googleusercontent.com/d/1lfN644wSMf_FcAsOoa5vVsrRNUVkEF06" alt="Foto 4">
             </div>
             <button class="btn" onclick="nextPage(4)">CONTINUE</button>
         </div>
@@ -181,7 +179,7 @@
         <div class="page" id="page4">
             <p class="subtitle">A MESSAGE JUST FOR YOU</p>
             <div class="single-photo">
-                <img src="foto5.jpg" alt="Kita">
+                <img src="https://lh3.googleusercontent.com/d/1WGFSn6JS7tv5C33IAMaCqGPbDnWOB3tv" alt="Foto 5">
             </div>
             <p>"Aku tidak butuh banyak hal untuk merasa bahagia, karena punya kamu saja, itu sudah lebih dari cukup."</p>
             <button class="btn" onclick="alert('Terima kasih sudah hadir di hidupku ❤️')">CLOSE</button>
@@ -197,3 +195,4 @@
     </script>
 </body>
 </html>
+
