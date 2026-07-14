@@ -12,7 +12,7 @@
             font-family: 'Georgia', serif;
         }
         body {
-            background-color: #0d0d0d;
+            background-color: #0b0a08;
             color: #f2f2f2;
             display: flex;
             justify-content: center;
@@ -21,16 +21,40 @@
             overflow: hidden;
             text-align: center;
             padding: 20px;
+            position: relative;
         }
-        /* Efek latar belakang bintang/glitter */
-        .bg-stars {
+        /* Efek Bokeh Cahaya seperti di Video */
+        .bokeh-bg {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 10.5%);
-            background-size: 20px 20px;
+            overflow: hidden;
             z-index: 1;
+            pointer-events: none;
         }
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle, rgba(245, 235, 215, 0.12) 0%, rgba(245, 235, 215, 0) 70%);
+            border-radius: 50%;
+            filter: blur(8px);
+            animation: floatUp 12s infinite ease-in-out;
+        }
+        /* Mengatur posisi & ukuran bulatan bokeh agar acak */
+        .bubble:nth-child(1) { width: 120px; height: 120px; left: 10%; animation-delay: 0s; animation-duration: 14s; }
+        .bubble:nth-child(2) { width: 200px; height: 200px; left: 60%; animation-delay: 2s; animation-duration: 18s; }
+        .bubble:nth-child(3) { width: 80px; height: 80px; left: 40%; animation-delay: 4s; animation-duration: 12s; }
+        .bubble:nth-child(4) { width: 150px; height: 150px; left: 80%; animation-delay: 1s; animation-duration: 16s; }
+        .bubble:nth-child(5) { width: 100px; height: 100px; left: 25%; animation-delay: 6s; animation-duration: 15s; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
         .container {
             position: relative;
             z-index: 2;
@@ -45,72 +69,85 @@
             display: block;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: 400;
             letter-spacing: 2px;
             margin-bottom: 10px;
-            color: #f5f5f5;
+            color: #f7f4eb;
+            line-height: 1.4;
         }
         .subtitle {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             font-style: italic;
-            color: #b3b3b3;
+            color: #a8a090;
             margin-bottom: 30px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #d9d9d9;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #e0dad0;
             margin-bottom: 20px;
+            font-style: italic;
         }
-        /* Style Tombol Elegan */
+        /* Style Tombol Pembatas Emas Tipis */
         .btn {
             background: transparent;
             color: #dfba73;
             border: 1px solid #dfba73;
             padding: 10px 25px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
+            transition: all 0.4s ease;
+            margin-top: 25px;
         }
         .btn:hover {
             background: #dfba73;
-            color: #0d0d0d;
+            color: #0b0a08;
+            box-shadow: 0 0 10px rgba(223, 186, 115, 0.3);
         }
         /* Style Galeri Foto Grid */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 20px 0;
+            gap: 12px;
+            margin: 25px 0;
         }
         .photo-grid img {
             width: 100%;
-            height: 150px;
+            height: 160px;
             object-fit: cover;
-            filter: grayscale(100%) contrast(110%); /* Otomatis bikin foto hitam putih sinematik */
-            border: 1px solid #333;
+            filter: grayscale(100%) contrast(105%) brightness(90%);
+            border: 1px solid #2d2a24;
+            transition: all 0.5s ease;
         }
         .single-photo img {
             width: 100%;
-            max-height: 250px;
+            max-height: 260px;
             object-fit: cover;
-            filter: grayscale(100%);
-            margin-bottom: 20px;
-            border: 1px solid #333;
+            filter: grayscale(100%) contrast(105%) brightness(90%);
+            margin-bottom: 25px;
+            border: 1px solid #2d2a24;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-stars"></div>
+    <!-- Efek Latar Belakang Bokeh -->
+    <div class="bokeh-bg">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
 
     <div class="container">
         <!-- HALAMAN 1: INTRO -->
@@ -130,7 +167,7 @@
         <div class="page" id="page3">
             <p class="subtitle">ALL ABOUT YOU</p>
             <div class="photo-grid">
-                <!-- Ganti nama file foto1.jpg s/d foto4.jpg dengan foto cewekmu -->
+                <!-- Taruh 4 foto berbeda di folder yang sama, lalu beri nama sesuai di bawah ini -->
                 <img src="foto1.jpg" alt="Kamu 1">
                 <img src="foto2.jpg" alt="Kamu 2">
                 <img src="foto3.jpg" alt="Kamu 3">
@@ -143,7 +180,7 @@
         <div class="page" id="page4">
             <p class="subtitle">A MESSAGE JUST FOR YOU</p>
             <div class="single-photo">
-                <!-- Foto utama di halaman pesan -->
+                <!-- Foto ke-5 untuk halaman utama kata-kata romantis -->
                 <img src="foto5.jpg" alt="Kita">
             </div>
             <p>"Aku tidak butuh banyak hal untuk merasa bahagia, karena punya kamu saja, itu sudah lebih dari cukup."</p>
