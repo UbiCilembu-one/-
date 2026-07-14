@@ -286,6 +286,16 @@
             100% { transform: translateY(-10vh) translateX(var(--drift)) scale(1.1) rotate(45deg); opacity: 0; }
         }
 
+        /* Dekorasi Jejak Sentuhan Jari (Cursor/Touch Trail) */
+        .trail-particle {
+            position: absolute; pointer-events: none; z-index: 999999;
+            font-size: 12px; animation: fadeOutTrail 0.8s linear forwards;
+        }
+        @keyframes fadeOutTrail {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; filter: blur(0px); }
+            100% { transform: translate(var(--mx), var(--my)) scale(0.3); opacity: 0; filter: blur(1px); }
+        }
+
         .firefly {
             position: absolute; pointer-events: none; z-index: 1; border-radius: 50%;
             background: rgba(254, 246, 186, 0.6); box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.5);
@@ -481,6 +491,35 @@
             setTimeout(() => heart.remove(), duration * 1000);
         }
         setInterval(buatHatiMelayang, 800);
+
+        // JEJAK SENTUHAN (TOUCH TRAIL SPARKLES) AGAR LATAR BELAKANG HIDUP SAAT DISENTUH/DIGESER
+        function buatJejakSentuhan(x, y) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail-particle');
+            trail.innerHTML = ['✨', '🌸', '•', '🤍'][Math.floor(Math.random() * 4)];
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            
+            // Randomize pergeseran arah terbang kecil
+            const mx = (Math.random() - 0.5) * 40 + 'px';
+            const my = (Math.random() - 0.5) * 40 - 20 + 'px'; // Cenderung melayang ke atas sedikit
+            trail.style.setProperty('--mx', mx);
+            trail.style.setProperty('--my', my);
+            
+            // Beri sentuhan warna acak emas/putih/pink lembut
+            const colors = ['#fcf6ba', '#ffffff', '#ffccd5', '#ffe5ec'];
+            trail.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(trail);
+            setTimeout(() => trail.remove(), 800);
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.25) buatJejakSentuhan(e.clientX, e.clientY); // Batasi intensitas agar halus
+        });
+        window.addEventListener('touchmove', (e) => {
+            if (Math.random() < 0.3) buatJejakSentuhan(e.touches[0].clientX, e.touches[0].clientY);
+        });
 
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
