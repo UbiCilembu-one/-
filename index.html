@@ -71,7 +71,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 999999; /* Z-Index sangat tinggi agar selalu di depan sebelum diklik */
+            z-index: 999999;
             opacity: 1;
         }
         
@@ -563,12 +563,9 @@
         function closeIntro() {
             const intro = document.getElementById('sc-intro');
             if (intro) {
-                // Sembunyikan paksa dalam sekejap tanpa delay/animasi CSS agar tidak menutupi apa pun
                 intro.style.setProperty('display', 'none', 'important');
                 intro.style.setProperty('opacity', '0', 'important');
                 intro.style.setProperty('pointer-events', 'none', 'important');
-                
-                // Langsung didelete dari struktur HTML
                 intro.remove(); 
             }
             ambientHeartsActive = true; 
@@ -720,7 +717,7 @@
 
         function revealPhoto() {
             const img = document.getElementById('secretPhoto');
-            const "cap" = document.getElementById('photoCaption');
+            const cap = document.getElementById('photoCaption');
             const btn = document.getElementById('btnAfterPhoto');
             img.style.opacity = '1'; cap.innerText = "✨ Truly Elegant ✨";
             setTimeout(() => { btn.style.display = "inline-block"; }, 3000);
